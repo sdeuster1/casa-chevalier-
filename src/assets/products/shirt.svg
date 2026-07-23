@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice">
+  <rect width="300" height="400" fill="#e2dcd2"/>
+  <g fill="none" stroke="#4f1d34" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55">
+    <!-- Shirt with collar -->
+    <path d="M100 130 L130 110 L150 125 L170 110 L200 130 L210 180 L205 320 L95 320 L90 180 Z"/>
+    <path d="M130 110 L145 135 L150 125 L155 135 L170 110"/>
+    <path d="M150 125 L150 200"/>
+    <path d="M90 180 L65 220 L75 320"/>
+    <path d="M210 180 L235 220 L225 320"/>
+    <!-- Button placket -->
+    <circle cx="150" cy="160" r="1.2" fill="#4f1d34"/>
+    <circle cx="150" cy="185" r="1.2" fill="#4f1d34"/>
+    <circle cx="150" cy="210" r="1.2" fill="#4f1d34"/>
+    <circle cx="150" cy="235" r="1.2" fill="#4f1d34"/>
+    <circle cx="150" cy="260" r="1.2" fill="#4f1d34"/>
+  </g>
+  <text x="150" y="370" font-family="Playfair Display, serif" font-style="italic" font-size="11" fill="#4f1d34" opacity="0.5" text-anchor="middle" letter-spacing="1">Casa Chevalier</text>
+</svg>

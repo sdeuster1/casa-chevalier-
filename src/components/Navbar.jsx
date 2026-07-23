@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Search, Heart, User, ShoppingBag } from 'lucide-react'
 
 export default function Navbar({ onMenuToggle }) {
@@ -19,9 +20,15 @@ export default function Navbar({ onMenuToggle }) {
 
       <div className="flex items-center gap-3 md:gap-6">
         <Search className="w-4 h-4 md:w-5 md:h-5 text-white cursor-pointer" />
-        <Heart className="w-4 h-4 md:w-5 md:h-5 text-white cursor-pointer hidden md:block" />
-        <User className="w-4 h-4 md:w-5 md:h-5 text-white cursor-pointer" />
-        <ShoppingBag className="w-4 h-4 md:w-5 md:h-5 text-white cursor-pointer" />
+        <Link to="/wishlist" aria-label="Wishlist" className="hidden md:block">
+          <Heart className="w-4 h-4 md:w-5 md:h-5 text-white cursor-pointer" />
+        </Link>
+        <Link to="/account" aria-label="Account">
+          <User className="w-4 h-4 md:w-5 md:h-5 text-white cursor-pointer" />
+        </Link>
+        <Link to="/shop" aria-label="Shopping bag">
+          <ShoppingBag className="w-4 h-4 md:w-5 md:h-5 text-white cursor-pointer" />
+        </Link>
       </div>
     </nav>
   )

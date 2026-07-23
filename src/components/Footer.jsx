@@ -1,25 +1,36 @@
+import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 
 const columns = [
   {
     title: 'Get in Touch',
-    links: ['Contacts', 'FAQ'],
+    links: [
+      { label: 'Contacts', to: '/contacts' },
+      { label: 'FAQ', to: '/contacts' },
+    ],
   },
   {
     title: 'Company',
-    links: ['Our Philosophy', 'CC News'],
+    links: [
+      { label: 'Our Philosophy', to: null },
+      { label: 'CC News', to: null },
+    ],
   },
 ]
 
 export default function Footer() {
   return (
     <footer className="w-full bg-[#f99943] py-12 md:py-16 px-6 md:px-12">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 max-w-5xl mx-auto">
-        <div className="mb-4 md:mb-0">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 max-w-5xl mx-auto">
+        {/* Newsletter block */}
+        <div>
           <h3 className="font-bodoni text-white text-base md:text-lg mb-2 uppercase tracking-[0.1em]">
             Subscribe to our newsletter
           </h3>
-          <p className="font-playfair text-white/70 text-sm mb-6">
+          <p className="font-playfair text-white/80 text-sm mb-1">
+            Subscribe and receive 10% off your first order.
+          </p>
+          <p className="font-playfair text-white/60 text-xs mb-6">
             Be the first to know about new collections and exclusive events.
           </p>
           <div className="flex items-center border-b border-white max-w-xs">
@@ -34,25 +45,39 @@ export default function Footer() {
           </div>
         </div>
 
-        {columns.map((col) => (
-          <div key={col.title}>
-            <h4 className="font-bodoni text-white uppercase text-xs md:text-sm mb-3 md:mb-4 tracking-[0.1em]">
-              {col.title}
-            </h4>
-            <ul className="list-none p-0 m-0 flex flex-col gap-2">
-              {col.links.map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
-                    className="font-playfair text-white/70 text-xs hover:text-white transition-colors duration-300 no-underline"
-                  >
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        {/* Link columns — grouped together on the right */}
+        <div className="grid grid-cols-2 gap-6 md:gap-10 md:justify-self-start">
+          {columns.map((col) => (
+            <div key={col.title}>
+              <h4 className="font-bodoni text-white uppercase text-xs md:text-sm mb-3 md:mb-4 tracking-[0.1em]">
+                {col.title}
+              </h4>
+              <ul className="list-none p-0 m-0 flex flex-col gap-2">
+                {col.links.map((link) =>
+                  link.to ? (
+                    <li key={link.label}>
+                      <Link
+                        to={link.to}
+                        className="font-playfair text-white/70 text-xs hover:text-white transition-colors duration-300 no-underline"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ) : (
+                    <li key={link.label}>
+                      <a
+                        href="#"
+                        className="font-playfair text-white/70 text-xs hover:text-white transition-colors duration-300 no-underline"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="border-t border-white/20 mt-10 md:mt-12 pt-6 text-center">

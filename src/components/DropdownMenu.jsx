@@ -1,17 +1,30 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { X, ChevronRight } from 'lucide-react'
 
 const submenuItems = ['PANTS', 'SHIRTS', 'JACKETS', 'VESTS', 'ACCESSORIES']
 
 const menuItems = [
-  { label: 'THE CAPSULE COLLECTION', hasSubmenu: true },
-  { label: 'OUR PHILOSOPHY', hasSubmenu: false },
-  { label: 'CC NEWS', hasSubmenu: false },
-  { label: 'CONTACTS', hasSubmenu: false },
+  { label: 'THE CAPSULE COLLECTION', hasSubmenu: true, to: '/products' },
+  { label: 'OUR PHILOSOPHY', hasSubmenu: false, to: null },
+  { label: 'CC NEWS', hasSubmenu: false, to: null },
+  { label: 'CONTACTS', hasSubmenu: false, to: '/contacts' },
 ]
 
 export default function DropdownMenu({ isOpen, onClose }) {
   const [activeSubmenu, setActiveSubmenu] = useState(false)
+  const navigate = useNavigate()
+
+  const handleItemClick = (item) => {
+    if (item.hasSubmenu) {
+      setActiveSubmenu(!activeSubmenu)
+      return
+    }
+    if (item.to) {
+      onClose()
+      navigate(item.to)
+    }
+  }
 
   if (!isOpen) return null
 
@@ -35,7 +48,7 @@ export default function DropdownMenu({ isOpen, onClose }) {
             <div key={item.label} className="flex flex-col">
               <button
                 className="font-bodoni uppercase text-[#f0e9e0] tracking-[0.15em] md:tracking-[0.2em] text-lg md:text-xl bg-transparent border-none cursor-pointer hover:opacity-70 transition-opacity duration-300 text-left flex items-center justify-between w-full"
-                onClick={() => item.hasSubmenu && setActiveSubmenu(!activeSubmenu)}
+                onClick={() => handleItemClick(item)}
               >
                 {item.label}
                 {item.hasSubmenu && (

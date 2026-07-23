@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice">
+  <rect width="300" height="400" fill="#cbc2b3"/>
+  <g fill="none" stroke="#4f1d34" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55">
+    <!-- Belt strap - horizontal -->
+    <path d="M50 190 L250 190 L250 220 L50 220 Z"/>
+    <!-- Belt holes -->
+    <circle cx="200" cy="205" r="2.5"/>
+    <circle cx="215" cy="205" r="2.5"/>
+    <circle cx="230" cy="205" r="2.5"/>
+    <!-- Buckle -->
+    <path d="M50 175 L90 175 L90 235 L50 235 Z"/>
+    <path d="M65 175 L65 235"/>
+    <path d="M75 205 L100 205"/>
+    <!-- Stitching -->
+    <path d="M100 195 L245 195" stroke-dasharray="2,3"/>
+    <path d="M100 215 L245 215" stroke-dasharray="2,3"/>
+  </g>
+  <text x="150" y="370" font-family="Playfair Display, serif" font-style="italic" font-size="11" fill="#4f1d34" opacity="0.5" text-anchor="middle" letter-spacing="1">Casa Chevalier</text>
+</svg>
