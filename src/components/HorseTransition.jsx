@@ -29,7 +29,7 @@ export default function HorseTransition() {
       <img
         src={horse}
         alt=""
-        className="horse-jump w-40 h-40 md:w-56 md:h-56 object-contain"
+        className="horse-jump w-64 md:w-96 h-auto object-contain"
       />
 
       <style>{`
