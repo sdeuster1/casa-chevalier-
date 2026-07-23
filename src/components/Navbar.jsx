@@ -2,11 +2,16 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Search, Heart, User, ShoppingBag, X } from 'lucide-react'
 import { products } from '../data/products'
+import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 
-export default function Navbar({ onMenuToggle }) {
+export default function Navbar({ onMenuToggle, variant = 'light' }) {
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState('')
   const navigate = useNavigate()
+  const { itemCount } = useCart()
+  const { items: wishItems } = useWishlist()
+  const wishCount = wishItems.length
 
   const results = query.trim()
     ? products.filter((p) =>
@@ -19,6 +24,13 @@ export default function Navbar({ onMenuToggle }) {
     setQuery('')
   }
 
+  // 'light' = light-colored (white/cream) foreground, for use on dark backgrounds (hero, plum sections)
+  // 'dark'  = dark (plum) foreground, for use on cream/light backgrounds
+  const fg = variant === 'dark' ? 'text-plum' : 'text-white'
+  const barBg = variant === 'dark' ? 'bg-plum' : 'bg-white'
+  const badgeBg = variant === 'dark' ? 'bg-plum' : 'bg-dark'
+  const badgeText = variant === 'dark' ? 'text-cream' : 'text-white'
+
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 md:px-10 py-4 bg-transparent">
@@ -27,14 +39,14 @@ export default function Navbar({ onMenuToggle }) {
           className="flex flex-col gap-[5px] cursor-pointer bg-transparent border-none p-2"
           aria-label="Menu"
         >
-          <span className="block w-5 md:w-6 h-[1.5px] bg-white"></span>
-          <span className="block w-5 md:w-6 h-[1.5px] bg-white"></span>
-          <span className="block w-5 md:w-6 h-[1.5px] bg-white"></span>
+          <span className={`block w-5 md:w-6 h-[1.5px] ${barBg}`}></span>
+          <span className={`block w-5 md:w-6 h-[1.5px] ${barBg}`}></span>
+          <span className={`block w-5 md:w-6 h-[1.5px] ${barBg}`}></span>
         </button>
 
         <Link
           to="/home"
-          className="font-bodoni uppercase text-white text-xs md:text-lg tracking-[0.15em] md:tracking-[0.2em] absolute left-1/2 -translate-x-1/2 no-underline hover:opacity-80 transition-opacity"
+          className={`font-bodoni uppercase ${fg} text-xs md:text-lg tracking-[0.15em] md:tracking-[0.2em] absolute left-1/2 -translate-x-1/2 no-underline hover:opacity-80 transition-opacity`}
         >
           Casa Chevalier
         </Link>
@@ -45,16 +57,33 @@ export default function Navbar({ onMenuToggle }) {
             aria-label="Search"
             className="bg-transparent border-none cursor-pointer p-0"
           >
-            <Search className="w-4 h-4 md:w-5 md:h-5 text-white" />
+            <Search className={`w-4 h-4 md:w-5 md:h-5 ${fg}`} />
           </button>
-          <Link to="/wishlist" aria-label="Wishlist" className="hidden md:block">
-            <Heart className="w-4 h-4 md:w-5 md:h-5 text-white cursor-pointer" />
+
+          <Link to="/wishlist" aria-label="Wishlist" className="hidden md:block relative">
+            <Heart className={`w-4 h-4 md:w-5 md:h-5 ${fg} cursor-pointer`} />
+            {wishCount > 0 && (
+              <span
+                className={`absolute -bottom-1 -right-1 ${badgeBg} ${badgeText} rounded-full w-3.5 h-3.5 flex items-center justify-center text-[9px] font-playfair leading-none`}
+              >
+                {wishCount > 9 ? '9+' : wishCount}
+              </span>
+            )}
           </Link>
+
           <Link to="/account" aria-label="Account">
-            <User className="w-4 h-4 md:w-5 md:h-5 text-white cursor-pointer" />
+            <User className={`w-4 h-4 md:w-5 md:h-5 ${fg} cursor-pointer`} />
           </Link>
-          <Link to="/shop" aria-label="Shopping bag">
-            <ShoppingBag className="w-4 h-4 md:w-5 md:h-5 text-white cursor-pointer" />
+
+          <Link to="/shop" aria-label="Shopping bag" className="relative">
+            <ShoppingBag className={`w-4 h-4 md:w-5 md:h-5 ${fg} cursor-pointer`} />
+            {itemCount > 0 && (
+              <span
+                className={`absolute -bottom-1 -right-1 ${badgeBg} ${badgeText} rounded-full w-4 h-4 flex items-center justify-center text-[9px] font-playfair leading-none`}
+              >
+                {itemCount > 9 ? '9+' : itemCount}
+              </span>
+            )}
           </Link>
         </div>
       </nav>

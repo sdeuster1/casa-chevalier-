@@ -48,7 +48,7 @@ export default function FAQ() {
 
   return (
     <div className="min-h-screen bg-cream">
-      <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} />
+      <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} variant="dark" />
       <DropdownMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
       <section className="pt-28 md:pt-36 pb-16 md:pb-24 px-6 md:px-12">
@@ -58,7 +58,7 @@ export default function FAQ() {
             <p className="font-playfair italic text-lilac text-[11px] tracking-[0.25em] uppercase mb-6">
               Frequently Asked Questions
             </p>
-            <h1 className="font-bodoni text-dark text-4xl md:text-6xl leading-tight">
+            <h1 className="font-bodoni text-plum text-4xl md:text-6xl leading-tight">
               Some answers<br />to your questions
             </h1>
           </div>

@@ -31,12 +31,12 @@ export default function Shop() {
 
   return (
     <div className="min-h-screen bg-cream flex flex-col">
-      <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} />
+      <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} variant="dark" />
       <DropdownMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
       <section className="pt-28 md:pt-36 pb-16 md:pb-24 px-6 md:px-12 flex-1">
         <div className="max-w-4xl mx-auto w-full">
-          <h1 className="font-bodoni uppercase text-dark text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
+          <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
             {step === 'checkout' ? 'Checkout' : step === 'confirmed' ? 'Thank You' : 'Your Bag'}
           </h1>
           <p className="font-playfair italic text-lilac text-center text-sm mb-16">

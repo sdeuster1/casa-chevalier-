@@ -40,13 +40,13 @@ export default function Philosophy() {
 
   return (
     <div className="min-h-screen bg-cream">
-      <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} />
+      <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} variant="dark" />
       <DropdownMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
       <section className="pt-28 md:pt-36 pb-8 md:pb-12 px-6 md:px-12">
         <div className="max-w-3xl mx-auto flex flex-col items-center text-center">
           <Monogram color="#4f1d34" size={48} className="mb-6" />
-          <h1 className="font-bodoni uppercase text-dark text-2xl md:text-3xl tracking-[0.2em] mb-4">
+          <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] mb-4">
             Our Philosophy
           </h1>
           <p className="font-playfair italic text-lilac text-sm md:text-base max-w-lg">

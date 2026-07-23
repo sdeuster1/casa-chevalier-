@@ -28,12 +28,12 @@ export default function Contacts() {
 
   return (
     <div className="min-h-screen bg-cream">
-      <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} />
+      <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} variant="dark" />
       <DropdownMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
       <section className="pt-28 md:pt-36 pb-16 md:pb-24 px-6 md:px-12">
         <div className="max-w-5xl mx-auto">
-          <h1 className="font-bodoni uppercase text-dark text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
+          <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
             Contacts
           </h1>
           <p className="font-playfair italic text-lilac text-center text-sm mb-16 md:mb-20">
