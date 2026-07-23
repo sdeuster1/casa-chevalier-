@@ -6,14 +6,14 @@ const columns = [
     title: 'Get in Touch',
     links: [
       { label: 'Contacts', to: '/contacts' },
-      { label: 'FAQ', to: '/contacts' },
+      { label: 'FAQ', to: '/faq' },
     ],
   },
   {
     title: 'Company',
     links: [
-      { label: 'Our Philosophy', to: null },
-      { label: 'CC News', to: null },
+      { label: 'Our Philosophy', to: '/philosophy' },
+      { label: 'CC News', to: '/news' },
     ],
   },
 ]
@@ -21,9 +21,9 @@ const columns = [
 export default function Footer() {
   return (
     <footer className="w-full bg-[#f99943] py-12 md:py-16 px-6 md:px-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-start gap-10 md:gap-12">
         {/* Newsletter block */}
-        <div>
+        <div className="md:flex-1 md:max-w-md">
           <h3 className="font-bodoni text-white text-base md:text-lg mb-2 uppercase tracking-[0.1em]">
             Subscribe to our newsletter
           </h3>
@@ -45,35 +45,24 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Link columns — grouped together on the right */}
-        <div className="grid grid-cols-2 gap-6 md:gap-10 md:justify-self-start">
+        {/* Link columns — sit right next to Subscribe */}
+        <div className="grid grid-cols-2 gap-8 md:gap-10">
           {columns.map((col) => (
             <div key={col.title}>
               <h4 className="font-bodoni text-white uppercase text-xs md:text-sm mb-3 md:mb-4 tracking-[0.1em]">
                 {col.title}
               </h4>
               <ul className="list-none p-0 m-0 flex flex-col gap-2">
-                {col.links.map((link) =>
-                  link.to ? (
-                    <li key={link.label}>
-                      <Link
-                        to={link.to}
-                        className="font-playfair text-white/70 text-xs hover:text-white transition-colors duration-300 no-underline"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ) : (
-                    <li key={link.label}>
-                      <a
-                        href="#"
-                        className="font-playfair text-white/70 text-xs hover:text-white transition-colors duration-300 no-underline"
-                      >
-                        {link.label}
-                      </a>
-                    </li>
-                  )
-                )}
+                {col.links.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      to={link.to}
+                      className="font-playfair text-white/70 text-xs hover:text-white transition-colors duration-300 no-underline"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           ))}

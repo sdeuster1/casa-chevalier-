@@ -1,46 +1,30 @@
 import { useState } from 'react'
-import { ChevronDown, Mail, Phone, MapPin } from 'lucide-react'
+import { Mail, Phone, MapPin } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
 
-const faqs = [
-  {
-    question: 'Where are Casa Chevalier pieces made?',
-    answer:
-      'Every garment is designed and handcrafted in Italy, drawing on traditional equestrian tailoring techniques passed down through generations of artisans.',
-  },
-  {
-    question: 'What is your shipping policy?',
-    answer:
-      'We offer complimentary shipping on all orders within the EU. International orders are delivered within 5-10 business days via our courier partners.',
-  },
-  {
-    question: 'Can I return or exchange an item?',
-    answer:
-      'Yes. Unworn items may be returned within 30 days of delivery for a full refund or exchange. Please contact us to arrange a return.',
-  },
-  {
-    question: 'Do you offer made-to-measure services?',
-    answer:
-      'Select pieces from the Capsule Collection can be tailored to measure. Reach out to our concierge team to discuss availability.',
-  },
-  {
-    question: 'How do I care for my Casa Chevalier garments?',
-    answer:
-      'Each piece is delivered with detailed care instructions. In general, we recommend dry cleaning and storing garments away from direct sunlight.',
-  },
-]
-
-const contactDetails = [
-  { icon: Mail, label: 'concierge@casachevalier.com' },
-  { icon: Phone, label: '+39 02 1234 5678' },
-  { icon: MapPin, label: 'Via della Spiga, Milano, Italia' },
+const details = [
+  { icon: Mail, label: 'Email', value: 'concierge@casachevalier.com' },
+  { icon: Phone, label: 'Telephone', value: '+39 02 1234 5678' },
+  { icon: MapPin, label: 'Atelier', value: 'Via della Spiga, Milano, Italia' },
 ]
 
 export default function Contacts() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [openIndex, setOpenIndex] = useState(null)
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
+  const [sent, setSent] = useState(false)
+
+  const setField = (k) => (e) => setForm({ ...form, [k]: e.target.value })
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setSent(true)
+    setTimeout(() => {
+      setSent(false)
+      setForm({ name: '', email: '', subject: '', message: '' })
+    }, 3000)
+  }
 
   return (
     <div className="min-h-screen bg-cream">
@@ -48,58 +32,86 @@ export default function Contacts() {
       <DropdownMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
       <section className="pt-28 md:pt-36 pb-16 md:pb-24 px-6 md:px-12">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <h1 className="font-bodoni uppercase text-dark text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
             Contacts
           </h1>
-          <p className="font-playfair italic text-lilac text-center text-sm mb-16">
+          <p className="font-playfair italic text-lilac text-center text-sm mb-16 md:mb-20">
             We are at your service
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 mb-20 md:mb-28">
-            {contactDetails.map(({ icon: Icon, label }) => (
-              <div key={label} className="flex flex-col items-center text-center gap-3">
-                <Icon className="w-5 h-5 text-plum" />
-                <p className="font-playfair text-dark text-sm">{label}</p>
-              </div>
-            ))}
-          </div>
-
-          <h2 className="font-bodoni uppercase text-dark text-xl md:text-2xl tracking-[0.15em] text-center mb-10">
-            Frequently Asked Questions
-          </h2>
-
-          <div className="flex flex-col divide-y divide-plum/20 border-t border-b border-plum/20">
-            {faqs.map((faq, index) => {
-              const isOpen = openIndex === index
-              return (
-                <div key={faq.question}>
-                  <button
-                    onClick={() => setOpenIndex(isOpen ? null : index)}
-                    className="w-full flex items-center justify-between gap-4 py-5 md:py-6 bg-transparent border-none cursor-pointer text-left"
-                  >
-                    <span className="font-bodoni uppercase text-dark text-sm md:text-base tracking-[0.1em]">
-                      {faq.question}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
+            {/* Left: contact details */}
+            <div className="flex flex-col gap-8">
+              {details.map(({ icon: Icon, label, value }) => (
+                <div key={label} className="flex items-start gap-4">
+                  <Icon className="w-5 h-5 text-plum mt-1 shrink-0" strokeWidth={1.5} />
+                  <div className="flex flex-col">
+                    <span className="font-playfair italic text-lilac text-[10px] tracking-[0.15em] uppercase">
+                      {label}
                     </span>
-                    <ChevronDown
-                      className={`w-4 h-4 text-plum shrink-0 transition-transform duration-300 ${
-                        isOpen ? 'rotate-180' : ''
-                      }`}
-                    />
-                  </button>
-                  {isOpen && (
-                    <p className="font-playfair text-dark/70 text-sm pb-5 md:pb-6 pr-8 -mt-2">
-                      {faq.answer}
-                    </p>
-                  )}
+                    <span className="font-playfair text-dark text-sm mt-1">{value}</span>
+                  </div>
                 </div>
-              )
-            })}
+              ))}
+
+              <div className="mt-6">
+                <h3 className="font-bodoni uppercase text-dark text-sm tracking-[0.15em] mb-3">
+                  Concierge Hours
+                </h3>
+                <p className="font-playfair text-dark/70 text-sm">
+                  Monday to Friday, 10:00 — 19:00 CET
+                </p>
+                <p className="font-playfair text-dark/70 text-sm">
+                  Saturday, by appointment
+                </p>
+              </div>
+            </div>
+
+            {/* Right: contact form */}
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+              <Field label="Name" value={form.name} onChange={setField('name')} required />
+              <Field label="Email" type="email" value={form.email} onChange={setField('email')} required />
+              <Field label="Subject" value={form.subject} onChange={setField('subject')} required />
+              <label className="flex flex-col gap-1">
+                <span className="font-playfair italic text-dark/60 text-xs">Message</span>
+                <textarea
+                  required
+                  rows={5}
+                  value={form.message}
+                  onChange={setField('message')}
+                  className="bg-transparent text-dark font-playfair text-sm py-2 w-full outline-none border-0 border-b border-dark/30 focus:border-plum transition-colors resize-none"
+                />
+              </label>
+              <button
+                type="submit"
+                className="mt-4 self-start font-bodoni uppercase text-cream bg-plum text-xs tracking-[0.2em] py-3 px-8 cursor-pointer hover:opacity-90 transition-opacity duration-300"
+              >
+                {sent ? 'Message Sent' : 'Send Message'}
+              </button>
+              {sent && (
+                <p className="font-playfair italic text-plum text-sm">
+                  Thank you — our concierge team will be in touch shortly.
+                </p>
+              )}
+            </form>
           </div>
         </div>
       </section>
 
       <Footer />
     </div>
+  )
+}
+
+function Field({ label, className = '', ...rest }) {
+  return (
+    <label className={`flex flex-col gap-1 ${className}`}>
+      <span className="font-playfair italic text-dark/60 text-xs">{label}</span>
+      <input
+        {...rest}
+        className="bg-transparent text-dark font-playfair text-sm py-2 w-full outline-none border-0 border-b border-dark/30 focus:border-plum transition-colors"
+      />
+    </label>
   )
 }

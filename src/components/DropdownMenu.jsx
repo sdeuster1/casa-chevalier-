@@ -6,8 +6,8 @@ const submenuItems = ['PANTS', 'SHIRTS', 'JACKETS', 'VESTS', 'ACCESSORIES']
 
 const menuItems = [
   { label: 'THE CAPSULE COLLECTION', hasSubmenu: true, to: '/products' },
-  { label: 'OUR PHILOSOPHY', hasSubmenu: false, to: null },
-  { label: 'CC NEWS', hasSubmenu: false, to: null },
+  { label: 'OUR PHILOSOPHY', hasSubmenu: false, to: '/philosophy' },
+  { label: 'CC NEWS', hasSubmenu: false, to: '/news' },
   { label: 'CONTACTS', hasSubmenu: false, to: '/contacts' },
 ]
 
