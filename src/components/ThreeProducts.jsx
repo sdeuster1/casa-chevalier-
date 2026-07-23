@@ -1,4 +1,4 @@
-const products = ['BREECHES', 'SHIRT', 'JACKET']
+const products = ['VEST', 'SHIRT', 'BREECHES']
 
 export default function ThreeProducts() {
   return (

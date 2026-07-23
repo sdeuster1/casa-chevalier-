@@ -2,10 +2,10 @@ import { useRef } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const items = [
-  { name: 'RIDING JACKET', price: '€890' },
-  { name: 'SILK SCARF', price: '€245' },
-  { name: 'LEATHER BELT', price: '€380' },
-  { name: 'BOOTS', price: '€1,120' },
+  { name: 'EQUESTRIAN BLAZER', price: '€890' },
+  { name: 'RIDERS BELT', price: '€380' },
+  { name: 'BOMBACHA', price: '€520' },
+  { name: 'SHIRT', price: '€345' },
 ]
 
 const dots = [

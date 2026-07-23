@@ -7,23 +7,15 @@ const columns = [
   },
   {
     title: 'Company',
-    links: ['Our Philosophy', 'CC News', 'Careers'],
-  },
-  {
-    title: 'Services',
-    links: ['All Services', 'Gift Cards', 'Returns & Exchange', 'Delivery & Shipping'],
-  },
-  {
-    title: 'Legal',
-    links: ['Privacy Policy', 'Cookie Notice', 'Terms & Conditions', 'Accessibility'],
+    links: ['Our Philosophy', 'CC News'],
   },
 ]
 
 export default function Footer() {
   return (
     <footer className="w-full bg-[#f99943] py-12 md:py-16 px-6 md:px-12">
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-6 max-w-7xl mx-auto">
-        <div className="col-span-2 md:col-span-1 mb-4 md:mb-0">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 max-w-5xl mx-auto">
+        <div className="mb-4 md:mb-0">
           <h3 className="font-bodoni text-white text-base md:text-lg mb-2 uppercase tracking-[0.1em]">
             Subscribe to our newsletter
           </h3>
