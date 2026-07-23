@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice">
+  <rect width="300" height="400" fill="#dcd5c8"/>
+  <g fill="none" stroke="#4f1d34" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55">
+    <!-- Structured blazer with lapels -->
+    <path d="M95 115 L125 95 L150 105 L175 95 L205 115 L215 175 L210 325 L90 325 L85 175 Z"/>
+    <path d="M125 95 L140 140 L150 130 L160 140 L175 95"/>
+    <path d="M150 130 L150 210"/>
+    <path d="M90 175 L65 215 L75 325"/>
+    <path d="M210 175 L235 215 L225 325"/>
+    <path d="M120 260 L135 260 M120 265 L135 265"/>
+    <path d="M180 260 L195 260 M180 265 L195 265"/>
+  </g>
+  <text x="150" y="370" font-family="Playfair Display, serif" font-style="italic" font-size="11" fill="#4f1d34" opacity="0.5" text-anchor="middle" letter-spacing="1">Casa Chevalier</text>
+</svg>

@@ -81,8 +81,8 @@ export default function Shop() {
           {step === 'bag' && items.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16">
               <div className="md:col-span-2 flex flex-col divide-y divide-plum/15 border-t border-b border-plum/15">
-                {items.map(({ product, quantity }) => (
-                  <div key={product.id} className="flex gap-4 md:gap-6 py-5 md:py-6">
+                {items.map(({ product, quantity, size, key }) => (
+                  <div key={key} className="flex gap-4 md:gap-6 py-5 md:py-6">
                     <img src={product.image} alt={product.name} className="w-20 h-24 md:w-24 md:h-32 object-cover bg-[#d4cec6]" />
                     <div className="flex-1 flex flex-col">
                       <span className="font-playfair italic text-lilac text-[10px] tracking-[0.15em] uppercase">
@@ -91,13 +91,16 @@ export default function Shop() {
                       <p className="font-bodoni uppercase tracking-[0.15em] text-xs md:text-sm text-dark mt-1">
                         {product.name}
                       </p>
+                      {size && (
+                        <p className="font-playfair text-dark/60 text-xs mt-1">Size: {size}</p>
+                      )}
                       <p className="font-playfair text-sm text-plum mt-1">
                         {formatPrice(product.price)}
                       </p>
                       <div className="mt-auto flex items-center gap-4 pt-3">
                         <div className="flex items-center border border-plum/30">
                           <button
-                            onClick={() => updateQuantity(product.id, quantity - 1)}
+                            onClick={() => updateQuantity(product.id, quantity - 1, size)}
                             className="w-7 h-7 flex items-center justify-center bg-transparent border-none cursor-pointer hover:bg-plum/5"
                             aria-label="Decrease quantity"
                           >
@@ -107,7 +110,7 @@ export default function Shop() {
                             {quantity}
                           </span>
                           <button
-                            onClick={() => updateQuantity(product.id, quantity + 1)}
+                            onClick={() => updateQuantity(product.id, quantity + 1, size)}
                             className="w-7 h-7 flex items-center justify-center bg-transparent border-none cursor-pointer hover:bg-plum/5"
                             aria-label="Increase quantity"
                           >
@@ -115,7 +118,7 @@ export default function Shop() {
                           </button>
                         </div>
                         <button
-                          onClick={() => removeItem(product.id)}
+                          onClick={() => removeItem(product.id, size)}
                           className="font-playfair text-dark/50 text-xs hover:text-plum transition-colors bg-transparent border-none cursor-pointer flex items-center gap-1"
                         >
                           <X className="w-3 h-3" /> Remove
@@ -201,9 +204,9 @@ export default function Shop() {
                 <h3 className="font-bodoni uppercase text-dark text-sm tracking-[0.15em] mb-2">
                   Your Order
                 </h3>
-                {items.map(({ product, quantity }) => (
-                  <div key={product.id} className="flex justify-between font-playfair text-xs text-dark/80">
-                    <span>{product.name} × {quantity}</span>
+                {items.map(({ product, quantity, size, key }) => (
+                  <div key={key} className="flex justify-between font-playfair text-xs text-dark/80">
+                    <span>{product.name}{size ? ` (${size})` : ''} × {quantity}</span>
                     <span>{formatPrice(product.price * quantity)}</span>
                   </div>
                 ))}

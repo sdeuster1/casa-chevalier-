@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Splash from './pages/Splash'
 import Home from './pages/Home'
 import Products from './pages/Products'
+import ProductDetail from './pages/ProductDetail'
 import Contacts from './pages/Contacts'
 import FAQ from './pages/FAQ'
 import News from './pages/News'
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="/" element={<Splash />} />
             <Route path="/home" element={<Home />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/news" element={<News />} />

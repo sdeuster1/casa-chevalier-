@@ -16,7 +16,7 @@ export default function ThreeProducts() {
         {featured.map((item) => (
           <button
             key={item.id}
-            onClick={() => navigate(`/products?product=${item.id}`)}
+            onClick={() => navigate(`/product/${item.id}`)}
             className="cursor-pointer group bg-transparent border-none p-0 text-left"
           >
             <div className="aspect-square bg-[#d4cec6] overflow-hidden">

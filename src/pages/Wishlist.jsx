@@ -5,13 +5,11 @@ import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
 import { useWishlist } from '../context/WishlistContext'
-import { useCart } from '../context/CartContext'
 import { formatPrice } from '../data/products'
 
 export default function Wishlist() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { items, remove } = useWishlist()
-  const { addItem } = useCart()
   const navigate = useNavigate()
 
   return (
@@ -64,17 +62,20 @@ export default function Wishlist() {
                     <span className="font-playfair italic text-lilac text-[10px] tracking-[0.15em] uppercase">
                       {product.category}
                     </span>
-                    <p className="font-bodoni uppercase tracking-[0.15em] text-xs md:text-sm text-dark mt-1">
+                    <button
+                      onClick={() => navigate(`/product/${product.id}`)}
+                      className="font-bodoni uppercase tracking-[0.15em] text-xs md:text-sm text-dark mt-1 bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
+                    >
                       {product.name}
-                    </p>
+                    </button>
                     <p className="font-playfair text-sm text-plum mt-1">
                       {formatPrice(product.price)}
                     </p>
                     <button
-                      onClick={() => addItem(product.id, 1)}
+                      onClick={() => navigate(`/product/${product.id}`)}
                       className="mt-4 self-start font-bodoni uppercase text-plum text-[10px] md:text-xs tracking-[0.2em] border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity duration-300"
                     >
-                      Add to Bag
+                      View Product
                     </button>
                   </div>
                 </div>

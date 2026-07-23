@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice">
+  <rect width="300" height="400" fill="#dcd5c8"/>
+  <g fill="none" stroke="#4f1d34" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55">
+    <!-- Breeches: tapered riding trousers -->
+    <path d="M115 100 L185 100 L192 130 L195 190 L180 340 L155 340 L150 210 L145 340 L120 340 L105 190 L108 130 Z"/>
+    <!-- Waistband -->
+    <path d="M115 100 L185 100"/>
+    <path d="M115 115 L185 115"/>
+    <!-- Center seam -->
+    <path d="M150 115 L150 210"/>
+    <!-- Knee patch detail (breeches trademark) -->
+    <path d="M130 235 L165 235 L170 265 L128 265 Z"/>
+    <path d="M132 240 L167 240" stroke-dasharray="2,2"/>
+    <!-- Ankle cuff -->
+    <path d="M120 335 L145 335"/>
+    <path d="M155 335 L180 335"/>
+  </g>
+  <text x="150" y="370" font-family="Playfair Display, serif" font-style="italic" font-size="11" fill="#4f1d34" opacity="0.5" text-anchor="middle" letter-spacing="1">Casa Chevalier</text>
+</svg>

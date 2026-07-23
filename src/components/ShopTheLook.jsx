@@ -49,7 +49,7 @@ export default function ShopTheLook() {
             {featured.map((item) => (
               <button
                 key={item.id}
-                onClick={() => navigate(`/products?product=${item.id}`)}
+                onClick={() => navigate(`/product/${item.id}`)}
                 className="flex-shrink-0 w-[150px] md:w-[200px] cursor-pointer bg-transparent border-none p-0 text-left"
                 style={{ scrollSnapAlign: 'start' }}
               >

@@ -5,16 +5,13 @@ import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
 import { products, categories, formatPrice } from '../data/products'
-import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 
 export default function Products() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [manualCategory, setManualCategory] = useState(null)
-  const [confirmation, setConfirmation] = useState(null)
   const [highlightTick, setHighlightTick] = useState(0)
   const productRefs = useRef({})
-  const { addItem } = useCart()
   const { toggle: toggleWish, has: hasWish } = useWishlist()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -54,12 +51,6 @@ export default function Products() {
     activeCategory === 'ALL'
       ? products
       : products.filter((p) => p.category === activeCategory)
-
-  const handleAdd = (product) => {
-    addItem(product.id, 1)
-    setConfirmation(product.name)
-    setTimeout(() => setConfirmation(null), 1500)
-  }
 
   const setCategory = (cat) => {
     setManualCategory(cat)
@@ -112,7 +103,8 @@ export default function Products() {
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      onClick={() => navigate(`/product/${product.id}`)}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
                     />
                     <button
                       onClick={() => toggleWish(product.id)}
@@ -131,17 +123,20 @@ export default function Products() {
                     <span className="font-playfair italic text-lilac text-[10px] tracking-[0.15em] uppercase">
                       {product.category}
                     </span>
-                    <p className="font-bodoni uppercase tracking-[0.15em] text-xs md:text-sm text-dark mt-1">
+                    <button
+                      onClick={() => navigate(`/product/${product.id}`)}
+                      className="font-bodoni uppercase tracking-[0.15em] text-xs md:text-sm text-dark mt-1 bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
+                    >
                       {product.name}
-                    </p>
+                    </button>
                     <p className="font-playfair text-sm text-plum mt-1">
                       {formatPrice(product.price)}
                     </p>
                     <button
-                      onClick={() => handleAdd(product)}
+                      onClick={() => navigate(`/product/${product.id}`)}
                       className="mt-4 self-start font-bodoni uppercase text-plum text-[10px] md:text-xs tracking-[0.2em] border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity duration-300"
                     >
-                      Add to Bag
+                      View Product
                     </button>
                   </div>
                 </div>
@@ -150,19 +145,6 @@ export default function Products() {
           </div>
         </div>
       </section>
-
-      {/* Add-to-cart confirmation toast */}
-      {confirmation && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[80] bg-plum text-cream px-6 py-3 font-playfair text-sm flex items-center gap-4 shadow-lg">
-          <span>Added to bag — <em>{confirmation}</em></span>
-          <button
-            onClick={() => navigate('/shop')}
-            className="font-bodoni uppercase text-cream text-[10px] tracking-[0.2em] underline bg-transparent border-none cursor-pointer"
-          >
-            View Bag
-          </button>
-        </div>
-      )}
 
       <Footer />
     </div>

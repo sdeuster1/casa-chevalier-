@@ -4,7 +4,10 @@ import { findProduct } from '../data/products'
 
 const CartContext = createContext(null)
 
-const STORAGE_KEY = 'cc_cart_v1'
+const STORAGE_KEY = 'cc_cart_v2'
+
+// A line item is uniquely identified by productId + size.
+const lineKey = (productId, size) => `${productId}__${size || 'ONE'}`
 
 export function CartProvider({ children }) {
   const [items, setItems] = useState(() => {
@@ -23,26 +26,33 @@ export function CartProvider({ children }) {
     } catch { /* ignore quota errors */ }
   }, [items])
 
-  const addItem = useCallback((productId, qty = 1) => {
+  const addItem = useCallback((productId, qty = 1, size = null) => {
     setItems((prev) => {
-      const existing = prev.find((i) => i.productId === productId)
+      const key = lineKey(productId, size)
+      const existing = prev.find((i) => lineKey(i.productId, i.size) === key)
       if (existing) {
         return prev.map((i) =>
-          i.productId === productId ? { ...i, quantity: i.quantity + qty } : i
+          lineKey(i.productId, i.size) === key
+            ? { ...i, quantity: i.quantity + qty }
+            : i
         )
       }
-      return [...prev, { productId, quantity: qty }]
+      return [...prev, { productId, size, quantity: qty }]
     })
   }, [])
 
-  const removeItem = useCallback((productId) => {
-    setItems((prev) => prev.filter((i) => i.productId !== productId))
+  const removeItem = useCallback((productId, size = null) => {
+    const key = lineKey(productId, size)
+    setItems((prev) => prev.filter((i) => lineKey(i.productId, i.size) !== key))
   }, [])
 
-  const updateQuantity = useCallback((productId, qty) => {
+  const updateQuantity = useCallback((productId, qty, size = null) => {
+    const key = lineKey(productId, size)
     setItems((prev) => {
-      if (qty <= 0) return prev.filter((i) => i.productId !== productId)
-      return prev.map((i) => (i.productId === productId ? { ...i, quantity: qty } : i))
+      if (qty <= 0) return prev.filter((i) => lineKey(i.productId, i.size) !== key)
+      return prev.map((i) =>
+        lineKey(i.productId, i.size) === key ? { ...i, quantity: qty } : i
+      )
     })
   }, [])
 
@@ -52,7 +62,7 @@ export function CartProvider({ children }) {
     const detailed = items
       .map((i) => {
         const product = findProduct(i.productId)
-        return product ? { ...i, product } : null
+        return product ? { ...i, product, key: lineKey(i.productId, i.size) } : null
       })
       .filter(Boolean)
 
