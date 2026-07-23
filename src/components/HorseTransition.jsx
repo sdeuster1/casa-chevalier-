@@ -4,16 +4,24 @@ import horse from '../assets/brand/horse.png'
 
 const DURATION = 1000 // ms the overlay stays visible
 
+// Palette rotation — excludes plum (#4f1d34) since the horse itself is that color
+const BACKGROUNDS = ['#f0e9e0', '#f05652', '#c49fae']
+
 export default function HorseTransition() {
   const location = useLocation()
   const [visible, setVisible] = useState(false)
+  const [bgIndex, setBgIndex] = useState(0)
   const isFirstRender = useRef(true)
+  const counter = useRef(0)
 
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false
       return
     }
+    // Rotate to the next background color on each navigation
+    counter.current = (counter.current + 1) % BACKGROUNDS.length
+    setBgIndex(counter.current)
     setVisible(true)
     const timer = setTimeout(() => setVisible(false), DURATION)
     return () => clearTimeout(timer)
@@ -23,8 +31,11 @@ export default function HorseTransition() {
 
   return (
     <div
-      className="fixed inset-0 z-[200] flex items-center justify-center pointer-events-none bg-plum/95 backdrop-blur-sm"
-      style={{ animation: `horse-fade ${DURATION}ms ease-in-out forwards` }}
+      className="fixed inset-0 z-[200] flex items-center justify-center pointer-events-none backdrop-blur-sm"
+      style={{
+        backgroundColor: BACKGROUNDS[bgIndex],
+        animation: `horse-fade ${DURATION}ms ease-in-out forwards`,
+      }}
     >
       <img
         src={horse}
@@ -47,9 +58,10 @@ export default function HorseTransition() {
         }
         .horse-jump {
           animation: horse-jump ${DURATION}ms ease-in-out;
-          filter: drop-shadow(0 12px 24px rgba(0,0,0,0.3));
+          filter: drop-shadow(0 12px 24px rgba(0,0,0,0.15));
         }
       `}</style>
     </div>
   )
 }
+
