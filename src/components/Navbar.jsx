@@ -24,10 +24,17 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
     setQuery('')
   }
 
-  // 'light' = light-colored (white/cream) foreground, for use on dark backgrounds (hero, plum sections)
-  // 'dark'  = dark (plum) foreground, for use on cream/light backgrounds
-  const fg = variant === 'dark' ? 'text-plum' : 'text-white'
-  const barBg = variant === 'dark' ? 'bg-plum' : 'bg-white'
+  // 'light' = white foreground, for dark hero backgrounds
+  // 'cream' = cream (#f0e9e0) foreground, for dark backgrounds where we want softer contrast
+  // 'dark'  = plum foreground, for cream/light backgrounds
+  const fg =
+    variant === 'dark' ? 'text-plum'
+    : variant === 'cream' ? 'text-cream'
+    : 'text-white'
+  const barBg =
+    variant === 'dark' ? 'bg-plum'
+    : variant === 'cream' ? 'bg-cream'
+    : 'bg-white'
   const badgeBg = variant === 'dark' ? 'bg-plum' : 'bg-dark'
   const badgeText = variant === 'dark' ? 'text-cream' : 'text-white'
 

@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <NewsletterPopup />
-      <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} />
+      <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} variant="cream" />
       <DropdownMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       <HeroSection />
       <TextInterlude text="Equestrian elegance, shaped by Italian craftsmanship." />

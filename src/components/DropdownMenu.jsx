@@ -60,12 +60,16 @@ export default function DropdownMenu({ isOpen, onClose }) {
               {item.hasSubmenu && activeSubmenu && (
                 <div className="flex flex-col gap-3 mt-4 pl-2">
                   {submenuItems.map((sub) => (
-                    <span
+                    <button
                       key={sub}
-                      className="font-playfair text-lilac text-base cursor-pointer hover:text-[#f0e9e0] transition-colors duration-300"
+                      onClick={() => {
+                        onClose()
+                        navigate(`/products?category=${sub}`)
+                      }}
+                      className="font-playfair text-lilac text-base cursor-pointer hover:text-[#f0e9e0] transition-colors duration-300 bg-transparent border-none p-0 text-left"
                     >
                       {sub}
-                    </span>
+                    </button>
                   ))}
                 </div>
               )}
