@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
 import { useWishlist } from '../context/WishlistContext'
-import { formatPrice } from '../data/products'
+import { formatPrice } from '../lib/shopify'
 
 export default function Wishlist() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -43,7 +43,7 @@ export default function Wishlist() {
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-10 md:gap-x-8 md:gap-y-16">
               {items.map((product) => (
-                <div key={product.id} className="flex flex-col group">
+                <div key={product.handle} className="flex flex-col group">
                   <div className="relative aspect-[3/4] overflow-hidden bg-[#d4cec6]">
                     <img
                       src={product.image}
@@ -51,7 +51,7 @@ export default function Wishlist() {
                       className="w-full h-full object-cover"
                     />
                     <button
-                      onClick={() => remove(product.id)}
+                      onClick={() => remove(product.handle)}
                       className="absolute top-3 right-3 bg-cream/80 backdrop-blur-sm w-8 h-8 flex items-center justify-center rounded-full border-none cursor-pointer hover:bg-cream transition-colors duration-300"
                       aria-label="Remove from wishlist"
                     >
@@ -63,7 +63,7 @@ export default function Wishlist() {
                       {product.category}
                     </span>
                     <button
-                      onClick={() => navigate(`/product/${product.id}`)}
+                      onClick={() => navigate(`/product/${product.handle}`)}
                       className="font-bodoni uppercase tracking-[0.15em] text-xs md:text-sm text-dark mt-1 bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
                     >
                       {product.name}
@@ -72,7 +72,7 @@ export default function Wishlist() {
                       {formatPrice(product.price)}
                     </p>
                     <button
-                      onClick={() => navigate(`/product/${product.id}`)}
+                      onClick={() => navigate(`/product/${product.handle}`)}
                       className="mt-4 self-start font-bodoni uppercase text-plum text-[10px] md:text-xs tracking-[0.2em] border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity duration-300"
                     >
                       View Product

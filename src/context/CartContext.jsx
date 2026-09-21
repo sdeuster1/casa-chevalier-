@@ -1,86 +1,117 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useEffect, useState, useCallback, useMemo } from 'react'
-import { findProduct } from '../data/products'
+import { createContext, useContext, useEffect, useState, useCallback } from 'react'
+import {
+  createCart,
+  fetchCart,
+  addCartLines,
+  updateCartLine,
+  removeCartLine,
+} from '../lib/shopify'
 
 const CartContext = createContext(null)
-
-const STORAGE_KEY = 'cc_cart_v2'
-
-// A line item is uniquely identified by productId + size.
-const lineKey = (productId, size) => `${productId}__${size || 'ONE'}`
+const CART_ID_KEY = 'cc_shopify_cart_id'
 
 export function CartProvider({ children }) {
-  const [items, setItems] = useState(() => {
-    if (typeof window === 'undefined') return []
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY)
-      return raw ? JSON.parse(raw) : []
-    } catch {
-      return []
-    }
-  })
+  const [cart, setCart] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [busy, setBusy] = useState(false)
 
+  // Restore an existing cart, or create a fresh one.
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
-    } catch { /* ignore quota errors */ }
-  }, [items])
+    let cancelled = false
 
-  const addItem = useCallback((productId, qty = 1, size = null) => {
-    setItems((prev) => {
-      const key = lineKey(productId, size)
-      const existing = prev.find((i) => lineKey(i.productId, i.size) === key)
-      if (existing) {
-        return prev.map((i) =>
-          lineKey(i.productId, i.size) === key
-            ? { ...i, quantity: i.quantity + qty }
-            : i
-        )
+    async function init() {
+      const savedId = localStorage.getItem(CART_ID_KEY)
+      try {
+        if (savedId) {
+          const existing = await fetchCart(savedId)
+          // Shopify expires carts eventually; fall through to a new one.
+          if (existing) {
+            if (!cancelled) { setCart(existing); setLoading(false) }
+            return
+          }
+        }
+        const fresh = await createCart()
+        localStorage.setItem(CART_ID_KEY, fresh.id)
+        if (!cancelled) { setCart(fresh); setLoading(false) }
+      } catch (err) {
+        console.error('Cart init failed:', err)
+        if (!cancelled) setLoading(false)
       }
-      return [...prev, { productId, size, quantity: qty }]
-    })
-  }, [])
-
-  const removeItem = useCallback((productId, size = null) => {
-    const key = lineKey(productId, size)
-    setItems((prev) => prev.filter((i) => lineKey(i.productId, i.size) !== key))
-  }, [])
-
-  const updateQuantity = useCallback((productId, qty, size = null) => {
-    const key = lineKey(productId, size)
-    setItems((prev) => {
-      if (qty <= 0) return prev.filter((i) => lineKey(i.productId, i.size) !== key)
-      return prev.map((i) =>
-        lineKey(i.productId, i.size) === key ? { ...i, quantity: qty } : i
-      )
-    })
-  }, [])
-
-  const clear = useCallback(() => setItems([]), [])
-
-  const { detailedItems, itemCount, subtotal } = useMemo(() => {
-    const detailed = items
-      .map((i) => {
-        const product = findProduct(i.productId)
-        return product ? { ...i, product, key: lineKey(i.productId, i.size) } : null
-      })
-      .filter(Boolean)
-
-    return {
-      detailedItems: detailed,
-      itemCount: detailed.reduce((sum, i) => sum + i.quantity, 0),
-      subtotal: detailed.reduce((sum, i) => sum + i.product.price * i.quantity, 0),
     }
-  }, [items])
+
+    init()
+    return () => { cancelled = true }
+  }, [])
+
+  // Shopify silently caps a line at available inventory rather than erroring,
+  // so we compare what we asked for against what came back and report the gap.
+  const addItem = useCallback(async (variantId, quantity = 1) => {
+    if (!cart) return { capped: false }
+    setBusy(true)
+    try {
+      const before =
+        cart.lines.find((l) => l.variantId === variantId)?.quantity || 0
+      const updated = await addCartLines(cart.id, variantId, quantity)
+      setCart(updated)
+
+      const after =
+        updated.lines.find((l) => l.variantId === variantId)?.quantity || 0
+      const gained = after - before
+      return {
+        capped: gained < quantity,
+        added: gained,
+        total: after,
+      }
+    } catch (err) {
+      console.error('Add to cart failed:', err)
+      throw err
+    } finally {
+      setBusy(false)
+    }
+  }, [cart])
+
+  const updateQuantity = useCallback(async (lineId, quantity) => {
+    if (!cart) return { capped: false }
+    setBusy(true)
+    try {
+      const updated = await updateCartLine(cart.id, lineId, quantity)
+      setCart(updated)
+      const line = updated.lines.find((l) => l.lineId === lineId)
+      return { capped: Boolean(line) && line.quantity < quantity }
+    } catch (err) {
+      console.error('Update quantity failed:', err)
+      return { capped: false }
+    } finally {
+      setBusy(false)
+    }
+  }, [cart])
+
+  const removeItem = useCallback(async (lineId) => {
+    if (!cart) return
+    setBusy(true)
+    try {
+      const updated = await removeCartLine(cart.id, lineId)
+      setCart(updated)
+    } catch (err) {
+      console.error('Remove from cart failed:', err)
+    } finally {
+      setBusy(false)
+    }
+  }, [cart])
 
   const value = {
-    items: detailedItems,
-    itemCount,
-    subtotal,
+    items: cart?.lines || [],
+    itemCount: cart?.totalQuantity || 0,
+    subtotal: cart?.subtotal || 0,
+    total: cart?.total || 0,
+    currency: cart?.currency || 'EUR',
+    checkoutUrl: cart?.checkoutUrl || null,
+    loading,
+    busy,
     addItem,
-    removeItem,
     updateQuantity,
-    clear,
+    removeItem,
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

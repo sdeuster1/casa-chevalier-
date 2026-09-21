@@ -11,30 +11,33 @@ import Shop from './pages/Shop'
 import Account from './pages/Account'
 import Wishlist from './pages/Wishlist'
 import HorseTransition from './components/HorseTransition'
+import { ProductsProvider } from './context/ProductsContext'
 import { CartProvider } from './context/CartContext'
 import { WishlistProvider } from './context/WishlistContext'
 
 export default function App() {
   return (
     <BrowserRouter>
-      <CartProvider>
-        <WishlistProvider>
-          <HorseTransition />
-          <Routes>
-            <Route path="/" element={<Splash />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/contacts" element={<Contacts />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/news" element={<News />} />
-            <Route path="/philosophy" element={<Philosophy />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/wishlist" element={<Wishlist />} />
-          </Routes>
-        </WishlistProvider>
-      </CartProvider>
+      <ProductsProvider>
+        <CartProvider>
+          <WishlistProvider>
+            <HorseTransition />
+            <Routes>
+              <Route path="/" element={<Splash />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
+              <Route path="/contacts" element={<Contacts />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/news" element={<News />} />
+              <Route path="/philosophy" element={<Philosophy />} />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="/account" element={<Account />} />
+              <Route path="/wishlist" element={<Wishlist />} />
+            </Routes>
+          </WishlistProvider>
+        </CartProvider>
+      </ProductsProvider>
     </BrowserRouter>
   )
 }
