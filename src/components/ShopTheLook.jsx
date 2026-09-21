@@ -1,10 +1,8 @@
 import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { products, formatPrice } from '../data/products'
-
-// Pick 4 items from the real catalog to feature
-const featured = products.slice(0, 4)
+import { formatPrice } from '../lib/shopify'
+import { useProducts } from '../context/ProductsContext'
 
 const dots = [
   { top: '25%', left: '35%' },
@@ -15,6 +13,8 @@ const dots = [
 export default function ShopTheLook() {
   const scrollRef = useRef(null)
   const navigate = useNavigate()
+  const { products, loading } = useProducts()
+  const featured = products.slice(0, 4)
 
   const scroll = (dir) => {
     if (scrollRef.current) {
@@ -46,43 +46,46 @@ export default function ShopTheLook() {
             className="flex gap-4 md:gap-5 overflow-x-auto pb-4 -mx-1 px-1"
             style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}
           >
-            {featured.map((item) => (
+            {loading &&
+              [...Array(3)].map((_, i) => (
+                <div key={i} className="flex-shrink-0 w-[150px] md:w-[200px] cc-fade-in">
+                  <div className="w-[150px] h-[150px] md:w-[200px] md:h-[200px] bg-[#e5ded4]" />
+                  <div className="h-3 w-24 bg-[#e5ded4] mt-3" />
+                  <div className="h-3 w-16 bg-[#e5ded4] mt-2" />
+                </div>
+              ))}
+
+            {!loading && featured.map((item) => (
               <button
-                key={item.id}
-                onClick={() => navigate(`/product/${item.id}`)}
+                key={item.handle}
+                onClick={() => navigate(`/product/${item.handle}`)}
                 className="flex-shrink-0 w-[150px] md:w-[200px] cursor-pointer bg-transparent border-none p-0 text-left"
                 style={{ scrollSnapAlign: 'start' }}
               >
                 <div className="w-[150px] h-[150px] md:w-[200px] md:h-[200px] bg-[#d4cec6] overflow-hidden">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                  />
+                  {item.image && (
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                    />
+                  )}
                 </div>
                 <p className="font-bodoni uppercase text-xs tracking-[0.15em] text-dark mt-3">
                   {item.name}
                 </p>
                 <p className="font-playfair text-sm text-plum mt-1">
-                  {formatPrice(item.price)}
+                  {formatPrice(item.price, item.currency)}
                 </p>
               </button>
             ))}
           </div>
 
           <div className="flex gap-4 mt-6">
-            <button
-              onClick={() => scroll(-1)}
-              className="bg-transparent border border-plum p-2 cursor-pointer hover:bg-plum hover:text-cream transition-all duration-300 text-plum"
-              aria-label="Previous"
-            >
+            <button onClick={() => scroll(-1)} className="bg-transparent border border-plum p-2 cursor-pointer hover:bg-plum hover:text-cream transition-all duration-300 text-plum" aria-label="Previous">
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <button
-              onClick={() => scroll(1)}
-              className="bg-transparent border border-plum p-2 cursor-pointer hover:bg-plum hover:text-cream transition-all duration-300 text-plum"
-              aria-label="Next"
-            >
+            <button onClick={() => scroll(1)} className="bg-transparent border border-plum p-2 cursor-pointer hover:bg-plum hover:text-cream transition-all duration-300 text-plum" aria-label="Next">
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>

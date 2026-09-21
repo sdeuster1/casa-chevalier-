@@ -1,12 +1,13 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState, useCallback } from 'react'
-import { findProduct } from '../data/products'
+import { useProducts } from './ProductsContext'
 
 const WishlistContext = createContext(null)
-const STORAGE_KEY = 'cc_wishlist_v1'
+const STORAGE_KEY = 'cc_wishlist_v2'
 
 export function WishlistProvider({ children }) {
-  const [ids, setIds] = useState(() => {
+  const { products } = useProducts()
+  const [handles, setHandles] = useState(() => {
     if (typeof window === 'undefined') return []
     try {
       const raw = localStorage.getItem(STORAGE_KEY)
@@ -18,24 +19,30 @@ export function WishlistProvider({ children }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(ids))
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(handles))
     } catch { /* ignore */ }
-  }, [ids])
+  }, [handles])
 
-  const toggle = useCallback((id) => {
-    setIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]))
+  const toggle = useCallback((handle) => {
+    setHandles((prev) =>
+      prev.includes(handle) ? prev.filter((h) => h !== handle) : [...prev, handle]
+    )
   }, [])
 
-  const remove = useCallback((id) => {
-    setIds((prev) => prev.filter((x) => x !== id))
+  const remove = useCallback((handle) => {
+    setHandles((prev) => prev.filter((h) => h !== handle))
   }, [])
 
-  const has = useCallback((id) => ids.includes(id), [ids])
+  const has = useCallback((handle) => handles.includes(handle), [handles])
 
-  const items = ids.map(findProduct).filter(Boolean)
+  // Resolve saved handles against the live catalog; products removed from
+  // Shopify simply drop out of the wishlist.
+  const items = handles
+    .map((h) => products.find((p) => p.handle === h))
+    .filter(Boolean)
 
   return (
-    <WishlistContext.Provider value={{ items, ids, toggle, remove, has }}>
+    <WishlistContext.Provider value={{ items, handles, toggle, remove, has }}>
       {children}
     </WishlistContext.Provider>
   )

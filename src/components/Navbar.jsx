@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Search, Heart, User, ShoppingBag, X } from 'lucide-react'
-import { products } from '../data/products'
+import { useProducts } from '../context/ProductsContext'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 
@@ -9,6 +9,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState('')
   const navigate = useNavigate()
+  const { products } = useProducts()
   const { itemCount } = useCart()
   const { items: wishItems } = useWishlist()
   const wishCount = wishItems.length
@@ -133,11 +134,11 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
               {results.length > 0 && (
                 <ul className="flex flex-col divide-y divide-cream/15 list-none p-0 m-0">
                   {results.map((p) => (
-                    <li key={p.id}>
+                    <li key={p.handle}>
                       <button
                         onClick={() => {
                           closeSearch()
-                          navigate('/products')
+                          navigate(`/product/${p.handle}`)
                         }}
                         className="w-full flex items-center gap-4 py-4 bg-transparent border-none cursor-pointer text-left hover:opacity-80 transition-opacity"
                       >
