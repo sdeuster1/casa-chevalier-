@@ -44,12 +44,25 @@ export function CartProvider({ children }) {
     return () => { cancelled = true }
   }, [])
 
+  // Shopify silently caps a line at available inventory rather than erroring,
+  // so we compare what we asked for against what came back and report the gap.
   const addItem = useCallback(async (variantId, quantity = 1) => {
-    if (!cart) return
+    if (!cart) return { capped: false }
     setBusy(true)
     try {
+      const before =
+        cart.lines.find((l) => l.variantId === variantId)?.quantity || 0
       const updated = await addCartLines(cart.id, variantId, quantity)
       setCart(updated)
+
+      const after =
+        updated.lines.find((l) => l.variantId === variantId)?.quantity || 0
+      const gained = after - before
+      return {
+        capped: gained < quantity,
+        added: gained,
+        total: after,
+      }
     } catch (err) {
       console.error('Add to cart failed:', err)
       throw err
@@ -59,13 +72,16 @@ export function CartProvider({ children }) {
   }, [cart])
 
   const updateQuantity = useCallback(async (lineId, quantity) => {
-    if (!cart) return
+    if (!cart) return { capped: false }
     setBusy(true)
     try {
       const updated = await updateCartLine(cart.id, lineId, quantity)
       setCart(updated)
+      const line = updated.lines.find((l) => l.lineId === lineId)
+      return { capped: Boolean(line) && line.quantity < quantity }
     } catch (err) {
       console.error('Update quantity failed:', err)
+      return { capped: false }
     } finally {
       setBusy(false)
     }

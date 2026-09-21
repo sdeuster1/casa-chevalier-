@@ -10,6 +10,7 @@ import { formatPrice } from '../lib/shopify'
 export default function Shop() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [redirecting, setRedirecting] = useState(false)
+  const [limitNote, setLimitNote] = useState({})
   const {
     items, itemCount, subtotal, currency, checkoutUrl,
     updateQuantity, removeItem, loading, busy,
@@ -70,7 +71,11 @@ export default function Shop() {
           {!loading && items.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16">
               <div className="md:col-span-2 flex flex-col divide-y divide-plum/15 border-t border-b border-plum/15">
-                {items.map((line) => (
+                {items.map((line) => {
+                  const atLimit =
+                    typeof line.available === 'number' &&
+                    line.quantity >= line.available
+                  return (
                   <div key={line.lineId} className="flex gap-4 md:gap-6 py-5 md:py-6">
                     {line.image && (
                       <img
@@ -107,9 +112,28 @@ export default function Shop() {
                             {line.quantity}
                           </span>
                           <button
-                            onClick={() => updateQuantity(line.lineId, line.quantity + 1)}
+                            onClick={async () => {
+                              if (atLimit) {
+                                setLimitNote((n) => ({ ...n, [line.lineId]: true }))
+                                setTimeout(
+                                  () => setLimitNote((n) => ({ ...n, [line.lineId]: false })),
+                                  2500
+                                )
+                                return
+                              }
+                              const r = await updateQuantity(line.lineId, line.quantity + 1)
+                              if (r?.capped) {
+                                setLimitNote((n) => ({ ...n, [line.lineId]: true }))
+                                setTimeout(
+                                  () => setLimitNote((n) => ({ ...n, [line.lineId]: false })),
+                                  2500
+                                )
+                              }
+                            }}
                             disabled={busy}
-                            className="w-7 h-7 flex items-center justify-center bg-transparent border-none cursor-pointer hover:bg-plum/5 disabled:opacity-40"
+                            className={`w-7 h-7 flex items-center justify-center bg-transparent border-none hover:bg-plum/5 disabled:opacity-40 ${
+                              atLimit ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'
+                            }`}
                             aria-label="Increase quantity"
                           >
                             <Plus className="w-3 h-3 text-plum" />
@@ -123,9 +147,15 @@ export default function Shop() {
                           <X className="w-3 h-3" /> Remove
                         </button>
                       </div>
+                      {limitNote[line.lineId] && (
+                        <p className="font-playfair italic text-plum text-xs mt-2">
+                          Only {line.available} available.
+                        </p>
+                      )}
                     </div>
                   </div>
-                ))}
+                  )
+                })}
               </div>
 
               <aside className="flex flex-col gap-3 self-start">

@@ -157,6 +157,8 @@ const CART_FIELDS = `
           ... on ProductVariant {
             id
             title
+            quantityAvailable
+            availableForSale
             price { amount currencyCode }
             image { url }
             selectedOptions { name value }
@@ -182,6 +184,8 @@ function normalizeCart(cart) {
       quantity: e.node.quantity,
       variantId: e.node.merchandise.id,
       variantTitle: e.node.merchandise.title,
+      available: e.node.merchandise.quantityAvailable,
+      inStock: e.node.merchandise.availableForSale,
       size:
         e.node.merchandise.selectedOptions.find(
           (o) => o.name.toLowerCase() === 'size'

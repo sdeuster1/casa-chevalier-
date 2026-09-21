@@ -9,6 +9,8 @@ import { useProducts } from '../context/ProductsContext'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 
+const LOW_STOCK_THRESHOLD = 5
+
 export default function ProductDetail() {
   const { id: handle } = useParams()
   const navigate = useNavigate()
@@ -85,7 +87,16 @@ export default function ProductDetail() {
     if (!selectedVariant) return
     setAddError(null)
     try {
-      await addItem(selectedVariant.id, 1)
+      const result = await addItem(selectedVariant.id, 1)
+      if (result?.capped) {
+        setAddError(
+          result.total > 0
+            ? `Only ${result.total} available in size ${size}. Your bag has been updated.`
+            : `Size ${size} is no longer available.`
+        )
+        setAdded(false)
+        return
+      }
       setAdded(true)
       setTimeout(() => setAdded(false), 2500)
     } catch {
@@ -192,6 +203,17 @@ export default function ProductDetail() {
                 )}
               </div>
             )}
+
+            {/* Low-stock note — honest scarcity, only when genuinely low */}
+            {selectedVariant &&
+              selectedVariant.available &&
+              selectedVariant.quantity > 0 &&
+              selectedVariant.quantity <= LOW_STOCK_THRESHOLD && (
+                <p className="font-playfair italic text-plum text-xs mt-4">
+                  Only {selectedVariant.quantity} remaining
+                  {product.hasSizes && size ? ` in size ${size}` : ''}.
+                </p>
+              )}
 
             {/* Buy button */}
             <button
