@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Search, Heart, User, ShoppingBag, X } from 'lucide-react'
 import { useProducts } from '../context/ProductsContext'
+import Wordmark from './Wordmark'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 
@@ -36,6 +37,10 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
     variant === 'dark' ? 'bg-plum'
     : variant === 'cream' ? 'bg-cream'
     : 'bg-white'
+  const wordmarkColor =
+    variant === 'dark' ? '#4f1d34'
+    : variant === 'cream' ? '#f0e9e0'
+    : '#ffffff'
   const badgeBg = variant === 'dark' ? 'bg-plum' : 'bg-dark'
   const badgeText = variant === 'dark' ? 'text-cream' : 'text-white'
 
@@ -54,9 +59,10 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
 
         <Link
           to="/home"
-          className={`font-bodoni uppercase ${fg} text-xs md:text-lg tracking-[0.15em] md:tracking-[0.2em] absolute left-1/2 -translate-x-1/2 no-underline hover:opacity-80 transition-opacity`}
+          aria-label="Casa Chevalier — home"
+          className="absolute left-1/2 -translate-x-1/2 no-underline hover:opacity-80 transition-opacity"
         >
-          Casa Chevalier
+          <Wordmark color={wordmarkColor} className="w-[150px] md:w-[260px] h-auto block" />
         </Link>
 
         <div className="flex items-center gap-3 md:gap-6">
