@@ -1,7 +1,7 @@
 import { useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { products, formatPrice } from '../data/products'
-import { goToShopify } from './config'
 
 // Pick 4 items from the real catalog to feature
 const featured = products.slice(0, 4)
@@ -14,6 +14,7 @@ const dots = [
 
 export default function ShopTheLook() {
   const scrollRef = useRef(null)
+  const navigate = useNavigate()
 
   const scroll = (dir) => {
     if (scrollRef.current) {
@@ -48,7 +49,7 @@ export default function ShopTheLook() {
             {featured.map((item) => (
               <button
                 key={item.id}
-                onClick={goToShopify}
+                onClick={() => navigate(`/product/${item.id}`)}
                 className="flex-shrink-0 w-[150px] md:w-[200px] cursor-pointer bg-transparent border-none p-0 text-left"
                 style={{ scrollSnapAlign: 'start' }}
               >
