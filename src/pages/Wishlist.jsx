@@ -60,7 +60,7 @@ export default function Wishlist() {
                   </div>
                   <div className="pt-4 flex flex-col">
                     <span className="font-playfair italic text-lilac text-[10px] tracking-[0.15em] uppercase">
-                      {product.category}
+                      {product.section}
                     </span>
                     <button
                       onClick={() => navigate(`/product/${product.handle}`)}

@@ -4,7 +4,7 @@ import { Heart } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
-import { formatPrice } from '../lib/shopify'
+import { formatPrice, matchesCategory } from '../lib/shopify'
 import { useProducts } from '../context/ProductsContext'
 import { useWishlist } from '../context/WishlistContext'
 
@@ -46,11 +46,7 @@ export default function Products() {
   const filtered =
     activeCategory === 'ALL'
       ? products
-      : products.filter(
-          (p) =>
-            p.category === activeCategory ||
-            (p.categoryTags || []).includes(activeCategory)
-        )
+      : products.filter((p) => matchesCategory(p, activeCategory))
 
   return (
     <div className="min-h-screen bg-cream">
@@ -164,7 +160,7 @@ export default function Products() {
 
                     <div className="pt-4 flex flex-col">
                       <span className="font-playfair italic text-lilac text-[10px] tracking-[0.15em] uppercase">
-                        {product.category}
+                        {product.section}
                       </span>
                       <button
                         onClick={() => navigate(`/product/${product.handle}`)}

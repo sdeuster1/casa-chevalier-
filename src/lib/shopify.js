@@ -66,6 +66,33 @@ const PRODUCT_FIELDS = `
   collections(first: 5) { edges { node { title handle } } }
 `
 
+// ---------- Category mapping ----------
+// Menu sections are English; the Shopify catalogue is organised in Italian.
+// Each section lists the Shopify product types / collections / tags it covers.
+// Add a line here when a new Italian product type is introduced.
+export const CATEGORY_MAP = {
+  PANTS: ['PANTALONI', 'BOMBACHA', 'BREECHES', 'PANTS'],
+  SHIRTS: ['CAMICIE ELEGANTI', 'CAMICIE', 'POLO', 'SHIRTS'],
+  JACKETS: ['BLAZER', 'GIACCHE', 'GIACCA', 'JACKETS'],
+  VESTS: ['GILET', 'VESTS'],
+  ACCESSORIES: ['CINTURE', 'CINTURA', 'ACCESSORI', 'ACCESSORIES'],
+}
+
+// The English section a set of Shopify labels belongs to, if any.
+function sectionFor(labels) {
+  for (const [section, members] of Object.entries(CATEGORY_MAP)) {
+    if (labels.some((l) => members.includes(l))) return section
+  }
+  return null
+}
+
+// True when a product belongs in the given English section.
+export function matchesCategory(product, section) {
+  if (!section || section === 'ALL') return true
+  const wanted = CATEGORY_MAP[section] || [section]
+  return (product.categoryTags || []).some((l) => wanted.includes(l))
+}
+
 // ---------- Normalisation ----------
 // Flattens Shopify's edges/node shape into the flat objects our
 // components already expect, so the UI layer stays unchanged.
@@ -124,6 +151,7 @@ function normalizeProduct(node) {
     availableForSale: node.availableForSale,
     tags: node.tags,
     categoryTags,
+    section: sectionFor(categoryTags) || category,
   }
 }
 
@@ -270,6 +298,7 @@ export async function removeCartLine(cartId, lineId) {
   if (errs?.length) throw new Error(errs.map((e) => e.message).join('; '))
   return normalizeCart(data.cartLinesRemove.cart)
 }
+
 
 export const formatPrice = (n, currency = 'EUR') =>
   new Intl.NumberFormat('it-IT', {

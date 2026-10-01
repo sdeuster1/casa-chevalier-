@@ -105,7 +105,7 @@ export default function ProductDetail() {
   }
 
   const related = products
-    .filter((p) => p.category === product.category && p.handle !== product.handle)
+    .filter((p) => p.section === product.section && p.handle !== product.handle)
     .slice(0, 3)
 
   const outOfStock = selectedVariant && !selectedVariant.available
@@ -134,7 +134,7 @@ export default function ProductDetail() {
           <div className="md:sticky md:top-24 md:self-start px-6 md:px-12 py-10 md:py-16">
             <div className="flex items-start justify-between">
               <span className="font-playfair italic text-lilac text-[11px] tracking-[0.2em] uppercase">
-                {product.category}
+                {product.section}
               </span>
               <button
                 onClick={() => toggleWish(product.handle)}

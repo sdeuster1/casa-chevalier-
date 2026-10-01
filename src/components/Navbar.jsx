@@ -171,7 +171,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
                         />
                         <div className="flex flex-col">
                           <span className="font-playfair italic text-lilac text-[10px] tracking-[0.15em] uppercase">
-                            {p.category}
+                            {p.section}
                           </span>
                           <span className="font-bodoni uppercase tracking-[0.15em] text-sm text-cream">
                             {p.name}
