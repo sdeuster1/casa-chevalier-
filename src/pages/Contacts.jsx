@@ -6,7 +6,7 @@ import Footer from '../components/Footer'
 
 const details = [
   { icon: Mail, label: 'Email', value: 'Info@casachevalier.com' },
-  { icon: Phone, label: 'Telephone', value: '+39 348 232 2063' },
+  { icon: Phone, label: 'Telephone', value: '+39 23935831' },
   { icon: MapPin, label: 'Atelier', value: 'Via Leonardo Bruni 25, Milano, Italia' },
 ]
 
