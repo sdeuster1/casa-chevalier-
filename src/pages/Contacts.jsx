@@ -5,9 +5,9 @@ import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
 
 const details = [
-  { icon: Mail, label: 'Email', value: 'concierge@casachevalier.com' },
-  { icon: Phone, label: 'Telephone', value: '+39 02 1234 5678' },
-  { icon: MapPin, label: 'Atelier', value: 'Via della Spiga, Milano, Italia' },
+  { icon: Mail, label: 'Email', value: 'Info@casachevalier.com' },
+  { icon: Phone, label: 'Telephone', value: '+39 348 232 2063' },
+  { icon: MapPin, label: 'Atelier', value: 'Via Leonardo Bruni 25, Milano, Italia' },
 ]
 
 export default function Contacts() {

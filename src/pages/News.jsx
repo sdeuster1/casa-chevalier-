@@ -10,7 +10,7 @@ const articles = [
     date: 'March 2026',
     title: 'Inside the Milan Atelier',
     excerpt:
-      'A quiet morning behind the doors of Via della Spiga, where every stitch begins with a single length of Italian thread.',
+      'A quiet morning behind the doors of Via Leonardo Bruni, where every stitch begins with a single length of Italian thread.',
     ratio: 'aspect-[4/5]',
     tone: '#c8beb0',
   },

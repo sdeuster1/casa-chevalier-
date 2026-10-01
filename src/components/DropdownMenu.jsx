@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { X, ChevronRight } from 'lucide-react'
-
-const submenuItems = ['PANTS', 'SHIRTS', 'JACKETS', 'VESTS', 'ACCESSORIES']
+import { useProducts } from '../context/ProductsContext'
 
 const menuItems = [
   { label: 'THE CAPSULE COLLECTION', hasSubmenu: true, to: '/products' },
@@ -14,6 +13,11 @@ const menuItems = [
 export default function DropdownMenu({ isOpen, onClose }) {
   const [activeSubmenu, setActiveSubmenu] = useState(false)
   const navigate = useNavigate()
+  const { categories } = useProducts()
+
+  // Driven by the live Shopify collections, so the menu and the filter can
+  // never disagree, and a new collection appears here with no code change.
+  const submenuItems = categories
 
   const handleItemClick = (item) => {
     if (item.hasSubmenu) {
@@ -64,7 +68,12 @@ export default function DropdownMenu({ isOpen, onClose }) {
                       key={sub}
                       onClick={() => {
                         onClose()
-                        navigate(`/products?category=${sub}`)
+                        // ALL goes to the unfiltered collection
+                        navigate(
+                          sub === 'ALL'
+                            ? '/products'
+                            : `/products?category=${encodeURIComponent(sub)}`
+                        )
                       }}
                       className="font-playfair text-lilac text-base cursor-pointer hover:text-[#f0e9e0] transition-colors duration-300 bg-transparent border-none p-0 text-left"
                     >
