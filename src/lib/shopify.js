@@ -90,9 +90,21 @@ function normalizeProduct(node) {
     (o) => o.name.toLowerCase() === 'size' || o.name.toLowerCase() === 'taglia'
   )
 
-  // Category: prefer a real collection, fall back to productType
-  const collection = node.collections.edges[0]?.node?.title
-  const category = (collection || node.productType || 'ALL').toUpperCase()
+  // Category: prefer a real collection, fall back to productType.
+  // Shopify's auto-created "Home page" collection isn't a real category.
+  const collectionTitles = node.collections.edges
+    .map((e) => e.node.title)
+    .filter((t) => t && t.toLowerCase() !== 'home page')
+  const category = (collectionTitles[0] || node.productType || 'UNCATEGORISED').toUpperCase()
+
+  // Every label this product could legitimately be filtered by
+  const categoryTags = [
+    ...collectionTitles,
+    node.productType,
+    ...node.tags,
+  ]
+    .filter(Boolean)
+    .map((t) => t.toUpperCase())
 
   return {
     id: node.handle,           // handle is the human-readable URL id
@@ -111,6 +123,7 @@ function normalizeProduct(node) {
     variants,
     availableForSale: node.availableForSale,
     tags: node.tags,
+    categoryTags,
   }
 }
 

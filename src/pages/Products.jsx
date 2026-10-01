@@ -13,7 +13,8 @@ export default function Products() {
   const [manualCategory, setManualCategory] = useState(null)
   const [highlightTick, setHighlightTick] = useState(0)
   const productRefs = useRef({})
-  const { products, categories, loading, error } = useProducts()
+  const { products, loading, error } = useProducts()
+  const categories = ['ALL', 'PANTS', 'SHIRTS', 'JACKETS', 'VESTS', 'ACCESSORIES']
   const { toggle: toggleWish, has: hasWish } = useWishlist()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -24,13 +25,13 @@ export default function Products() {
 
   const activeCategory = useMemo(() => {
     if (manualCategory) return manualCategory
-    if (urlCategory && categories.includes(urlCategory)) return urlCategory
+    if (urlCategory) return urlCategory.toUpperCase()
     if (urlProductId) {
       const p = products.find((x) => x.handle === urlProductId)
       if (p) return p.category
     }
     return 'ALL'
-  }, [manualCategory, urlCategory, urlProductId, categories, products])
+  }, [manualCategory, urlCategory, urlProductId, products])
 
   useEffect(() => {
     if (!urlProductId || loading) return
@@ -45,7 +46,11 @@ export default function Products() {
   const filtered =
     activeCategory === 'ALL'
       ? products
-      : products.filter((p) => p.category === activeCategory)
+      : products.filter(
+          (p) =>
+            p.category === activeCategory ||
+            (p.categoryTags || []).includes(activeCategory)
+        )
 
   return (
     <div className="min-h-screen bg-cream">
@@ -103,9 +108,17 @@ export default function Products() {
           )}
 
           {!loading && !error && filtered.length === 0 && (
-            <p className="font-playfair italic text-lilac text-center text-sm py-12">
-              No pieces in this category yet.
-            </p>
+            <div className="text-center py-12">
+              <p className="font-playfair italic text-lilac text-sm">
+                No pieces in this category yet.
+              </p>
+              <button
+                onClick={() => setManualCategory('ALL')}
+                className="mt-4 font-bodoni uppercase text-plum text-[10px] tracking-[0.2em] border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
+              >
+                View All
+              </button>
+            </div>
           )}
 
           {!loading && filtered.length > 0 && (
