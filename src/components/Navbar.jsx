@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Search, Heart, User, ShoppingBag, X } from 'lucide-react'
 import { useProducts } from '../context/ProductsContext'
@@ -9,6 +9,7 @@ import { useWishlist } from '../context/WishlistContext'
 export default function Navbar({ onMenuToggle, variant = 'light' }) {
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState('')
+  const [scrolled, setScrolled] = useState(false)
   const navigate = useNavigate()
   const { products } = useProducts()
   const { itemCount } = useCart()
@@ -26,35 +27,47 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
     setQuery('')
   }
 
+  // Transparent at the very top; solid plum once the page is scrolled.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // At the top the bar is transparent and the foreground follows the page's
+  // variant. Once scrolled, the bar fills plum and the foreground is always cream.
   // 'light' = white foreground, for dark hero backgrounds
-  // 'cream' = cream (#f0e9e0) foreground, for dark backgrounds where we want softer contrast
+  // 'cream' = cream (#f0e9e0) foreground, softer on dark backgrounds
   // 'dark'  = plum foreground, for cream/light backgrounds
-  const fg =
-    variant === 'dark' ? 'text-plum'
+  const fg = scrolled
+    ? 'text-cream'
+    : variant === 'dark' ? 'text-plum'
     : variant === 'cream' ? 'text-cream'
     : 'text-white'
-  const barBg =
-    variant === 'dark' ? 'bg-plum'
+  const barBg = scrolled
+    ? 'bg-cream'
+    : variant === 'dark' ? 'bg-plum'
     : variant === 'cream' ? 'bg-cream'
     : 'bg-white'
-  const wordmarkColor =
-    variant === 'dark' ? '#4f1d34'
-    : variant === 'cream' ? '#f0e9e0'
-    : '#ffffff'
-  const badgeBg = variant === 'dark' ? 'bg-plum' : 'bg-dark'
-  const badgeText = variant === 'dark' ? 'text-cream' : 'text-white'
+  const badgeBg = scrolled ? 'bg-cream' : variant === 'dark' ? 'bg-plum' : 'bg-dark'
+  const badgeText = scrolled ? 'text-plum' : variant === 'dark' ? 'text-cream' : 'text-white'
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 md:px-10 py-4 bg-transparent">
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 md:px-10 py-4 transition-colors duration-500 ${
+          scrolled ? 'bg-plum shadow-sm' : 'bg-transparent'
+        }`}
+      >
         <button
           onClick={onMenuToggle}
           className="flex flex-col gap-[5px] cursor-pointer bg-transparent border-none p-2"
           aria-label="Menu"
         >
-          <span className={`block w-5 md:w-6 h-[1.5px] ${barBg}`}></span>
-          <span className={`block w-5 md:w-6 h-[1.5px] ${barBg}`}></span>
-          <span className={`block w-5 md:w-6 h-[1.5px] ${barBg}`}></span>
+          <span className={`block w-5 md:w-6 h-[1.5px] transition-colors duration-500 ${barBg}`}></span>
+          <span className={`block w-5 md:w-6 h-[1.5px] transition-colors duration-500 ${barBg}`}></span>
+          <span className={`block w-5 md:w-6 h-[1.5px] transition-colors duration-500 ${barBg}`}></span>
         </button>
 
         <Link
@@ -62,7 +75,10 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
           aria-label="Casa Chevalier — home"
           className="absolute left-1/2 -translate-x-1/2 no-underline hover:opacity-80 transition-opacity"
         >
-          <Wordmark color={wordmarkColor} className="w-[150px] md:w-[260px] h-auto block" />
+          <Wordmark
+            color="currentColor"
+            className={`w-[150px] md:w-[260px] h-auto block transition-colors duration-500 ${fg}`}
+          />
         </Link>
 
         <div className="flex items-center gap-3 md:gap-6">
@@ -71,11 +87,11 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
             aria-label="Search"
             className="bg-transparent border-none cursor-pointer p-0"
           >
-            <Search className={`w-4 h-4 md:w-5 md:h-5 ${fg}`} />
+            <Search className={`w-4 h-4 md:w-5 md:h-5 transition-colors duration-500 ${fg}`} />
           </button>
 
           <Link to="/wishlist" aria-label="Wishlist" className="hidden md:block relative">
-            <Heart className={`w-4 h-4 md:w-5 md:h-5 ${fg} cursor-pointer`} />
+            <Heart className={`w-4 h-4 md:w-5 md:h-5 cursor-pointer transition-colors duration-500 ${fg}`} />
             {wishCount > 0 && (
               <span
                 className={`absolute -bottom-1 -right-1 ${badgeBg} ${badgeText} rounded-full w-3.5 h-3.5 flex items-center justify-center text-[9px] font-playfair leading-none`}
@@ -86,11 +102,11 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
           </Link>
 
           <Link to="/account" aria-label="Account">
-            <User className={`w-4 h-4 md:w-5 md:h-5 ${fg} cursor-pointer`} />
+            <User className={`w-4 h-4 md:w-5 md:h-5 cursor-pointer transition-colors duration-500 ${fg}`} />
           </Link>
 
           <Link to="/shop" aria-label="Shopping bag" className="relative">
-            <ShoppingBag className={`w-4 h-4 md:w-5 md:h-5 ${fg} cursor-pointer`} />
+            <ShoppingBag className={`w-4 h-4 md:w-5 md:h-5 cursor-pointer transition-colors duration-500 ${fg}`} />
             {itemCount > 0 && (
               <span
                 className={`absolute -bottom-1 -right-1 ${badgeBg} ${badgeText} rounded-full w-4 h-4 flex items-center justify-center text-[9px] font-playfair leading-none`}
