@@ -45,6 +45,7 @@ const PRODUCT_FIELDS = `
   description
   descriptionHtml
   productType
+  category { name }
   tags
   availableForSale
   options { name values }
@@ -122,10 +123,12 @@ function normalizeProduct(node) {
   const collectionTitles = node.collections.edges
     .map((e) => e.node.title)
     .filter((t) => t && t.toLowerCase() !== 'home page')
-  const category = (collectionTitles[0] || node.productType || 'UNCATEGORISED').toUpperCase()
+  const taxonomy = node.category?.name
+  const category = (taxonomy || collectionTitles[0] || node.productType || 'UNCATEGORISED').toUpperCase()
 
   // Every label this product could legitimately be filtered by
   const categoryTags = [
+    taxonomy,
     ...collectionTitles,
     node.productType,
     ...node.tags,
