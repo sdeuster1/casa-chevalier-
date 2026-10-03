@@ -15,6 +15,15 @@ const API_VERSION = '2025-01'
 
 const ENDPOINT = `https://${DOMAIN}/api/${API_VERSION}/graphql.json`
 
+// Language Shopify returns content in (Translate & Adapt translations).
+// Every query declares $language and uses @inContext, so it applies to
+// products, cart lines and the checkout. Falls back to the store default
+// when a translation is missing.
+let language = 'EN'
+export function setShopifyLanguage(lang) {
+  language = lang.toUpperCase()
+}
+
 async function shopifyFetch(query, variables = {}) {
   const res = await fetch(ENDPOINT, {
     method: 'POST',
@@ -22,7 +31,7 @@ async function shopifyFetch(query, variables = {}) {
       'Content-Type': 'application/json',
       'X-Shopify-Storefront-Access-Token': TOKEN,
     },
-    body: JSON.stringify({ query, variables }),
+    body: JSON.stringify({ query, variables: { ...variables, language } }),
   })
 
   if (!res.ok) {
@@ -68,15 +77,16 @@ const PRODUCT_FIELDS = `
 `
 
 // ---------- Category mapping ----------
-// Menu sections are English; the Shopify catalogue is organised in Italian.
-// Each section lists the Shopify product types / collections / tags it covers.
-// Add a line here when a new Italian product type is introduced.
+// Menu sections are fixed keys (labels come from the translations file).
+// Shopify returns taxonomy names in the requested language, so each section
+// lists both the Italian and the English Shopify labels it covers.
+// Add both names here when a new product category is introduced.
 export const CATEGORY_MAP = {
-  PANTS: ['PANTALONI', 'BOMBACHA', 'BREECHES', 'PANTS'],
-  SHIRTS: ['CAMICIE ELEGANTI', 'CAMICIE', 'POLO', 'SHIRTS'],
-  JACKETS: ['BLAZER', 'GIACCHE', 'GIACCA', 'JACKETS'],
+  PANTS: ['PANTALONI', 'BOMBACHA', 'BREECHES', 'PANTS', 'TROUSERS'],
+  SHIRTS: ['CAMICIE ELEGANTI', 'CAMICIE', 'POLO', 'SHIRTS', 'DRESS SHIRTS', 'POLOS'],
+  JACKETS: ['BLAZER', 'GIACCHE', 'GIACCA', 'JACKETS', 'BLAZERS'],
   VESTS: ['GILET', 'VESTS'],
-  ACCESSORIES: ['CINTURE', 'CINTURA', 'ACCESSORI', 'ACCESSORIES'],
+  ACCESSORIES: ['CINTURE', 'CINTURA', 'ACCESSORI', 'ACCESSORIES', 'BELTS'],
 }
 
 // The English section a set of Shopify labels belongs to, if any.
@@ -162,7 +172,7 @@ function normalizeProduct(node) {
 
 export async function fetchProducts(first = 100) {
   const data = await shopifyFetch(
-    `query Products($first: Int!) {
+    `query Products($first: Int!, $language: LanguageCode) @inContext(language: $language) {
       products(first: $first) {
         edges { node { ${PRODUCT_FIELDS} } }
       }
@@ -174,7 +184,7 @@ export async function fetchProducts(first = 100) {
 
 export async function fetchProductByHandle(handle) {
   const data = await shopifyFetch(
-    `query Product($handle: String!) {
+    `query Product($handle: String!, $language: LanguageCode) @inContext(language: $language) {
       product(handle: $handle) { ${PRODUCT_FIELDS} }
     }`,
     { handle }
@@ -232,7 +242,7 @@ function normalizeCart(cart) {
       inStock: e.node.merchandise.availableForSale,
       size:
         e.node.merchandise.selectedOptions.find(
-          (o) => o.name.toLowerCase() === 'size'
+          (o) => ['size', 'taglia'].includes(o.name.toLowerCase())
         )?.value || null,
       price: parseFloat(e.node.merchandise.price.amount),
       image: e.node.merchandise.image?.url || null,
@@ -244,14 +254,14 @@ function normalizeCart(cart) {
 
 export async function createCart() {
   const data = await shopifyFetch(
-    `mutation { cartCreate { cart { ${CART_FIELDS} } userErrors { message } } }`
+    `mutation Create($language: LanguageCode) @inContext(language: $language) { cartCreate { cart { ${CART_FIELDS} } userErrors { message } } }`
   )
   return normalizeCart(data.cartCreate.cart)
 }
 
 export async function fetchCart(cartId) {
   const data = await shopifyFetch(
-    `query Cart($id: ID!) { cart(id: $id) { ${CART_FIELDS} } }`,
+    `query Cart($id: ID!, $language: LanguageCode) @inContext(language: $language) { cart(id: $id) { ${CART_FIELDS} } }`,
     { id: cartId }
   )
   return normalizeCart(data.cart)
@@ -259,7 +269,7 @@ export async function fetchCart(cartId) {
 
 export async function addCartLines(cartId, variantId, quantity = 1) {
   const data = await shopifyFetch(
-    `mutation Add($cartId: ID!, $lines: [CartLineInput!]!) {
+    `mutation Add($cartId: ID!, $lines: [CartLineInput!]!, $language: LanguageCode) @inContext(language: $language) {
       cartLinesAdd(cartId: $cartId, lines: $lines) {
         cart { ${CART_FIELDS} }
         userErrors { message }
@@ -274,7 +284,7 @@ export async function addCartLines(cartId, variantId, quantity = 1) {
 
 export async function updateCartLine(cartId, lineId, quantity) {
   const data = await shopifyFetch(
-    `mutation Update($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+    `mutation Update($cartId: ID!, $lines: [CartLineUpdateInput!]!, $language: LanguageCode) @inContext(language: $language) {
       cartLinesUpdate(cartId: $cartId, lines: $lines) {
         cart { ${CART_FIELDS} }
         userErrors { message }
@@ -289,7 +299,7 @@ export async function updateCartLine(cartId, lineId, quantity) {
 
 export async function removeCartLine(cartId, lineId) {
   const data = await shopifyFetch(
-    `mutation Remove($cartId: ID!, $lineIds: [ID!]!) {
+    `mutation Remove($cartId: ID!, $lineIds: [ID!]!, $language: LanguageCode) @inContext(language: $language) {
       cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
         cart { ${CART_FIELDS} }
         userErrors { message }

@@ -7,16 +7,19 @@ import {
   updateCartLine,
   removeCartLine,
 } from '../lib/shopify'
+import { useLanguage } from '../i18n/LanguageContext'
 
 const CartContext = createContext(null)
 const CART_ID_KEY = 'cc_shopify_cart_id'
 
 export function CartProvider({ children }) {
+  const { lang } = useLanguage()
   const [cart, setCart] = useState(null)
   const [loading, setLoading] = useState(true)
   const [busy, setBusy] = useState(false)
 
-  // Restore an existing cart, or create a fresh one.
+  // Restore an existing cart, or create a fresh one. Re-read on language
+  // change so line titles and the checkout link follow the chosen language.
   useEffect(() => {
     let cancelled = false
 
@@ -42,7 +45,7 @@ export function CartProvider({ children }) {
 
     init()
     return () => { cancelled = true }
-  }, [])
+  }, [lang])
 
   // Shopify silently caps a line at available inventory rather than erroring,
   // so we compare what we asked for against what came back and report the gap.

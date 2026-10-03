@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { formatPrice } from '../lib/shopify'
 import { useProducts } from '../context/ProductsContext'
+import { useLanguage } from '../i18n/LanguageContext'
 
 const dots = [
   { top: '25%', left: '35%' },
@@ -14,6 +15,7 @@ export default function ShopTheLook() {
   const scrollRef = useRef(null)
   const navigate = useNavigate()
   const { products, loading } = useProducts()
+  const { t } = useLanguage()
   const featured = products.slice(0, 4)
 
   const scroll = (dir) => {
@@ -38,7 +40,7 @@ export default function ShopTheLook() {
 
         <div className="w-full md:w-1/2 px-6 py-10 md:p-12 flex flex-col justify-center" style={{ backgroundColor: '#f0e9e0' }}>
           <h2 className="font-bodoni uppercase tracking-[0.2em] text-plum text-xl md:text-2xl mb-8 md:mb-12">
-            Shop the Look
+            {t('home.shopTheLook')}
           </h2>
 
           <div
@@ -82,10 +84,10 @@ export default function ShopTheLook() {
           </div>
 
           <div className="flex gap-4 mt-6">
-            <button onClick={() => scroll(-1)} className="bg-transparent border border-plum p-2 cursor-pointer hover:bg-plum hover:text-cream transition-all duration-300 text-plum" aria-label="Previous">
+            <button onClick={() => scroll(-1)} className="bg-transparent border border-plum p-2 cursor-pointer hover:bg-plum hover:text-cream transition-all duration-300 text-plum" aria-label={t('common.previous')}>
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <button onClick={() => scroll(1)} className="bg-transparent border border-plum p-2 cursor-pointer hover:bg-plum hover:text-cream transition-all duration-300 text-plum" aria-label="Next">
+            <button onClick={() => scroll(1)} className="bg-transparent border border-plum p-2 cursor-pointer hover:bg-plum hover:text-cream transition-all duration-300 text-plum" aria-label={t('common.next')}>
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>

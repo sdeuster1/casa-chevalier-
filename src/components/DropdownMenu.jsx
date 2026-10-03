@@ -1,19 +1,22 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { X, ChevronRight } from 'lucide-react'
+import { useLanguage } from '../i18n/LanguageContext'
+import LanguageSwitch from './LanguageSwitch'
 
 const submenuItems = ['ALL', 'PANTS', 'SHIRTS', 'JACKETS', 'VESTS', 'ACCESSORIES']
 
 const menuItems = [
-  { label: 'THE CAPSULE COLLECTION', hasSubmenu: true, to: '/products' },
-  { label: 'OUR PHILOSOPHY', hasSubmenu: false, to: '/philosophy' },
-  { label: 'CC NEWS', hasSubmenu: false, to: '/news' },
-  { label: 'CONTACTS', hasSubmenu: false, to: '/contacts' },
+  { key: 'collection', hasSubmenu: true, to: '/products' },
+  { key: 'philosophy', hasSubmenu: false, to: '/philosophy' },
+  { key: 'news', hasSubmenu: false, to: '/news' },
+  { key: 'contacts', hasSubmenu: false, to: '/contacts' },
 ]
 
 export default function DropdownMenu({ isOpen, onClose }) {
   const [activeSubmenu, setActiveSubmenu] = useState(false)
   const navigate = useNavigate()
+  const { t } = useLanguage()
 
   const handleItemClick = (item) => {
     if (item.hasSubmenu) {
@@ -38,19 +41,19 @@ export default function DropdownMenu({ isOpen, onClose }) {
         <button
           onClick={onClose}
           className="absolute top-5 right-5 bg-transparent border-none cursor-pointer p-2"
-          aria-label="Close menu"
+          aria-label={t('menu.close')}
         >
           <X className="w-5 h-5 text-[#f0e9e0]" />
         </button>
 
         <div className="flex flex-col gap-6 md:gap-8">
           {menuItems.map((item) => (
-            <div key={item.label} className="flex flex-col">
+            <div key={item.key} className="flex flex-col">
               <button
                 className="font-bodoni uppercase text-[#f0e9e0] tracking-[0.15em] md:tracking-[0.2em] text-lg md:text-xl bg-transparent border-none cursor-pointer hover:opacity-70 transition-opacity duration-300 text-left flex items-center justify-between w-full"
                 onClick={() => handleItemClick(item)}
               >
-                {item.label}
+                {t(`menu.${item.key}`)}
                 {item.hasSubmenu && (
                   <ChevronRight
                     className={`w-5 h-5 text-[#f0e9e0] transition-transform duration-300 ${activeSubmenu ? 'rotate-90' : ''}`}
@@ -73,7 +76,7 @@ export default function DropdownMenu({ isOpen, onClose }) {
                       }}
                       className="font-playfair text-lilac text-base cursor-pointer hover:text-[#f0e9e0] transition-colors duration-300 bg-transparent border-none p-0 text-left"
                     >
-                      {sub}
+                      {t(`sections.${sub}`)}
                     </button>
                   ))}
                 </div>
@@ -81,6 +84,8 @@ export default function DropdownMenu({ isOpen, onClose }) {
             </div>
           ))}
         </div>
+
+        <LanguageSwitch className="absolute bottom-8 left-10 md:left-14 text-[#f0e9e0]" />
       </div>
 
       {/* Blurred overlay for right side */}

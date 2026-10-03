@@ -1,14 +1,11 @@
 import { useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-
-const newsItems = [
-  { category: 'EQUESTRIAN', title: 'The Art of Riding in Style' },
-  { category: 'EDITORIAL', title: 'Spring Summer 2026 Campaign' },
-  { category: 'EVENTS', title: 'Casa Chevalier at Milano Fashion Week' },
-]
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function NewsCarousel() {
   const [active, setActive] = useState(1)
+  const { t } = useLanguage()
+  const newsItems = t('home.newsItems')
 
   const prev = () => setActive((a) => (a - 1 + newsItems.length) % newsItems.length)
   const next = () => setActive((a) => (a + 1) % newsItems.length)
@@ -16,14 +13,14 @@ export default function NewsCarousel() {
   return (
     <section className="w-full bg-plum py-16 md:py-24 overflow-hidden">
       <h2 className="font-bodoni text-lilac text-xl md:text-2xl tracking-[0.1em] text-center mb-10 md:mb-16 uppercase px-4">
-        News from Casa Chevalier
+        {t('home.newsTitle')}
       </h2>
 
       <div className="flex items-start justify-center gap-2 md:gap-6 px-2 md:px-4">
         <button
           onClick={prev}
           className="bg-transparent border-none cursor-pointer p-2 flex-shrink-0 mt-28 md:mt-32"
-          aria-label="Previous"
+          aria-label={t('common.previous')}
         >
           <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-lilac" />
         </button>
@@ -48,7 +45,7 @@ export default function NewsCarousel() {
                   style={{ aspectRatio: '3/4' }}
                 >
                   <span className="absolute top-4 left-4 font-playfair text-xs uppercase text-lilac border border-lilac px-4 py-2">
-                    SCOPRIRE
+                    {t('home.newsCta')}
                   </span>
                 </div>
                 <div className="mt-4 text-center px-2">
@@ -67,7 +64,7 @@ export default function NewsCarousel() {
         <button
           onClick={next}
           className="bg-transparent border-none cursor-pointer p-2 flex-shrink-0 mt-28 md:mt-32"
-          aria-label="Next"
+          aria-label={t('common.next')}
         >
           <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-lilac" />
         </button>

@@ -8,6 +8,7 @@ import { formatPrice } from '../lib/shopify'
 import { useProducts } from '../context/ProductsContext'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
+import { useLanguage } from '../i18n/LanguageContext'
 
 const LOW_STOCK_THRESHOLD = 5
 
@@ -27,6 +28,7 @@ export default function ProductDetail() {
 
   const { addItem, busy } = useCart()
   const { toggle: toggleWish, has: hasWish } = useWishlist()
+  const { t, sectionLabel } = useLanguage()
 
   if (loading) {
     return (
@@ -52,12 +54,12 @@ export default function ProductDetail() {
         <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} variant="dark" />
         <DropdownMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
         <div className="pt-40 pb-40 text-center">
-          <p className="font-playfair italic text-plum text-lg mb-6">Product not found.</p>
+          <p className="font-playfair italic text-plum text-lg mb-6">{t('product.notFound')}</p>
           <button
             onClick={() => navigate('/products')}
             className="font-bodoni uppercase text-cream bg-plum text-xs tracking-[0.2em] py-3 px-8 cursor-pointer"
           >
-            Back to Collection
+            {t('product.back')}
           </button>
         </div>
         <Footer />
@@ -91,8 +93,8 @@ export default function ProductDetail() {
       if (result?.capped) {
         setAddError(
           result.total > 0
-            ? `Only ${result.total} available in size ${size}. Your bag has been updated.`
-            : `Size ${size} is no longer available.`
+            ? t('product.onlyInSize', { count: result.total, size })
+            : t('product.sizeGone', { size })
         )
         setAdded(false)
         return
@@ -100,7 +102,7 @@ export default function ProductDetail() {
       setAdded(true)
       setTimeout(() => setAdded(false), 2500)
     } catch {
-      setAddError('Could not add to bag. Please try again.')
+      setAddError(t('product.addFailed'))
     }
   }
 
@@ -123,7 +125,7 @@ export default function ProductDetail() {
               <div key={i} className="w-full aspect-[3/4] bg-[#d4cec6]">
                 <img
                   src={img}
-                  alt={`${product.name} view ${i + 1}`}
+                  alt={t('product.view', { name: product.name, n: i + 1 })}
                   className="w-full h-full object-cover cc-fade-in"
                 />
               </div>
@@ -134,12 +136,12 @@ export default function ProductDetail() {
           <div className="md:sticky md:top-24 md:self-start px-6 md:px-12 py-10 md:py-16">
             <div className="flex items-start justify-between">
               <span className="font-playfair italic text-lilac text-[11px] tracking-[0.2em] uppercase">
-                {product.section}
+                {sectionLabel(product.section)}
               </span>
               <button
                 onClick={() => toggleWish(product.handle)}
                 className="bg-transparent border-none cursor-pointer p-0"
-                aria-label={wished ? 'Remove from wishlist' : 'Add to wishlist'}
+                aria-label={wished ? t('common.removeFromWishlist') : t('common.addToWishlist')}
               >
                 <Heart className="w-5 h-5 text-plum" fill={wished ? '#4f1d34' : 'none'} strokeWidth={1.5} />
               </button>
@@ -168,13 +170,13 @@ export default function ProductDetail() {
                   }`}
                 >
                   <span className="font-bodoni uppercase text-dark text-sm tracking-[0.15em]">
-                    {size ? `Size: ${size}` : 'Select your size'}
+                    {size ? t('product.size', { size }) : t('product.selectSize')}
                   </span>
                   <ChevronDown className={`w-4 h-4 text-plum transition-transform ${sizeOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {sizeError && (
                   <p className="font-playfair italic text-coral text-xs mt-2">
-                    Please select a size to continue.
+                    {t('product.sizeRequired')}
                   </p>
                 )}
                 {sizeOpen && (
@@ -210,8 +212,9 @@ export default function ProductDetail() {
               selectedVariant.quantity > 0 &&
               selectedVariant.quantity <= LOW_STOCK_THRESHOLD && (
                 <p className="font-playfair italic text-plum text-xs mt-4">
-                  Only {selectedVariant.quantity} remaining
-                  {product.hasSizes && size ? ` in size ${size}` : ''}.
+                  {product.hasSizes && size
+                    ? t('product.remainingInSize', { count: selectedVariant.quantity, size })
+                    : t('product.remaining', { count: selectedVariant.quantity })}
                 </p>
               )}
 
@@ -226,12 +229,12 @@ export default function ProductDetail() {
               }`}
             >
               {outOfStock
-                ? 'Sold Out'
+                ? t('common.soldOut')
                 : busy
-                ? 'Adding…'
+                ? t('product.adding')
                 : added
-                ? 'Added to Bag ✓'
-                : 'Add to Bag'}
+                ? t('product.added')
+                : t('product.addToBag')}
             </button>
 
             {addError && (
@@ -243,7 +246,7 @@ export default function ProductDetail() {
                 onClick={() => navigate('/shop')}
                 className="w-full mt-3 font-playfair text-plum text-sm underline hover:no-underline cursor-pointer bg-transparent border-none"
               >
-                View bag
+                {t('product.viewBag')}
               </button>
             )}
 
@@ -252,18 +255,18 @@ export default function ProductDetail() {
               {[
                 {
                   key: 'details',
-                  label: 'Details',
-                  body: product.description?.split('\n\n')[1] || product.description || 'Handcrafted in Italy.',
+                  label: t('product.details'),
+                  body: product.description?.split('\n\n')[1] || product.description || t('product.detailsFallback'),
                 },
                 {
                   key: 'composition',
-                  label: 'Composition & Care',
-                  body: product.description?.split('\n\n')[2] || 'Please refer to the garment label for care instructions.',
+                  label: t('product.composition'),
+                  body: product.description?.split('\n\n')[2] || t('product.compositionFallback'),
                 },
                 {
                   key: 'shipping',
-                  label: 'Shipping & Returns',
-                  body: 'Complimentary shipping within the EU. Returns accepted within 30 days of delivery.',
+                  label: t('product.shipping'),
+                  body: t('product.shippingBody'),
                 },
               ].map((sec) => {
                 const open = openSection === sec.key
@@ -294,7 +297,7 @@ export default function ProductDetail() {
         {related.length > 0 && (
           <section className="px-6 md:px-12 py-16 md:py-24 max-w-6xl mx-auto">
             <h2 className="font-bodoni uppercase text-plum text-lg md:text-xl tracking-[0.2em] text-center mb-12">
-              You May Also Like
+              {t('product.related')}
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-10 md:gap-x-8">
               {related.map((p) => (

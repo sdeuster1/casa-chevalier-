@@ -8,9 +8,11 @@ import ShopTheLook from '../components/ShopTheLook'
 import NewsCarousel from '../components/NewsCarousel'
 import Footer from '../components/Footer'
 import NewsletterPopup from '../components/NewsletterPopup'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const { t } = useLanguage()
 
   return (
     <div className="min-h-screen">
@@ -18,9 +20,9 @@ export default function Home() {
       <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} variant="cream" />
       <DropdownMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       <HeroSection />
-      <TextInterlude text="Equestrian elegance, shaped by Italian craftsmanship." />
+      <TextInterlude text={t('home.interlude1')} />
       <ThreeProducts />
-      <TextInterlude text="From saddle to table." />
+      <TextInterlude text={t('home.interlude2')} />
       <ShopTheLook />
       <NewsCarousel />
       <Footer />

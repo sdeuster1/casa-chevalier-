@@ -3,40 +3,15 @@ import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
 import Monogram from '../components/Monogram'
+import { useLanguage } from '../i18n/LanguageContext'
 
-const sections = [
-  {
-    eyebrow: 'The Foundation',
-    title: 'Craftsmanship from the Saddle',
-    body:
-      'Casa Chevalier was born at the intersection of equestrian tradition and Italian sartorial precision. Every collection begins with the movement of the ride — the tension of the reins, the drape of a jacket in motion, the memory of leather softened by decades of use.',
-    tone: '#c8beb0',
-  },
-  {
-    eyebrow: 'The Atelier',
-    title: 'Made Slowly in Italy',
-    body:
-      'Our garments are cut and finished in small ateliers across Lombardy and Tuscany. We work with families who have supplied Italian houses for generations — tanneries, wool mills, button makers — and refuse to compromise on the time each piece deserves.',
-    tone: '#d4cec6',
-  },
-  {
-    eyebrow: 'The Aesthetic',
-    title: 'A Quiet Elegance',
-    body:
-      'We believe in restraint. No visible branding. No trend-led silhouettes. Just considered proportions, honest materials, and details that only reveal themselves to the person wearing them.',
-    tone: '#cec5b8',
-  },
-  {
-    eyebrow: 'The Future',
-    title: 'From Saddle to Table',
-    body:
-      'Casa Chevalier is not only about clothing. It is a way of moving through the world — from stables to lunch, from evening rides to unhurried conversations. Our capsule collections extend from tailoring into accessories, home, and the objects of a well-considered life.',
-    tone: '#d8d1c4',
-  },
-]
+// Image tones only; copy lives in i18n/translations.js (philosophy.sections)
+const tones = ['#c8beb0', '#d4cec6', '#cec5b8', '#d8d1c4']
 
 export default function Philosophy() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const { t } = useLanguage()
+  const sections = t('philosophy.sections').map((s, i) => ({ ...s, tone: tones[i] }))
 
   return (
     <div className="min-h-screen bg-cream">
@@ -47,10 +22,10 @@ export default function Philosophy() {
         <div className="max-w-3xl mx-auto flex flex-col items-center text-center">
           <Monogram color="#4f1d34" size={48} className="mb-6" />
           <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] mb-4">
-            Our Philosophy
+            {t('philosophy.title')}
           </h1>
           <p className="font-playfair italic text-lilac text-sm md:text-base max-w-lg">
-            Equestrian elegance, shaped by Italian craftsmanship.
+            {t('philosophy.subtitle')}
           </p>
         </div>
       </section>
@@ -85,7 +60,7 @@ export default function Philosophy() {
 
             return (
               <div
-                key={s.title}
+                key={i}
                 className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center"
               >
                 {imageFirst ? (

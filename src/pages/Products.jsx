@@ -7,6 +7,7 @@ import Footer from '../components/Footer'
 import { formatPrice, matchesCategory } from '../lib/shopify'
 import { useProducts } from '../context/ProductsContext'
 import { useWishlist } from '../context/WishlistContext'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function Products() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -18,6 +19,7 @@ export default function Products() {
   const { toggle: toggleWish, has: hasWish } = useWishlist()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
+  const { t, sectionLabel } = useLanguage()
 
   const urlCategory = searchParams.get('category')
   const urlProductId = searchParams.get('product')
@@ -56,10 +58,10 @@ export default function Products() {
       <section className="pt-28 md:pt-36 pb-16 md:pb-24 px-6 md:px-12">
         <div className="max-w-6xl mx-auto">
           <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
-            The Collection
+            {t('products.title')}
           </h1>
           <p className="font-playfair italic text-lilac text-center text-sm mb-12">
-            Equestrian sartorial pieces, handcrafted in Italy
+            {t('products.subtitle')}
           </p>
 
           {/* Category filter */}
@@ -75,7 +77,7 @@ export default function Products() {
                       : 'text-dark/50 hover:text-dark'
                   }`}
                 >
-                  {cat === 'ALL' ? 'All' : cat.charAt(0) + cat.slice(1).toLowerCase()}
+                  {sectionLabel(cat).charAt(0) + sectionLabel(cat).slice(1).toLowerCase()}
                 </button>
               ))}
             </div>
@@ -99,20 +101,20 @@ export default function Products() {
 
           {error && !loading && (
             <p className="font-playfair italic text-plum text-center text-sm py-12">
-              The collection is momentarily unavailable. Please try again shortly.
+              {t('products.unavailable')}
             </p>
           )}
 
           {!loading && !error && filtered.length === 0 && (
             <div className="text-center py-12">
               <p className="font-playfair italic text-lilac text-sm">
-                No pieces in this category yet.
+                {t('products.empty')}
               </p>
               <button
                 onClick={() => setManualCategory('ALL')}
                 className="mt-4 font-bodoni uppercase text-plum text-[10px] tracking-[0.2em] border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
               >
-                View All
+                {t('products.viewAll')}
               </button>
             </div>
           )}
@@ -142,13 +144,13 @@ export default function Products() {
                       )}
                       {soldOut && (
                         <span className="absolute top-3 left-3 bg-cream/90 font-bodoni uppercase text-plum text-[9px] tracking-[0.2em] px-2 py-1">
-                          Sold Out
+                          {t('common.soldOut')}
                         </span>
                       )}
                       <button
                         onClick={() => toggleWish(product.handle)}
                         className="absolute top-3 right-3 bg-cream/80 backdrop-blur-sm w-8 h-8 flex items-center justify-center rounded-full border-none cursor-pointer hover:bg-cream transition-colors duration-300"
-                        aria-label={wished ? 'Remove from wishlist' : 'Add to wishlist'}
+                        aria-label={wished ? t('common.removeFromWishlist') : t('common.addToWishlist')}
                       >
                         <Heart
                           className="w-4 h-4 text-plum"
@@ -160,7 +162,7 @@ export default function Products() {
 
                     <div className="pt-4 flex flex-col">
                       <span className="font-playfair italic text-lilac text-[10px] tracking-[0.15em] uppercase">
-                        {product.section}
+                        {sectionLabel(product.section)}
                       </span>
                       <button
                         onClick={() => navigate(`/product/${product.handle}`)}
@@ -175,7 +177,7 @@ export default function Products() {
                         onClick={() => navigate(`/product/${product.handle}`)}
                         className="mt-4 self-start font-bodoni uppercase text-plum text-[10px] md:text-xs tracking-[0.2em] border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity duration-300"
                       >
-                        View Product
+                        {t('common.viewProduct')}
                       </button>
                     </div>
                   </div>

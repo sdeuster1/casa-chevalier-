@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import Monogram from './Monogram'
+import { useLanguage } from '../i18n/LanguageContext'
 import Wordmark from './Wordmark'
 
 export default function SplashPage() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
 
   return (
     <div className="fixed inset-0 flex flex-col md:flex-row">
@@ -23,7 +25,7 @@ export default function SplashPage() {
           onClick={() => navigate('/home')}
           className="font-playfair italic text-white text-sm tracking-[0.15em] underline hover:no-underline transition-all duration-300 cursor-pointer bg-transparent border-none"
         >
-          Discover
+          {t('common.discover')}
         </button>
       </div>
     </div>

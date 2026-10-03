@@ -5,12 +5,15 @@ import { useProducts } from '../context/ProductsContext'
 import Wordmark from './Wordmark'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
+import { useLanguage } from '../i18n/LanguageContext'
+import LanguageSwitch from './LanguageSwitch'
 
 export default function Navbar({ onMenuToggle, variant = 'light' }) {
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [scrolled, setScrolled] = useState(false)
   const navigate = useNavigate()
+  const { t, sectionLabel } = useLanguage()
   const { products } = useProducts()
   const { itemCount } = useCart()
   const { items: wishItems } = useWishlist()
@@ -18,7 +21,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
 
   const results = query.trim()
     ? products.filter((p) =>
-        (p.name + ' ' + p.category).toLowerCase().includes(query.toLowerCase())
+        (p.name + ' ' + p.category + ' ' + sectionLabel(p.section)).toLowerCase().includes(query.toLowerCase())
       )
     : []
 
@@ -63,7 +66,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
         <button
           onClick={onMenuToggle}
           className="flex flex-col gap-[5px] cursor-pointer bg-transparent border-none p-2"
-          aria-label="Menu"
+          aria-label={t('nav.menu')}
         >
           <span className={`block w-5 md:w-6 h-[1.5px] transition-colors duration-500 ${barBg}`}></span>
           <span className={`block w-5 md:w-6 h-[1.5px] transition-colors duration-500 ${barBg}`}></span>
@@ -72,7 +75,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
 
         <Link
           to="/home"
-          aria-label="Casa Chevalier — home"
+          aria-label={t('nav.home')}
           className="absolute left-1/2 -translate-x-1/2 no-underline hover:opacity-80 transition-opacity"
         >
           <Wordmark
@@ -82,15 +85,17 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
         </Link>
 
         <div className="flex items-center gap-3 md:gap-6">
+          <LanguageSwitch className={`hidden md:flex transition-colors duration-500 ${fg}`} />
+
           <button
             onClick={() => setSearchOpen(true)}
-            aria-label="Search"
+            aria-label={t('nav.search')}
             className="bg-transparent border-none cursor-pointer p-0"
           >
             <Search className={`w-4 h-4 md:w-5 md:h-5 transition-colors duration-500 ${fg}`} />
           </button>
 
-          <Link to="/wishlist" aria-label="Wishlist" className="hidden md:block relative">
+          <Link to="/wishlist" aria-label={t('nav.wishlist')} className="hidden md:block relative">
             <Heart className={`w-4 h-4 md:w-5 md:h-5 cursor-pointer transition-colors duration-500 ${fg}`} />
             {wishCount > 0 && (
               <span
@@ -101,11 +106,11 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
             )}
           </Link>
 
-          <Link to="/account" aria-label="Account">
+          <Link to="/account" aria-label={t('nav.account')}>
             <User className={`w-4 h-4 md:w-5 md:h-5 cursor-pointer transition-colors duration-500 ${fg}`} />
           </Link>
 
-          <Link to="/shop" aria-label="Shopping bag" className="relative">
+          <Link to="/shop" aria-label={t('nav.bag')} className="relative">
             <ShoppingBag className={`w-4 h-4 md:w-5 md:h-5 cursor-pointer transition-colors duration-500 ${fg}`} />
             {itemCount > 0 && (
               <span
@@ -123,12 +128,12 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
           <div className="flex items-center justify-between px-4 md:px-10 py-4">
             <div className="w-5" />
             <span className="font-bodoni uppercase text-cream text-xs md:text-lg tracking-[0.15em] md:tracking-[0.2em]">
-              Search
+              {t('nav.search')}
             </span>
             <button
               onClick={closeSearch}
               className="bg-transparent border-none cursor-pointer p-2"
-              aria-label="Close search"
+              aria-label={t('nav.closeSearch')}
             >
               <X className="w-5 h-5 text-cream" />
             </button>
@@ -142,7 +147,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search the collection..."
+                placeholder={t('nav.searchPlaceholder')}
                 className="bg-transparent text-cream placeholder-cream/40 font-playfair text-base md:text-lg py-2 flex-1 outline-none border-none"
               />
             </div>
@@ -150,7 +155,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
             <div className="w-full max-w-xl mt-8">
               {query.trim() && results.length === 0 && (
                 <p className="font-playfair italic text-lilac text-sm text-center">
-                  No results for "{query}"
+                  {t('nav.noResults', { query })}
                 </p>
               )}
               {results.length > 0 && (
@@ -171,7 +176,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
                         />
                         <div className="flex flex-col">
                           <span className="font-playfair italic text-lilac text-[10px] tracking-[0.15em] uppercase">
-                            {p.section}
+                            {sectionLabel(p.section)}
                           </span>
                           <span className="font-bodoni uppercase tracking-[0.15em] text-sm text-cream">
                             {p.name}
@@ -184,7 +189,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
               )}
               {!query.trim() && (
                 <p className="font-playfair italic text-lilac/60 text-sm text-center">
-                  Start typing to browse the collection.
+                  {t('nav.startTyping')}
                 </p>
               )}
             </div>
