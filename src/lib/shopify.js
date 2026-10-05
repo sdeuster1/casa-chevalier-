@@ -74,6 +74,7 @@ const PRODUCT_FIELDS = `
     }
   }
   collections(first: 5) { edges { node { title handle } } }
+  composizione: metafield(namespace: "custom", key: "composizione") { value }
 `
 
 // ---------- Category mapping ----------
@@ -153,6 +154,8 @@ function normalizeProduct(node) {
     handle: node.handle,
     description: node.description,
     descriptionHtml: node.descriptionHtml,
+    // custom.composizione (multi-line text); null when not filled in
+    composition: node.composizione?.value?.trim() || null,
     category,
     price: parseFloat(node.priceRange.minVariantPrice.amount),
     currency: node.priceRange.minVariantPrice.currencyCode,

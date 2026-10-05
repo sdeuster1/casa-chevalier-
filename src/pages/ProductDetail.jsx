@@ -154,12 +154,6 @@ export default function ProductDetail() {
               {formatPrice(product.price, product.currency)}
             </p>
 
-            {product.description && (
-              <p className="font-playfair text-dark/70 text-sm leading-relaxed mt-6 max-w-md whitespace-pre-line">
-                {product.description.split('\n\n')[0]}
-              </p>
-            )}
-
             {/* Size selector — only when the product actually has sizes */}
             {product.hasSizes && (
               <div className="mt-10">
@@ -256,19 +250,15 @@ export default function ProductDetail() {
                 {
                   key: 'details',
                   label: t('product.details'),
-                  body: product.description?.split('\n\n')[1] || product.description || t('product.detailsFallback'),
+                  body: product.description || t('product.detailsFallback'),
                 },
-                {
+                // Hidden when the product has no custom.composizione metafield
+                product.composition && {
                   key: 'composition',
                   label: t('product.composition'),
-                  body: product.description?.split('\n\n')[2] || t('product.compositionFallback'),
+                  body: product.composition,
                 },
-                {
-                  key: 'shipping',
-                  label: t('product.shipping'),
-                  body: t('product.shippingBody'),
-                },
-              ].map((sec) => {
+              ].filter(Boolean).map((sec) => {
                 const open = openSection === sec.key
                 return (
                   <div key={sec.key} className="border-b border-plum/20">

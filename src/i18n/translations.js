@@ -116,9 +116,6 @@ const en = {
     details: 'Details',
     detailsFallback: 'Handcrafted in Italy.',
     composition: 'Composition & Care',
-    compositionFallback: 'Please refer to the garment label for care instructions.',
-    shipping: 'Shipping & Returns',
-    shippingBody: 'Complimentary shipping within the EU. Returns accepted within 30 days of delivery.',
     related: 'You May Also Like',
   },
 
@@ -413,9 +410,6 @@ const it = {
     details: 'Dettagli',
     detailsFallback: 'Realizzato a mano in Italia.',
     composition: 'Composizione e cura',
-    compositionFallback: "Consulta l'etichetta del capo per le istruzioni di lavaggio.",
-    shipping: 'Spedizioni e resi',
-    shippingBody: "Spedizione gratuita nell'UE. Resi accettati entro 30 giorni dalla consegna.",
     related: 'Potrebbe piacerti anche',
   },
 
