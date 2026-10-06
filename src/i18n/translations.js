@@ -360,8 +360,9 @@ const it = {
   },
 
   home: {
-    interlude1: "Eleganza equestre, plasmata dall'artigianalità italiana.",
-    interlude2: 'Dalla sella alla tavola.',
+    // Homepage quotes stay in English in both languages, by brand choice.
+    interlude1: 'Equestrian elegance, shaped by Italian craftsmanship.',
+    interlude2: 'From saddle to table.',
     shopTheLook: 'Shop the Look',
     newsTitle: 'News da Casa Chevalier',
     newsCta: 'SCOPRI',
