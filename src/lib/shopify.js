@@ -1,19 +1,13 @@
 // ============================================================
 //  Casa Chevalier — Shopify Storefront API client
 // ============================================================
-//  The Storefront access token is PUBLIC by design. It ships in
-//  the browser bundle and only permits the read/cart scopes
-//  enabled in the Headless channel. It is not an admin secret.
+//  Domain, API version and public token: see ./shopifyConfig.js
 // ============================================================
 
-const DOMAIN =
-  import.meta.env.VITE_SHOPIFY_DOMAIN || 'casachevalier.myshopify.com'
-const TOKEN =
-  import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN ||
-  '6c89c607a3e3e705f11515d81d36cabb'
-const API_VERSION = '2025-01'
-
-const ENDPOINT = `https://${DOMAIN}/api/${API_VERSION}/graphql.json`
+import {
+  SHOPIFY_ENDPOINT as ENDPOINT,
+  SHOPIFY_STOREFRONT_TOKEN as TOKEN,
+} from './shopifyConfig'
 
 // Language Shopify returns content in (Translate & Adapt translations).
 // Every query declares $language and uses @inContext, so it applies to
