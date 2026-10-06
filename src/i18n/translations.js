@@ -115,7 +115,7 @@ const en = {
     viewBag: 'View bag',
     details: 'Details',
     detailsFallback: 'Handcrafted in Italy.',
-    composition: 'Composition & Care',
+    composition: 'Composition',
     related: 'You May Also Like',
   },
 
@@ -410,7 +410,7 @@ const it = {
     viewBag: 'Vedi shopping bag',
     details: 'Dettagli',
     detailsFallback: 'Realizzato a mano in Italia.',
-    composition: 'Composizione e cura',
+    composition: 'Composizione',
     related: 'Potrebbe piacerti anche',
   },
 
