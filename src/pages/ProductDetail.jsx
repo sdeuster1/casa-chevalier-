@@ -45,9 +45,9 @@ export default function ProductDetail() {
       <div className="min-h-screen bg-cream">
         <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} variant="dark" />
         <DropdownMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
-        <div className="pt-24 grid grid-cols-1 md:grid-cols-2">
+        <div className="pt-24 grid grid-cols-1 md:grid-cols-[minmax(0,44fr)_minmax(0,46fr)] md:gap-x-[10%] md:px-10">
           <div className="aspect-[3/4] bg-[#e5ded4] cc-fade-in" />
-          <div className="px-6 md:px-12 py-10 md:py-16 flex flex-col gap-4">
+          <div className="px-6 md:px-0 py-10 md:py-16 flex flex-col gap-4">
             <div className="h-2 w-20 bg-[#e5ded4]" />
             <div className="h-6 w-56 bg-[#e5ded4]" />
             <div className="h-4 w-24 bg-[#e5ded4]" />
@@ -128,7 +128,9 @@ export default function ProductDetail() {
       <DropdownMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
       <div className="pt-20 md:pt-24">
-        <div className="grid grid-cols-1 md:grid-cols-2">
+        {/* Desktop: inside the navbar's side margins (md:px-10), gallery 44%,
+            gap 10%, info 46% ending at the right margin. Mobile is full-width. */}
+        <div className="grid grid-cols-1 md:grid-cols-[minmax(0,44fr)_minmax(0,46fr)] md:gap-x-[10%] md:px-10">
           {/* LEFT: image gallery */}
           <div className="flex flex-col">
             {gallery.map((img, i) => (
@@ -143,7 +145,7 @@ export default function ProductDetail() {
           </div>
 
           {/* RIGHT: sticky info column */}
-          <div className="md:sticky md:top-24 md:self-start px-6 md:px-12 py-10 md:py-16">
+          <div className="md:sticky md:top-24 md:self-start px-6 md:px-0 py-10 md:py-16">
             <div className="flex items-start justify-between">
               <span className="font-playfair italic text-lilac text-[11px] tracking-[0.2em] uppercase">
                 {sectionLabel(product.section)}
