@@ -56,3 +56,23 @@ body {
 .cc-fade-in {
   animation: cc-fade-in 400ms ease-out both;
 }
+
+/* Sanitised Shopify product descriptions (Dettagli). Font, size and colour
+   come from the container; this only restores spacing and list markers
+   that Tailwind's reset removes. */
+.cc-rich-text p + p,
+.cc-rich-text p + ul,
+.cc-rich-text p + ol,
+.cc-rich-text ul + p,
+.cc-rich-text ol + p {
+  margin-top: 0.75em;
+}
+.cc-rich-text ul,
+.cc-rich-text ol {
+  padding-left: 1.15em;
+}
+.cc-rich-text ul { list-style: disc; }
+.cc-rich-text ol { list-style: decimal; }
+.cc-rich-text li + li {
+  margin-top: 0.35em;
+}

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Heart, ChevronDown, Plus, Minus } from 'lucide-react'
+import DOMPurify from 'dompurify'
 import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
@@ -11,6 +12,15 @@ import { useWishlist } from '../context/WishlistContext'
 import { useLanguage } from '../i18n/LanguageContext'
 
 const LOW_STOCK_THRESHOLD = 5
+
+// Shopify descriptions are often pasted from Word and carry fonts, sizes and
+// colours. Keep only structure (paragraphs, breaks, bold, italic, lists) and
+// drop every attribute, so the site's own typography always applies.
+const sanitizeDescription = (html) =>
+  DOMPurify.sanitize(html || '', {
+    ALLOWED_TAGS: ['p', 'br', 'strong', 'b', 'em', 'i', 'ul', 'ol', 'li'],
+    ALLOWED_ATTR: [],
+  }).trim()
 
 export default function ProductDetail() {
   const { id: handle } = useParams()
@@ -250,7 +260,8 @@ export default function ProductDetail() {
                 {
                   key: 'details',
                   label: t('product.details'),
-                  body: product.description || t('product.detailsFallback'),
+                  html: sanitizeDescription(product.descriptionHtml),
+                  body: t('product.detailsFallback'),
                 },
                 // Hidden when the product has no custom.composizione metafield
                 product.composition && {
@@ -271,7 +282,13 @@ export default function ProductDetail() {
                       </span>
                       {open ? <Minus className="w-4 h-4 text-plum" /> : <Plus className="w-4 h-4 text-plum" />}
                     </button>
-                    {open && (
+                    {open && sec.html && (
+                      <div
+                        className="cc-rich-text font-playfair text-dark/70 text-sm leading-relaxed pb-4 pr-4"
+                        dangerouslySetInnerHTML={{ __html: sec.html }}
+                      />
+                    )}
+                    {open && !sec.html && (
                       <p className="font-playfair text-dark/70 text-sm leading-relaxed pb-4 pr-4 whitespace-pre-line">
                         {sec.body}
                       </p>
