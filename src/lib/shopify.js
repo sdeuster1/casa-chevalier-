@@ -75,6 +75,7 @@ const PRODUCT_FIELDS = `
   }
   collections(first: 5) { edges { node { title handle } } }
   composizione: metafield(namespace: "custom", key: "composizione") { value }
+  shortDescription: metafield(namespace: "custom", key: "short_description") { value }
 `
 
 // ---------- Category mapping ----------
@@ -156,6 +157,8 @@ function normalizeProduct(node) {
     descriptionHtml: node.descriptionHtml,
     // custom.composizione (multi-line text); null when not filled in
     composition: node.composizione?.value?.trim() || null,
+    // custom.short_description (multi-line text); null when not filled in
+    shortDescription: node.shortDescription?.value?.trim() || null,
     category,
     price: parseFloat(node.priceRange.minVariantPrice.amount),
     currency: node.priceRange.minVariantPrice.currencyCode,

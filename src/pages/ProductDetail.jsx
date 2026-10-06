@@ -210,6 +210,13 @@ export default function ProductDetail() {
               </div>
             )}
 
+            {/* Short description — custom.short_description, under the sizes */}
+            {product.shortDescription && (
+              <p className="font-playfair italic text-dark/70 text-sm leading-relaxed mt-6 max-w-md whitespace-pre-line">
+                {product.shortDescription}
+              </p>
+            )}
+
             {/* Low-stock note — honest scarcity, only when genuinely low */}
             {selectedVariant &&
               selectedVariant.available &&
