@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Heart, ChevronDown, Plus, Minus } from 'lucide-react'
+import { Heart, Plus, Minus } from 'lucide-react'
 import DOMPurify from 'dompurify'
 import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
@@ -30,9 +30,8 @@ export default function ProductDetail() {
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [chosenSize, setChosenSize] = useState(null)
-  const [sizeOpen, setSizeOpen] = useState(false)
   const [sizeError, setSizeError] = useState(false)
-  const [openSection, setOpenSection] = useState('details')
+  const [openSection, setOpenSection] = useState(null)
   const [added, setAdded] = useState(false)
   const [addError, setAddError] = useState(null)
 
@@ -93,7 +92,6 @@ export default function ProductDetail() {
   const handleBuy = async () => {
     if (product.hasSizes && !size) {
       setSizeError(true)
-      setSizeOpen(true)
       return
     }
     if (!selectedVariant) return
@@ -169,45 +167,35 @@ export default function ProductDetail() {
             {/* Size selector — only when the product actually has sizes */}
             {product.hasSizes && (
               <div className="mt-10">
-                <button
-                  onClick={() => { setSizeOpen(!sizeOpen); setSizeError(false) }}
-                  className={`w-full flex items-center justify-between border-b pb-3 bg-transparent cursor-pointer ${
-                    sizeError ? 'border-coral' : 'border-plum/30'
-                  }`}
-                >
-                  <span className="font-bodoni uppercase text-dark text-sm tracking-[0.15em]">
-                    {size ? t('product.size', { size }) : t('product.selectSize')}
-                  </span>
-                  <ChevronDown className={`w-4 h-4 text-plum transition-transform ${sizeOpen ? 'rotate-180' : ''}`} />
-                </button>
+                <span className="block font-bodoni uppercase text-dark text-xs tracking-[0.15em] mb-3">
+                  {t('product.sizeLabel')}
+                </span>
+                <div className="grid grid-cols-5 gap-2">
+                  {product.variants.map((v) => {
+                    const label = v.options.Size || v.title
+                    const disabled = !v.available
+                    return (
+                      <button
+                        key={v.id}
+                        disabled={disabled}
+                        onClick={() => { setChosenSize(label); setSizeError(false) }}
+                        className={`py-2 border font-playfair text-sm transition-colors ${
+                          disabled
+                            ? 'border-plum/15 text-dark/25 line-through cursor-not-allowed'
+                            : size === label
+                            ? 'border-plum bg-plum text-cream cursor-pointer'
+                            : 'border-plum/30 text-dark hover:border-plum cursor-pointer'
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    )
+                  })}
+                </div>
                 {sizeError && (
                   <p className="font-playfair italic text-coral text-xs mt-2">
                     {t('product.sizeRequired')}
                   </p>
-                )}
-                {sizeOpen && (
-                  <div className="grid grid-cols-5 gap-2 mt-4">
-                    {product.variants.map((v) => {
-                      const label = v.options.Size || v.title
-                      const disabled = !v.available
-                      return (
-                        <button
-                          key={v.id}
-                          disabled={disabled}
-                          onClick={() => { setChosenSize(label); setSizeOpen(false); setSizeError(false) }}
-                          className={`py-2 border font-playfair text-sm transition-colors ${
-                            disabled
-                              ? 'border-plum/15 text-dark/25 line-through cursor-not-allowed'
-                              : size === label
-                              ? 'border-plum bg-plum text-cream cursor-pointer'
-                              : 'border-plum/30 text-dark hover:border-plum cursor-pointer'
-                          }`}
-                        >
-                          {label}
-                        </button>
-                      )
-                    })}
-                  </div>
                 )}
               </div>
             )}
