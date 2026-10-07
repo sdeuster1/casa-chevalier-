@@ -270,33 +270,19 @@ const en = {
 
   philosophy: {
     title: 'Our Philosophy',
-    subtitle: 'Equestrian elegance, shaped by Italian craftsmanship.',
-    sections: [
-      {
-        eyebrow: 'The Foundation',
-        title: 'Craftsmanship from the Saddle',
-        body:
-          'Casa Chevalier was born at the intersection of equestrian tradition and Italian sartorial precision. Every collection begins with the movement of the ride — the tension of the reins, the drape of a jacket in motion, the memory of leather softened by decades of use.',
-      },
-      {
-        eyebrow: 'The Atelier',
-        title: 'Made Slowly in Italy',
-        body:
-          'Our garments are cut and finished in small ateliers across Lombardy and Tuscany. We work with families who have supplied Italian houses for generations — tanneries, wool mills, button makers — and refuse to compromise on the time each piece deserves.',
-      },
-      {
-        eyebrow: 'The Aesthetic',
-        title: 'A Quiet Elegance',
-        body:
-          'We believe in restraint. No visible branding. No trend-led silhouettes. Just considered proportions, honest materials, and details that only reveal themselves to the person wearing them.',
-      },
-      {
-        eyebrow: 'The Future',
-        title: 'From Saddle to Table',
-        body:
-          'Casa Chevalier is not only about clothing. It is a way of moving through the world — from stables to lunch, from evening rides to unhurried conversations. Our capsule collections extend from tailoring into accessories, home, and the objects of a well-considered life.',
-      },
+    intro: [
+      'Born from a passion for the equestrian world.',
+      'Created to bring its timeless elegance into everyday life.',
     ],
+    body: [
+      'Casa Chevalier was created around the belief that performance and elegance should never have to exist apart.',
+      'Rooted in the timeless codes of the equestrian world and the heritage of Made in Italy, Casa Chevalier brings together craftsmanship, refined fabrics and thoughtful design with the functionality required in the saddle. Each piece is conceived to transcend seasons and trends, defined by quality, versatility and an understated sense of elegance.',
+      'But Casa Chevalier is not only for riders.',
+      'It embraces everything the equestrian world represents: its timeless elegance, its sophistication, its connection to nature and a way of life that extends far beyond the stables. It is for those who live in this world, but equally for every woman who is drawn to its aesthetic and wishes to bring its elegance into her everyday life.',
+      'This is the philosophy behind our motto, From Saddle to Table: creating pieces that belong naturally in the saddle, yet transition with the same elegance and versatility to lunch, dinner, the countryside or the city.',
+    ],
+    closing: 'Designed for a way of living.',
+    motto: ['From Saddle to Table.', 'In & beyond the saddle.'],
   },
 }
 
@@ -565,33 +551,19 @@ const it = {
 
   philosophy: {
     title: 'La nostra filosofia',
-    subtitle: "Eleganza equestre, plasmata dall'artigianalità italiana.",
-    sections: [
-      {
-        eyebrow: 'Le origini',
-        title: 'Artigianalità dalla sella',
-        body:
-          "Casa Chevalier nasce dall'incontro tra la tradizione equestre e la precisione sartoriale italiana. Ogni collezione prende vita dal movimento della cavalcata — la tensione delle redini, la caduta di una giacca in movimento, il ricordo di una pelle ammorbidita da decenni di utilizzo.",
-      },
-      {
-        eyebrow: "L'atelier",
-        title: 'Fatto con lentezza in Italia',
-        body:
-          'I nostri capi vengono tagliati e rifiniti in piccoli atelier tra Lombardia e Toscana. Lavoriamo con famiglie che da generazioni servono le maison italiane — concerie, lanifici, bottonifici — e non scendiamo a compromessi sul tempo che ogni capo merita.',
-      },
-      {
-        eyebrow: "L'estetica",
-        title: 'Un’eleganza silenziosa',
-        body:
-          'Crediamo nella misura. Nessun logo in vista. Nessuna silhouette dettata dalle tendenze. Solo proporzioni studiate, materiali autentici e dettagli che si rivelano soltanto a chi li indossa.',
-      },
-      {
-        eyebrow: 'Il futuro',
-        title: 'Dalla sella alla tavola',
-        body:
-          'Casa Chevalier non è solo abbigliamento. È un modo di attraversare il mondo — dalle scuderie al pranzo, dalle cavalcate serali alle conversazioni senza fretta. Le nostre capsule collection si estendono dalla sartoria agli accessori, alla casa e agli oggetti di una vita vissuta con cura.',
-      },
+    intro: [
+      'Nata dalla passione per il mondo equestre.',
+      'Creata per portare la sua eleganza senza tempo nella vita di ogni giorno.',
     ],
+    body: [
+      'Casa Chevalier nasce dalla convinzione che performance ed eleganza non debbano mai essere separate.',
+      'Radicata nei codici senza tempo del mondo equestre e nell’eccellenza del Made in Italy, Casa Chevalier unisce artigianalità, tessuti ricercati e cura del design alla funzionalità necessaria in sella. Ogni creazione nasce per andare oltre le stagioni e le tendenze, espressione di qualità, versatilità e di un’eleganza discreta e senza tempo.',
+      'Casa Chevalier non parla soltanto a chi monta a cavallo.',
+      'Racchiude tutto ciò che il mondo equestre rappresenta: la sua eleganza senza tempo, la sua sofisticatezza, il legame con la natura e uno stile di vita che va ben oltre le scuderie. È pensata per chi vive questo mondo, ma anche per ogni donna che ne ama l’estetica e desidera portarne l’eleganza nella propria quotidianità.',
+      'Da qui nasce il nostro motto, From Saddle to Table: creare pezzi che appartengano con naturalezza alla sella e che, con la stessa eleganza e versatilità, possano accompagnare un pranzo, una cena, una giornata in campagna o la vita in città.',
+    ],
+    closing: 'L’espressione di uno stile di vita.',
+    motto: ['From Saddle to Table.', 'In & beyond the saddle.'],
   },
 }
 
