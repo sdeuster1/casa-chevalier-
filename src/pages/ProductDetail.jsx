@@ -5,6 +5,8 @@ import DOMPurify from 'dompurify'
 import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
+import SizeGuide from '../components/SizeGuide'
+import { sizeGuideFor, TEXT as SIZE_TEXT } from '../data/sizeGuide'
 import { formatPrice } from '../lib/shopify'
 import { useProducts } from '../context/ProductsContext'
 import { useCart } from '../context/CartContext'
@@ -37,7 +39,7 @@ export default function ProductDetail() {
 
   const { addItem, busy } = useCart()
   const { toggle: toggleWish, has: hasWish } = useWishlist()
-  const { t, sectionLabel } = useLanguage()
+  const { t, lang, sectionLabel } = useLanguage()
 
   if (loading) {
     return (
@@ -76,11 +78,16 @@ export default function ProductDetail() {
     )
   }
 
-  // Single-variant products (no sizes) select themselves.
+  // Size guide for this product (src/data/sizeGuide.js), or null
+  const guide = sizeGuideFor(product)
+  // One-size products show a note instead of a size button
+  const oneSizeNote = guide?.type === 'oneSize' && product.variants.length === 1
+
+  // Single-variant products (no sizes, or one-size) select themselves.
   const size =
     chosenSize ||
-    (!product.hasSizes && product.variants.length === 1
-      ? product.variants[0].title
+    ((!product.hasSizes || oneSizeNote) && product.variants.length === 1
+      ? product.variants[0].options.Size || product.variants[0].title
       : null)
 
   const gallery = product.images.length ? product.images : []
@@ -164,8 +171,22 @@ export default function ProductDetail() {
               {formatPrice(product.price, product.currency)}
             </p>
 
+            {/* One-size products: fit note in place of the size buttons */}
+            {oneSizeNote && (
+              <div className="mt-10">
+                {guide.fit && (
+                  <p className="font-playfair italic text-dark/70 text-sm leading-relaxed">
+                    {guide.fit[lang] ?? guide.fit.en}
+                  </p>
+                )}
+                <p className={`font-playfair text-dark/50 text-xs leading-relaxed ${guide.fit ? 'mt-2' : ''}`}>
+                  {SIZE_TEXT.oneSizeGeneral[lang] ?? SIZE_TEXT.oneSizeGeneral.en}
+                </p>
+              </div>
+            )}
+
             {/* Size selector — only when the product actually has sizes */}
-            {product.hasSizes && (
+            {product.hasSizes && !oneSizeNote && (
               <div className="mt-10">
                 <span className="block font-bodoni uppercase text-dark text-xs tracking-[0.15em] mb-3">
                   {t('product.sizeLabel')}
@@ -197,6 +218,7 @@ export default function ProductDetail() {
                     {t('product.sizeRequired')}
                   </p>
                 )}
+                {guide?.type === 'sized' && <SizeGuide guide={guide} />}
               </div>
             )}
 
