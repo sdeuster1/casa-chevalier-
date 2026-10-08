@@ -20,7 +20,7 @@ export default defineConfig([
   },
   {
     // Build scripts run in Node
-    files: ['scripts/**/*.js'],
+    files: ['scripts/**/*.js', 'middleware.js'],
     languageOptions: { globals: globals.node },
   },
 ])
