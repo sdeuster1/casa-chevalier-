@@ -3,11 +3,11 @@ import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import HeroSection from '../components/HeroSection'
 import TextInterlude from '../components/TextInterlude'
-import ThreeProducts from '../components/ThreeProducts'
+import FeaturedProducts from '../components/FeaturedProducts'
 import ShopTheLook from '../components/ShopTheLook'
-import NewsCarousel from '../components/NewsCarousel'
 import Footer from '../components/Footer'
 import NewsletterPopup from '../components/NewsletterPopup'
+import InstagramFeed from '../components/InstagramFeed'
 import { useLanguage } from '../i18n/LanguageContext'
 
 export default function Home() {
@@ -21,10 +21,10 @@ export default function Home() {
       <DropdownMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       <HeroSection />
       <TextInterlude text={t('home.interlude1')} />
-      <ThreeProducts />
+      <FeaturedProducts />
       <TextInterlude text={t('home.interlude2')} />
       <ShopTheLook />
-      <NewsCarousel />
+      <InstagramFeed />
       <Footer />
     </div>
   )

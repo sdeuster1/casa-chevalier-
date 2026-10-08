@@ -42,9 +42,15 @@ export function ProductsProvider({ children }) {
 
   const findProduct = (handle) => products.find((p) => p.handle === handle)
 
+  // Other colours of the same piece ("The Stable Vest - Sand" ↔ "- Dark Chocolate")
+  const colourVersions = (product) =>
+    product
+      ? products.filter((p) => p.baseName === product.baseName && p.handle !== product.handle)
+      : []
+
   return (
     <ProductsContext.Provider
-      value={{ products, categories, loading, error, findProduct }}
+      value={{ products, categories, loading, error, findProduct, colourVersions }}
     >
       {children}
     </ProductsContext.Provider>

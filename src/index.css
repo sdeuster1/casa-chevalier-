@@ -76,3 +76,7 @@ body {
 .cc-rich-text li + li {
   margin-top: 0.35em;
 }
+
+/* Horizontal rows scroll without a visible bar */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }

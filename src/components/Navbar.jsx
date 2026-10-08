@@ -63,15 +63,24 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
           scrolled ? 'bg-plum shadow-sm' : 'bg-transparent'
         }`}
       >
-        <button
-          onClick={onMenuToggle}
-          className="flex flex-col gap-[5px] cursor-pointer bg-transparent border-none p-2"
-          aria-label={t('nav.menu')}
-        >
-          <span className={`block w-5 md:w-6 h-[1.5px] transition-colors duration-500 ${barBg}`}></span>
-          <span className={`block w-5 md:w-6 h-[1.5px] transition-colors duration-500 ${barBg}`}></span>
-          <span className={`block w-5 md:w-6 h-[1.5px] transition-colors duration-500 ${barBg}`}></span>
-        </button>
+        <div className="flex items-center gap-8">
+          <button
+            onClick={onMenuToggle}
+            className="flex flex-col gap-[5px] cursor-pointer bg-transparent border-none p-2"
+            aria-label={t('nav.menu')}
+          >
+            <span className={`block w-5 md:w-6 h-[1.5px] transition-colors duration-500 ${barBg}`}></span>
+            <span className={`block w-5 md:w-6 h-[1.5px] transition-colors duration-500 ${barBg}`}></span>
+            <span className={`block w-5 md:w-6 h-[1.5px] transition-colors duration-500 ${barBg}`}></span>
+          </button>
+
+          {/* Desktop: shopping is one click away, not behind the menu */}
+          <div className={`hidden xl:flex items-center gap-7 font-bodoni uppercase text-[11px] tracking-[0.2em] transition-colors duration-500 ${fg}`}>
+            <Link to="/products" className="text-inherit no-underline hover:opacity-70 transition-opacity">{t('nav.shop')}</Link>
+            <Link to="/philosophy" className="text-inherit no-underline hover:opacity-70 transition-opacity">{t('nav.philosophy')}</Link>
+            <Link to="/news" className="text-inherit no-underline hover:opacity-70 transition-opacity">{t('nav.news')}</Link>
+          </div>
+        </div>
 
         <Link
           to="/home"

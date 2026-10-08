@@ -9,11 +9,28 @@ export default function SplashPage() {
 
   return (
     <div className="fixed inset-0 flex flex-col md:flex-row">
-      <div className="w-full md:w-1/2 h-1/2 md:h-full bg-[#1a1a1a] flex items-center justify-center">
-        <span className="text-gray-500 font-playfair text-sm tracking-widest">[Campaign Image]</span>
+      {/* Campaign video on the left — muted and looping so browsers allow autoplay */}
+      <div className="relative w-full md:w-1/2 h-1/2 md:h-full bg-[#1a1a1a] overflow-hidden">
+        <video
+          src="/media/splash.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/25" />
       </div>
-      <div className="w-full md:w-1/2 h-1/2 md:h-full bg-[#2a2a2a] flex items-center justify-center">
-        <span className="text-gray-500 font-playfair text-sm tracking-widest">[Campaign Video]</span>
+      {/* Campaign photo on the right */}
+      <div className="relative w-full md:w-1/2 h-1/2 md:h-full bg-[#2a2a2a] overflow-hidden">
+        <img
+          src="/media/splash-photo.jpg"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/25" />
       </div>
       <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
         <Monogram color="#ffffff" size={70} className="mb-6" />

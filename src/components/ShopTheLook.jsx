@@ -5,10 +5,20 @@ import { formatPrice } from '../lib/shopify'
 import { useProducts } from '../context/ProductsContext'
 import { useLanguage } from '../i18n/LanguageContext'
 
+// Shopify handles of the pieces worn in the photo, in display order
+const LOOK_HANDLES = [
+  'the-stable-vest-dark-chocolate',
+  'the-signature-bombacha-heritage-check',
+  'the-saddle-shirt-vanilla-blush',
+]
+
+// Pulsing dots sit on the garments in the photo: vest, shirt, trousers.
+// The frame is 10% wider than the photo's 2:3 ratio and anchored to the top,
+// so only the very bottom of the photo is trimmed; the face never is.
 const dots = [
-  { top: '25%', left: '35%' },
-  { top: '55%', left: '60%' },
-  { top: '75%', left: '30%' },
+  { top: '50%', left: '74%' },
+  { top: '57%', left: '45%' },
+  { top: '86%', left: '40%' },
 ]
 
 export default function ShopTheLook() {
@@ -16,29 +26,43 @@ export default function ShopTheLook() {
   const navigate = useNavigate()
   const { products, loading } = useProducts()
   const { t } = useLanguage()
-  const featured = products.slice(0, 4)
+  // The pieces worn in the photo, in this order: vest, bombacha, shirt.
+  // Change the handles here if the photo changes.
+  const featured = LOOK_HANDLES
+    .map((handle) => products.find((p) => p.handle === handle))
+    .filter(Boolean)
 
   const scroll = (dir) => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: dir * 220, behavior: 'smooth' })
+      scrollRef.current.scrollBy({ left: dir * 351, behavior: 'smooth' })
     }
   }
 
   return (
     <section className="w-full" style={{ backgroundColor: '#f0e9e0' }}>
       <div className="flex flex-col md:flex-row" style={{ backgroundColor: '#f0e9e0' }}>
-        <div className="w-full md:w-1/2 min-h-[50vh] md:min-h-[80vh] bg-[#2a2a2a] relative flex items-center justify-center">
-          <span className="text-gray-500 font-playfair text-sm tracking-widest">[Model Image]</span>
-          {dots.map((pos, i) => (
-            <div
-              key={i}
-              className="absolute w-3 h-3 rounded-full bg-white dot-pulse"
-              style={{ top: pos.top, left: pos.left, animationDelay: `${i * 0.5}s` }}
+        {/* Photo frame sized by height, anchored to the top so the face is
+            never cropped. The column hugs the photo so the products sit
+            right beside it. */}
+        <div className="w-full md:w-auto md:shrink-0 flex items-center justify-center py-8 md:py-12 px-6 md:pl-28 md:pr-0">
+          <div className="relative h-[69vh] md:h-[92vh] aspect-[11/15] max-w-full overflow-hidden bg-[#2a2a2a]">
+            <img
+              src="/media/shop-the-look.jpg"
+              alt=""
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover object-top"
             />
-          ))}
+            {dots.map((pos, i) => (
+              <div
+                key={i}
+                className="absolute w-3 h-3 rounded-full bg-white dot-pulse"
+                style={{ top: pos.top, left: pos.left, animationDelay: `${i * 0.5}s` }}
+              />
+            ))}
+          </div>
         </div>
 
-        <div className="w-full md:w-1/2 px-6 py-10 md:p-12 flex flex-col justify-center" style={{ backgroundColor: '#f0e9e0' }}>
+        <div className="w-full md:flex-1 min-w-0 px-6 py-10 md:py-12 md:pl-14 md:pr-10 flex flex-col justify-center" style={{ backgroundColor: '#f0e9e0' }}>
           <h2 className="font-bodoni uppercase tracking-[0.2em] text-plum text-xl md:text-2xl mb-8 md:mb-12">
             {t('home.shopTheLook')}
           </h2>
@@ -50,8 +74,8 @@ export default function ShopTheLook() {
           >
             {loading &&
               [...Array(3)].map((_, i) => (
-                <div key={i} className="flex-shrink-0 w-[150px] md:w-[200px] cc-fade-in">
-                  <div className="w-[150px] h-[150px] md:w-[200px] md:h-[200px] bg-[#e5ded4]" />
+                <div key={i} className="flex-shrink-0 w-[247px] md:w-[331px] cc-fade-in">
+                  <div className="w-[247px] h-[247px] md:w-[331px] md:h-[331px] bg-[#e5ded4]" />
                   <div className="h-3 w-24 bg-[#e5ded4] mt-3" />
                   <div className="h-3 w-16 bg-[#e5ded4] mt-2" />
                 </div>
@@ -61,10 +85,10 @@ export default function ShopTheLook() {
               <button
                 key={item.handle}
                 onClick={() => navigate(`/product/${item.handle}`)}
-                className="flex-shrink-0 w-[150px] md:w-[200px] cursor-pointer bg-transparent border-none p-0 text-left"
+                className="flex-shrink-0 w-[247px] md:w-[331px] cursor-pointer bg-transparent border-none p-0 text-left"
                 style={{ scrollSnapAlign: 'start' }}
               >
-                <div className="w-[150px] h-[150px] md:w-[200px] md:h-[200px] bg-[#d4cec6] overflow-hidden">
+                <div className="w-[247px] h-[247px] md:w-[331px] md:h-[331px] bg-[#d4cec6] overflow-hidden">
                   {item.image && (
                     <img
                       src={item.image}

@@ -28,26 +28,35 @@ export default function Philosophy() {
         </div>
       </section>
 
-      {/* Manifesto — single reading column, copy in i18n/translations.js */}
+      {/* Manifesto — one photo on the left, the whole text on the right */}
       <section className="pb-16 md:pb-24 px-6 md:px-12">
-        <div className="max-w-xl mx-auto flex flex-col gap-6 text-center">
-          {t('philosophy.body').map((paragraph, i) => (
-            <p key={i} className="font-playfair text-dark/75 text-sm md:text-base leading-relaxed">
-              {paragraph}
-            </p>
-          ))}
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
+          <div className="aspect-[2/3] overflow-hidden bg-[#e5ded4]">
+            <img
+              src="/media/philosophy-1.jpg"
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          </div>
 
-          <div className="w-10 h-px bg-plum/30 mx-auto mt-6" />
-
-          <p className="font-playfair italic text-plum text-base md:text-lg mt-4">
-            {t('philosophy.closing')}
-          </p>
-          <div className="flex flex-col gap-2">
-            {t('philosophy.motto').map((line, i) => (
-              <span key={i} className="font-bodoni uppercase text-plum text-xs md:text-sm tracking-[0.2em]">
-                {line}
-              </span>
+          <div className="flex flex-col gap-6 md:max-w-md md:pl-4 md:-mt-[0.35em]">
+            {t('philosophy.body').map((paragraph, i) => (
+              <p key={i} className="font-playfair text-dark/75 text-sm md:text-base leading-relaxed">
+                {paragraph}
+              </p>
             ))}
+
+            <div className="w-10 h-px bg-plum/30 mt-4" />
+            <p className="font-playfair italic text-plum text-base md:text-lg">
+              {t('philosophy.closing')}
+            </p>
+            <div className="flex flex-col gap-2 -mt-2">
+              {t('philosophy.motto').map((line, i) => (
+                <span key={i} className="font-bodoni uppercase text-plum text-xs md:text-sm tracking-[0.2em]">
+                  {line}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>

@@ -100,6 +100,27 @@ export function matchesCategory(product, section) {
   return (product.categoryTags || []).some((l) => wanted.includes(l))
 }
 
+// ---------- Naming ----------
+// Shopify titles carry the colour after a dash ("The Stable Vest - Sand") and
+// collaborations a "CC × RSC" prefix. Splitting them lets cards show the name
+// and colour on separate lines and lets colour versions find each other.
+const COLLAB_PREFIX = /^CC\s*×\s*RSC\s+/i
+
+function splitTitle(title) {
+  const i = title.lastIndexOf(' - ')
+  const base = i > 0 ? title.slice(0, i).trim() : title.trim()
+  const colour = i > 0 ? title.slice(i + 3).trim() : null
+  return {
+    baseName: base,                              // groups colour versions
+    displayName: base.replace(COLLAB_PREFIX, ''), // shown on cards
+    colour,
+  }
+}
+
+// Shopify's CDN resizes on the fly; grids don't need full-size photos.
+export const sizedImage = (url, width) =>
+  url ? `${url}${url.includes('?') ? '&' : '?'}width=${width}` : url
+
 // ---------- Normalisation ----------
 // Flattens Shopify's edges/node shape into the flat objects our
 // components already expect, so the UI layer stays unchanged.
@@ -146,6 +167,7 @@ function normalizeProduct(node) {
     id: node.handle,           // handle is the human-readable URL id
     shopifyId: node.id,
     name: node.title,
+    ...splitTitle(node.title),
     handle: node.handle,
     description: node.description,
     descriptionHtml: node.descriptionHtml,

@@ -9,6 +9,12 @@
 const en = {
   lang: { en: 'EN', it: 'IT', switchTo: 'Switch language' },
 
+  instagram: {
+    tagline: 'In & beyond the saddle',
+    follow: 'Follow us',
+    post: 'Instagram post',
+  },
+
   sections: {
     ALL: 'ALL',
     PANTS: 'PANTS',
@@ -27,6 +33,9 @@ const en = {
   },
 
   nav: {
+    shop: 'Collection',
+    philosophy: 'Philosophy',
+    news: 'CC News',
     menu: 'Menu',
     home: 'Casa Chevalier — home',
     search: 'Search',
@@ -66,6 +75,10 @@ const en = {
   },
 
   home: {
+    heroEyebrow: 'The Capsule Collection',
+    heroTitle: 'In & beyond the saddle',
+    heroCta: 'Shop the collection',
+    heroCta2: 'Our philosophy',
     interlude1: 'Equestrian elegance, shaped by Italian craftsmanship.',
     interlude2: 'From saddle to table.',
     shopTheLook: 'Shop the Look',
@@ -116,6 +129,7 @@ const en = {
     details: 'Details',
     detailsFallback: 'Handcrafted in Italy.',
     composition: 'Composition',
+    moreColours: '{count} colours',
     related: 'You May Also Like',
   },
 
@@ -289,6 +303,12 @@ const en = {
 const it = {
   lang: { en: 'EN', it: 'IT', switchTo: 'Cambia lingua' },
 
+  instagram: {
+    tagline: 'In & beyond the saddle',
+    follow: 'Seguici',
+    post: 'Post Instagram',
+  },
+
   sections: {
     ALL: 'TUTTO',
     PANTS: 'PANTALONI',
@@ -307,6 +327,9 @@ const it = {
   },
 
   nav: {
+    shop: 'Collezione',
+    philosophy: 'Filosofia',
+    news: 'CC News',
     menu: 'Menu',
     home: 'Casa Chevalier — home',
     search: 'Cerca',
@@ -346,6 +369,10 @@ const it = {
   },
 
   home: {
+    heroEyebrow: 'La Capsule Collection',
+    heroTitle: 'In & beyond the saddle',
+    heroCta: 'Scopri la collezione',
+    heroCta2: 'La nostra filosofia',
     // Homepage quotes stay in English in both languages, by brand choice.
     interlude1: 'Equestrian elegance, shaped by Italian craftsmanship.',
     interlude2: 'From saddle to table.',
@@ -397,6 +424,7 @@ const it = {
     details: 'Dettagli',
     detailsFallback: 'Realizzato a mano in Italia.',
     composition: 'Composizione',
+    moreColours: '{count} colori',
     related: 'Potrebbe piacerti anche',
   },
 
