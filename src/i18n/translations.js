@@ -62,6 +62,7 @@ const en = {
     news: 'CC News',
     legal: 'Legal',
     rights: '© 2026 Casa Chevalier. All rights reserved.',
+    companyDetails: 'B&M S.r.l. · Via Leonardo Bruni 25, 20158 Milano · VAT no. 03247930278',
   },
 
   common: {
@@ -215,22 +216,12 @@ const en = {
       {
         question: 'What is your shipping policy?',
         answer:
-          'Shipping costs €8 within Italy and €20 within the European Union, and is free on orders over €350. Orders are delivered within 7 days of purchase. Full details are in our Shipping & Returns policy.',
+          'Shipping costs €8 within Italy and €20 within the European Union, and is free on orders over €350. Orders are delivered within 7 working days of purchase, with BRT in Italy and DHL elsewhere. Full details are in our Shipping & Returns policy.',
       },
       {
         question: 'Can I return or exchange an item?',
         answer:
-          'Yes. You may withdraw from your purchase within 14 days of delivery. Items must be unworn and unwashed, with all original labels and tags attached. Your first return is free. To start a return, write to eshop@baldangroup.it.',
-      },
-      {
-        question: 'Do you offer made-to-measure services?',
-        answer:
-          'Select pieces from the Capsule Collection can be tailored to measure. Reach out to our concierge team in Milan to discuss availability and lead times.',
-      },
-      {
-        question: 'How do I care for my Casa Chevalier garments?',
-        answer:
-          'Each piece is delivered with detailed care instructions. In general, we recommend dry cleaning and storing garments away from direct sunlight.',
+          'Yes. You may withdraw from your purchase within 14 days of delivery. Items must be unworn and unwashed, with all original labels and tags attached. Return shipping is paid by the customer, unless the item is defective. To start a return, write to info@casachevalier.com.',
       },
       {
         question: 'How do I find my size?',
@@ -369,6 +360,7 @@ const it = {
     news: 'CC News',
     legal: 'Informazioni legali',
     rights: '© 2026 Casa Chevalier. Tutti i diritti riservati.',
+    companyDetails: 'B&M S.r.l. · Via Leonardo Bruni 25, 20158 Milano · P.IVA 03247930278',
   },
 
   common: {
@@ -523,22 +515,12 @@ const it = {
       {
         question: 'Quali sono le condizioni di spedizione?',
         answer:
-          "La spedizione costa 8 € in Italia e 20 € nei paesi dell’Unione Europea ed è gratuita per ordini superiori a 350 €. Gli ordini vengono consegnati entro 7 giorni dall’acquisto. Tutti i dettagli sono nella pagina Spedizioni e resi.",
+          "La spedizione costa 8 € in Italia e 20 € nei paesi dell’Unione Europea ed è gratuita per ordini superiori a 350 €. Gli ordini vengono consegnati entro 7 giorni lavorativi dall’acquisto, con BRT in Italia e DHL negli altri paesi. Tutti i dettagli sono nella pagina Spedizioni e resi.",
       },
       {
         question: 'Posso restituire o cambiare un articolo?',
         answer:
-          'Sì. Puoi recedere dall’acquisto entro 14 giorni dalla consegna. I capi devono essere non indossati e non lavati, con tutte le etichette e i cartellini originali. Il primo reso è gratuito. Per avviare un reso scrivi a eshop@baldangroup.it.',
-      },
-      {
-        question: 'Offrite un servizio su misura?',
-        answer:
-          'Alcuni capi della Capsule Collection possono essere realizzati su misura. Contatta il nostro team concierge a Milano per disponibilità e tempi di realizzazione.',
-      },
-      {
-        question: 'Come devo prendermi cura dei capi Casa Chevalier?',
-        answer:
-          'Ogni capo viene consegnato con istruzioni di cura dettagliate. In generale, consigliamo il lavaggio a secco e di conservare i capi lontano dalla luce diretta del sole.',
+          'Sì. Puoi recedere dall’acquisto entro 14 giorni dalla consegna. I capi devono essere non indossati e non lavati, con tutte le etichette e i cartellini originali. Le spese di reso sono a carico del cliente, salvo in caso di prodotto difettoso. Per avviare un reso scrivi a info@casachevalier.com.',
       },
       {
         question: 'Come trovo la mia taglia?',

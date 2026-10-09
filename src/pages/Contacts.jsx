@@ -7,7 +7,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 
 const details = [
   { icon: Mail, label: 'email', value: 'Info@casachevalier.com' },
-  { icon: Phone, label: 'telephone', value: '+39 23935831' },
+  { icon: Phone, label: 'telephone', value: '+39 02 393 5831' },
   { icon: MapPin, label: 'atelier', valueKey: 'address' },
 ]
 

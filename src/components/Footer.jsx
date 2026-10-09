@@ -135,6 +135,9 @@ export default function Footer() {
         <p className="font-playfair text-white/50 text-xs">
           {t('footer.rights')}
         </p>
+        <p className="font-playfair text-white/50 text-xs mt-2">
+          {t('footer.companyDetails')}
+        </p>
       </div>
     </footer>
   )

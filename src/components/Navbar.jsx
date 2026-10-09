@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Search, Heart, User, ShoppingBag, X } from 'lucide-react'
+import { Search, Heart, ShoppingBag, X } from 'lucide-react'
 import { useProducts } from '../context/ProductsContext'
 import Wordmark from './Wordmark'
 import { useCart } from '../context/CartContext'
@@ -116,9 +116,11 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
             )}
           </Link>
 
+          {/* Account hidden until customer accounts exist (re-add User to the
+              lucide-react import when restoring)
           <Link to="/account" aria-label={t('nav.account')}>
             <User className={`w-4 h-4 md:w-5 md:h-5 cursor-pointer transition-colors duration-500 ${fg}`} />
-          </Link>
+          </Link> */}
 
           <Link to="/shop" aria-label={t('nav.bag')} className="relative">
             <ShoppingBag className={`w-4 h-4 md:w-5 md:h-5 cursor-pointer transition-colors duration-500 ${fg}`} />
