@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import { Heart, Plus, Minus } from 'lucide-react'
 import DOMPurify from 'dompurify'
 import Navbar from '../components/Navbar'
@@ -7,7 +7,8 @@ import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
 import SizeGuide from '../components/SizeGuide'
 import { sizeGuideFor, TEXT as SIZE_TEXT } from '../data/sizeGuide'
-import { formatPrice } from '../lib/shopify'
+import { formatPrice, sizedImage } from '../lib/shopify'
+import { swatchFor } from '../data/colours'
 import { useProducts } from '../context/ProductsContext'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
@@ -27,7 +28,7 @@ const sanitizeDescription = (html) =>
 export default function ProductDetail() {
   const { id: handle } = useParams()
   const navigate = useNavigate()
-  const { products, loading } = useProducts()
+  const { products, loading, colourVersions } = useProducts()
   const product = products.find((p) => p.handle === handle)
 
   const [menuOpen, setMenuOpen] = useState(false)
@@ -83,12 +84,22 @@ export default function ProductDetail() {
   // One-size products show a note instead of a size button
   const oneSizeNote = guide?.type === 'oneSize' && product.variants.length === 1
 
+  // A size chosen on another colour carries over only if it's available here
+  const keptSize = product.variants.some(
+    (v) => (v.options.Size || v.title) === chosenSize && v.available
+  )
+    ? chosenSize
+    : null
+
   // Single-variant products (no sizes, or one-size) select themselves.
   const size =
-    chosenSize ||
+    keptSize ||
     ((!product.hasSizes || oneSizeNote) && product.variants.length === 1
       ? product.variants[0].options.Size || product.variants[0].title
       : null)
+
+  // Colour versions of this piece ("The Stable Vest - Sand" / "- Dark Chocolate"), stable order
+  const colours = [product, ...colourVersions(product)].sort((a, b) => a.handle.localeCompare(b.handle))
 
   const gallery = product.images.length ? product.images : []
   const wished = hasWish(product.handle)
@@ -165,11 +176,47 @@ export default function ProductDetail() {
             </div>
 
             <h1 className="font-bodoni text-dark text-2xl md:text-3xl leading-tight mt-3">
-              {product.name}
+              {colours.length > 1 ? product.displayName : product.name}
             </h1>
             <p className="font-playfair text-plum text-lg mt-3">
               {formatPrice(product.price, product.currency)}
             </p>
+
+            {/* Colour — one swatch per colour version of this piece */}
+            {colours.length > 1 && (
+              <div className="mt-8">
+                <span className="block font-bodoni uppercase text-dark text-xs tracking-[0.15em] mb-3">
+                  {t('product.colour')}
+                  <span className="font-playfair normal-case italic tracking-normal text-dark/60 ml-2">
+                    {product.colour}
+                  </span>
+                </span>
+                <div className="flex gap-2">
+                  {colours.map((c) => {
+                    const current = c.handle === product.handle
+                    const hex = swatchFor(c.colour)
+                    return (
+                      <Link
+                        key={c.handle}
+                        to={`/product/${c.handle}`}
+                        replace
+                        aria-label={c.colour}
+                        aria-current={current ? 'true' : undefined}
+                        title={c.colour}
+                        className={`block w-12 h-8 p-[3px] border transition-colors ${
+                          current ? 'border-plum' : 'border-transparent hover:border-plum/40'
+                        }`}
+                      >
+                        <span
+                          className="block w-full h-full bg-[#e5ded4] bg-cover bg-center border border-dark/10"
+                          style={hex ? { backgroundColor: hex } : { backgroundImage: `url(${sizedImage(c.image, 120)})` }}
+                        />
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* One-size products: fit note in place of the size buttons */}
             {oneSizeNote && (

@@ -142,6 +142,7 @@ const en = {
     detailsFallback: 'Handcrafted in Italy.',
     composition: 'Composition',
     moreColours: '{count} colours',
+    colour: 'Colour',
     related: 'You May Also Like',
   },
 
@@ -449,6 +450,7 @@ const it = {
     detailsFallback: 'Realizzato a mano in Italia.',
     composition: 'Composizione',
     moreColours: '{count} colori',
+    colour: 'Colore',
     related: 'Potrebbe piacerti anche',
   },
 

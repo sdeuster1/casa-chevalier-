@@ -6,6 +6,12 @@ import { useProducts } from '../context/ProductsContext'
 import { useLanguage } from '../i18n/LanguageContext'
 
 // Shopify handles of the pieces worn in the photo, in display order
+// Where each card photo is framed in its square (CSS object-position).
+// The shirt sits lower so the frame starts at the neck, not the face.
+const CARD_FOCUS = {
+  'the-saddle-shirt-vanilla-blush': 'center 78%',
+}
+
 const LOOK_HANDLES = [
   'the-stable-vest-dark-chocolate',
   'the-signature-bombacha-heritage-check',
@@ -94,6 +100,7 @@ export default function ShopTheLook() {
                       src={item.image}
                       alt={item.name}
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                      style={{ objectPosition: CARD_FOCUS[item.handle] || 'center' }}
                     />
                   )}
                 </div>
