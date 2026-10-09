@@ -2,14 +2,17 @@ import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 import Monogram from './Monogram'
 import { useLanguage } from '../i18n/LanguageContext'
+import { subscribeToNewsletter, PRIVACY_POLICY_URL } from '../lib/newsletter'
 
 const STORAGE_KEY = 'cc_newsletter_dismissed'
 
 export default function NewsletterPopup() {
   const [isOpen, setIsOpen] = useState(false)
   const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-  const { t } = useLanguage()
+  const [website, setWebsite] = useState('') // hidden anti-spam field
+  const [status, setStatus] = useState('idle') // idle | sending | done | invalid_email | error
+  const { t, lang } = useLanguage()
+  const submitted = status === 'done'
 
   useEffect(() => {
     const dismissed = localStorage.getItem(STORAGE_KEY)
@@ -24,12 +27,16 @@ export default function NewsletterPopup() {
     localStorage.setItem(STORAGE_KEY, 'true')
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!email) return
-    setSubmitted(true)
-    localStorage.setItem(STORAGE_KEY, 'true')
-    setTimeout(close, 1800)
+    if (!email || status === 'sending') return
+    setStatus('sending')
+    const result = await subscribeToNewsletter({ email, locale: lang, source: 'popup', website })
+    setStatus(result === 'ok' ? 'done' : result)
+    if (result === 'ok') {
+      localStorage.setItem(STORAGE_KEY, 'true')
+      setTimeout(close, 2600)
+    }
   }
 
   if (!isOpen) return null
@@ -71,7 +78,7 @@ export default function NewsletterPopup() {
               {t('newsletter.body')}
             </p>
 
-            <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6">
+            <form onSubmit={handleSubmit} className="relative w-full flex flex-col gap-6">
               <input
                 type="email"
                 required
@@ -80,12 +87,35 @@ export default function NewsletterPopup() {
                 placeholder={t('newsletter.emailPlaceholder')}
                 className="bg-transparent text-cream placeholder-cream/50 font-playfair text-sm py-2 w-full outline-none border-0 border-b border-cream/50 text-center"
               />
+              {/* Hidden from people; bots that fill it in are ignored */}
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+                className="absolute -left-[9999px] w-px h-px opacity-0"
+                aria-hidden="true"
+              />
               <button
                 type="submit"
-                className="font-bodoni uppercase text-plum bg-cream text-xs tracking-[0.2em] py-3 px-6 cursor-pointer hover:opacity-90 transition-opacity duration-300"
+                disabled={status === 'sending'}
+                className="font-bodoni uppercase text-plum bg-cream text-xs tracking-[0.2em] py-3 px-6 cursor-pointer hover:opacity-90 transition-opacity duration-300 disabled:opacity-60"
               >
-                {t('newsletter.claim')}
+                {status === 'sending' ? t('newsletter.sending') : t('newsletter.claim')}
               </button>
+              {(status === 'invalid_email' || status === 'error') && (
+                <p className="font-playfair italic text-coral text-xs -mt-3" role="alert">
+                  {t(status === 'invalid_email' ? 'newsletter.invalidEmail' : 'newsletter.error')}
+                </p>
+              )}
+              <p className="font-playfair text-cream/55 text-[11px] leading-relaxed -mt-1">
+                {t('newsletter.consent')}{' '}
+                <a href={PRIVACY_POLICY_URL} target="_blank" rel="noopener noreferrer" className="underline text-cream/75 hover:text-cream">
+                  {t('newsletter.privacy')}
+                </a>
+              </p>
             </form>
 
             <button

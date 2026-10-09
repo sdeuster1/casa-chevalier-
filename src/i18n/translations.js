@@ -100,6 +100,11 @@ const en = {
     emailPlaceholder: 'Your email',
     claim: 'Claim My 10%',
     decline: 'No, thank you',
+    sending: 'Sending…',
+    invalidEmail: 'Please enter a valid email address.',
+    error: 'Something went wrong. Please try again in a moment.',
+    consent: 'By subscribing you agree to receive emails from Casa Chevalier. You can unsubscribe at any time.',
+    privacy: 'Privacy Policy',
   },
 
   products: {
@@ -395,6 +400,11 @@ const it = {
     emailPlaceholder: 'La tua email',
     claim: 'Ottieni il 10%',
     decline: 'No, grazie',
+    sending: 'Invio in corso…',
+    invalidEmail: 'Inserisci un indirizzo email valido.',
+    error: 'Si è verificato un errore. Riprova tra qualche istante.',
+    consent: 'Iscrivendoti accetti di ricevere email da Casa Chevalier. Puoi annullare l’iscrizione in qualsiasi momento.',
+    privacy: 'Informativa sulla privacy',
   },
 
   products: {
