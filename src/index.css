@@ -80,3 +80,30 @@ body {
 /* Horizontal rows scroll without a visible bar */
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Legal documents (src/pages/Legal.jsx): headings and links inside Shopify text */
+.cc-legal h2,
+.cc-legal h3 {
+  font-family: var(--font-bodoni);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-plum);
+  font-size: 0.8125rem;
+  margin: 2.25em 0 0.9em;
+}
+.cc-legal h2:first-child,
+.cc-legal h3:first-child {
+  margin-top: 0;
+}
+.cc-legal p + p {
+  margin-top: 0.85em;
+}
+.cc-legal ul,
+.cc-legal ol {
+  margin: 0.85em 0;
+}
+.cc-legal a {
+  color: var(--color-plum);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

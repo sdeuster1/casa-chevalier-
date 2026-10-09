@@ -19,7 +19,12 @@ import {
 const SITE_URL = 'https://casachevalier.com'
 
 // Indexable pages. Excluded on purpose: / (splash), /shop, /wishlist, /account.
-const STATIC_PATHS = ['/home', '/products', '/philosophy', '/news', '/faq', '/contacts']
+const STATIC_PATHS = [
+  '/home', '/products', '/philosophy', '/news', '/faq', '/contacts',
+  // Legal pages (src/lib/legal.js)
+  '/policies/shipping-policy', '/policies/refund-policy', '/policies/terms-of-service',
+  '/policies/privacy-policy', '/pages/cookie-policy', '/pages/accessibility-statement',
+]
 
 const OUTPUT = fileURLToPath(new URL('../public/sitemap.xml', import.meta.url))
 

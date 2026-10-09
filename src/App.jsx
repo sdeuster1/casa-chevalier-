@@ -10,6 +10,7 @@ import Philosophy from './pages/Philosophy'
 import Shop from './pages/Shop'
 import Account from './pages/Account'
 import Wishlist from './pages/Wishlist'
+import Legal from './pages/Legal'
 import HorseTransition from './components/HorseTransition'
 import { ProductsProvider } from './context/ProductsContext'
 import { CartProvider } from './context/CartContext'
@@ -36,6 +37,8 @@ export default function App() {
                 <Route path="/shop" element={<Shop />} />
                 <Route path="/account" element={<Account />} />
                 <Route path="/wishlist" element={<Wishlist />} />
+                <Route path="/policies/:handle" element={<Legal />} />
+                <Route path="/pages/:handle" element={<Legal />} />
               </Routes>
             </WishlistProvider>
           </CartProvider>

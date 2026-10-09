@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { subscribeToNewsletter, PRIVACY_POLICY_URL } from '../lib/newsletter'
 import { useLanguage } from '../i18n/LanguageContext'
+import { LEGAL_DOCUMENTS } from '../lib/legal'
 
 const columns = [
   {
@@ -23,6 +24,11 @@ const columns = [
 
 export default function Footer() {
   const { t, lang } = useLanguage()
+  // Legal pages: titles come from src/lib/legal.js in the current language
+  const legalColumn = {
+    title: 'legal',
+    links: LEGAL_DOCUMENTS.map((d) => ({ text: d.title[lang] ?? d.title.en, to: d.path })),
+  }
   const [email, setEmail] = useState('')
   const [website, setWebsite] = useState('') // hidden anti-spam field
   const [status, setStatus] = useState('idle') // idle | sending | done | invalid_email | error
@@ -101,20 +107,20 @@ export default function Footer() {
         </div>
 
         {/* Link columns — sit right next to Subscribe */}
-        <div className="grid grid-cols-2 gap-8 md:gap-10">
-          {columns.map((col) => (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-10">
+          {[...columns, legalColumn].map((col) => (
             <div key={col.title}>
               <h4 className="font-bodoni text-white uppercase text-xs md:text-sm mb-3 md:mb-4 tracking-[0.1em]">
                 {t(`footer.${col.title}`)}
               </h4>
               <ul className="list-none p-0 m-0 flex flex-col gap-2">
                 {col.links.map((link) => (
-                  <li key={link.label}>
+                  <li key={link.to}>
                     <Link
                       to={link.to}
                       className="font-playfair text-white/70 text-xs hover:text-white transition-colors duration-300 no-underline"
                     >
-                      {t(`footer.${link.label}`)}
+                      {link.text ?? t(`footer.${link.label}`)}
                     </Link>
                   </li>
                 ))}

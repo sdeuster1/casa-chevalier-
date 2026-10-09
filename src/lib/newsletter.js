@@ -1,8 +1,7 @@
 // Sends a newsletter sign-up to /api/subscribe (api/subscribe.js), which
 // saves it in Shopify → Customers with email-marketing consent.
 // Resolves to 'ok' | 'invalid_email' | 'error'.
-export const PRIVACY_POLICY_URL =
-  'https://casachevalier.myshopify.com/policies/privacy-policy'
+export const PRIVACY_POLICY_URL = '/policies/privacy-policy'
 
 export async function subscribeToNewsletter({ email, locale, source, website = '' }) {
   try {

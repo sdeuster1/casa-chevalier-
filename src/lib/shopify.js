@@ -214,6 +214,28 @@ export async function fetchProductByHandle(handle) {
   return normalizeProduct(data.product)
 }
 
+// ---------- Legal documents ----------
+// A store policy (shippingPolicy, refundPolicy, termsOfService, privacyPolicy)
+// or an Online Store page, in the current language. Returns its HTML body.
+
+export async function fetchLegalBody({ policy, page }) {
+  if (policy) {
+    const data = await shopifyFetch(
+      `query Policy($language: LanguageCode) @inContext(language: $language) {
+        shop { ${policy} { body } }
+      }`
+    )
+    return data.shop[policy]?.body || ''
+  }
+  const data = await shopifyFetch(
+    `query Page($handle: String!, $language: LanguageCode) @inContext(language: $language) {
+      page(handle: $handle) { body }
+    }`,
+    { handle: page }
+  )
+  return data.page?.body || ''
+}
+
 // ---------- Cart ----------
 
 const CART_FIELDS = `

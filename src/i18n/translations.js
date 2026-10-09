@@ -60,6 +60,7 @@ const en = {
     faq: 'FAQ',
     philosophy: 'Our Philosophy',
     news: 'CC News',
+    legal: 'Legal',
     rights: '© 2026 Casa Chevalier. All rights reserved.',
   },
 
@@ -89,6 +90,12 @@ const en = {
       { category: 'EDITORIAL', title: 'Spring Summer 2026 Campaign' },
       { category: 'EVENTS', title: 'Casa Chevalier at Milano Fashion Week' },
     ],
+  },
+
+  legal: {
+    notFound: 'Page not found',
+    error: 'This page is momentarily unavailable. Please try again shortly.',
+    backHome: 'Back to home',
   },
 
   newsletter: {
@@ -207,12 +214,12 @@ const en = {
       {
         question: 'What is your shipping policy?',
         answer:
-          'We offer complimentary shipping on all orders within the EU. International orders are delivered within 5-10 business days via our courier partners.',
+          'Shipping costs €8 within Italy and €20 within the European Union, and is free on orders over €350. Orders are delivered within 7 days of purchase. Full details are in our Shipping & Returns policy.',
       },
       {
         question: 'Can I return or exchange an item?',
         answer:
-          'Yes. Unworn items may be returned within 30 days of delivery for a full refund or exchange. Please contact our concierge team to arrange a return.',
+          'Yes. You may withdraw from your purchase within 14 days of delivery. Items must be unworn and unwashed, with all original labels and tags attached. Your first return is free. To start a return, write to eshop@baldangroup.it.',
       },
       {
         question: 'Do you offer made-to-measure services?',
@@ -232,7 +239,7 @@ const en = {
       {
         question: 'Do you ship internationally?',
         answer:
-          'Yes. We deliver worldwide via our courier partners. Duties and taxes for orders outside the EU are calculated at checkout.',
+          'Yes. Outside the European Union, including the United Kingdom and Switzerland, shipping costs €60 and is free on orders over €600. Customs duties, import taxes and other local charges are not included and are paid by the customer.',
       },
     ],
   },
@@ -359,6 +366,7 @@ const it = {
     faq: 'FAQ',
     philosophy: 'La nostra filosofia',
     news: 'CC News',
+    legal: 'Informazioni legali',
     rights: '© 2026 Casa Chevalier. Tutti i diritti riservati.',
   },
 
@@ -389,6 +397,12 @@ const it = {
       { category: 'EDITORIALE', title: 'Campagna Primavera Estate 2026' },
       { category: 'EVENTI', title: 'Casa Chevalier alla Milano Fashion Week' },
     ],
+  },
+
+  legal: {
+    notFound: 'Pagina non trovata',
+    error: 'Questa pagina è momentaneamente non disponibile. Riprova tra poco.',
+    backHome: 'Torna alla home',
   },
 
   newsletter: {
@@ -507,12 +521,12 @@ const it = {
       {
         question: 'Quali sono le condizioni di spedizione?',
         answer:
-          "La spedizione è gratuita per tutti gli ordini all'interno dell'UE. Gli ordini internazionali vengono consegnati in 5-10 giorni lavorativi tramite i nostri corrieri partner.",
+          "La spedizione costa 8 € in Italia e 20 € nei paesi dell’Unione Europea ed è gratuita per ordini superiori a 350 €. Gli ordini vengono consegnati entro 7 giorni dall’acquisto. Tutti i dettagli sono nella pagina Spedizioni e resi.",
       },
       {
         question: 'Posso restituire o cambiare un articolo?',
         answer:
-          'Sì. I capi non indossati possono essere restituiti entro 30 giorni dalla consegna per un rimborso completo o un cambio. Contatta il nostro team concierge per organizzare il reso.',
+          'Sì. Puoi recedere dall’acquisto entro 14 giorni dalla consegna. I capi devono essere non indossati e non lavati, con tutte le etichette e i cartellini originali. Il primo reso è gratuito. Per avviare un reso scrivi a eshop@baldangroup.it.',
       },
       {
         question: 'Offrite un servizio su misura?',
@@ -532,7 +546,7 @@ const it = {
       {
         question: 'Spedite in tutto il mondo?',
         answer:
-          "Sì. Consegniamo in tutto il mondo tramite i nostri corrieri partner. Dazi e tasse per gli ordini al di fuori dell'UE vengono calcolati al checkout.",
+          "Sì. Al di fuori dell’Unione Europea, inclusi Regno Unito e Svizzera, la spedizione costa 60 € ed è gratuita per ordini superiori a 600 €. Dazi doganali, imposte di importazione e altri oneri locali non sono inclusi e sono a carico del cliente.",
       },
     ],
   },
