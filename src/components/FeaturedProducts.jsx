@@ -1,11 +1,21 @@
 import { useProducts } from '../context/ProductsContext'
 import ProductCard from './ProductCard'
 
+// Shopify handles of the four pieces shown on the homepage, in order.
+const FEATURED_HANDLES = [
+  'test-blazer',
+  'the-stable-vest-dark-chocolate',
+  'cc-rsc-the-timeless-polo-rust-cream',
+  'the-saddle-shirt-vanilla-blush',
+]
+
 // Homepage row of four pieces with name, colour and price. The grid spans
 // 92% of the page width on desktop.
 export default function FeaturedProducts() {
   const { products, loading } = useProducts()
-  const featured = products.slice(0, 4)
+  const featured = FEATURED_HANDLES
+    .map((handle) => products.find((p) => p.handle === handle))
+    .filter(Boolean)
 
   return (
     <section className="w-full bg-cream py-16 md:py-24 px-4 md:px-10">

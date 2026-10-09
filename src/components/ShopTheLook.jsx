@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { formatPrice } from '../lib/shopify'
 import { useProducts } from '../context/ProductsContext'
@@ -18,13 +18,14 @@ const LOOK_HANDLES = [
   'the-saddle-shirt-vanilla-blush',
 ]
 
-// Pulsing dots sit on the garments in the photo: vest, shirt, trousers.
+// Pulsing dots sit on the garments in the photo and link to each piece:
+// vest, shirt, trousers.
 // The frame is 10% wider than the photo's 2:3 ratio and anchored to the top,
 // so only the very bottom of the photo is trimmed; the face never is.
 const dots = [
-  { top: '50%', left: '74%' },
-  { top: '57%', left: '45%' },
-  { top: '86%', left: '40%' },
+  { top: '50%', left: '74%', handle: 'the-stable-vest-dark-chocolate' },
+  { top: '57%', left: '45%', handle: 'the-saddle-shirt-vanilla-blush' },
+  { top: '86%', left: '40%', handle: 'the-signature-bombacha-heritage-check' },
 ]
 
 export default function ShopTheLook() {
@@ -58,13 +59,26 @@ export default function ShopTheLook() {
               loading="lazy"
               className="absolute inset-0 w-full h-full object-cover object-top"
             />
-            {dots.map((pos, i) => (
-              <div
-                key={i}
-                className="absolute w-3 h-3 rounded-full bg-white dot-pulse"
-                style={{ top: pos.top, left: pos.left, animationDelay: `${i * 0.5}s` }}
-              />
-            ))}
+            {/* Each dot sits in a larger invisible tap target, shifted so the
+                dot itself stays exactly where it was. */}
+            {dots.map((dot, i) => {
+              const name = products.find((p) => p.handle === dot.handle)?.name
+              return (
+                <Link
+                  key={dot.handle}
+                  to={`/product/${dot.handle}`}
+                  aria-label={name}
+                  title={name}
+                  className="group absolute w-8 h-8 flex items-center justify-center"
+                  style={{ top: dot.top, left: dot.left, transform: 'translate(-10px, -10px)' }}
+                >
+                  <span
+                    className="block w-3 h-3 rounded-full bg-white dot-pulse group-hover:scale-150 transition-transform duration-300"
+                    style={{ animationDelay: `${i * 0.5}s` }}
+                  />
+                </Link>
+              )
+            })}
           </div>
         </div>
 

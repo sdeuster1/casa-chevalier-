@@ -78,7 +78,8 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
           <div className={`hidden xl:flex items-center gap-7 font-bodoni uppercase text-[11px] tracking-[0.2em] transition-colors duration-500 ${fg}`}>
             <Link to="/products" className="text-inherit no-underline hover:opacity-70 transition-opacity">{t('nav.shop')}</Link>
             <Link to="/philosophy" className="text-inherit no-underline hover:opacity-70 transition-opacity">{t('nav.philosophy')}</Link>
-            <Link to="/news" className="text-inherit no-underline hover:opacity-70 transition-opacity">{t('nav.news')}</Link>
+            {/* CC News hidden until there is news to show
+            <Link to="/news" className="text-inherit no-underline hover:opacity-70 transition-opacity">{t('nav.news')}</Link> */}
           </div>
         </div>
 

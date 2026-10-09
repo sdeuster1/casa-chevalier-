@@ -48,6 +48,11 @@ body {
   animation: pulse-dot 2s ease-in-out infinite;
 }
 
+/* Hovering a Shop the Look dot stops the pulse so it can grow instead */
+.group:hover > .dot-pulse {
+  animation: none;
+}
+
 /* Quiet fade for content arriving from the Shopify API */
 @keyframes cc-fade-in {
   from { opacity: 0; }
