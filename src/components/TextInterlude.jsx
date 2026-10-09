@@ -9,13 +9,13 @@ export default function TextInterlude({ text }) {
   return (
     <section className="w-full bg-plum py-10 md:py-14">
       <div className="flex flex-col items-center px-6">
-        <Monogram color="#c49fae" size={30} className="mb-4" />
-        <p className="font-playfair italic text-lilac text-xl text-center max-w-xl mx-auto">
+        <Monogram color="#f0e9e0" size={30} className="mb-4" />
+        <p className="font-playfair italic text-cream text-xl text-center max-w-xl mx-auto">
           {text}
         </p>
         <button
           onClick={() => navigate('/products')}
-          className="mt-5 font-playfair text-lilac text-sm tracking-[0.15em] underline hover:no-underline transition-all duration-300 cursor-pointer bg-transparent border-none"
+          className="mt-5 font-playfair text-cream text-sm tracking-[0.15em] underline hover:no-underline transition-all duration-300 cursor-pointer bg-transparent border-none"
         >
           {t('common.discover')}
         </button>

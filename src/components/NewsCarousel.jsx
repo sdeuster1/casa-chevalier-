@@ -12,7 +12,7 @@ export default function NewsCarousel() {
 
   return (
     <section className="w-full bg-plum py-16 md:py-24 overflow-hidden">
-      <h2 className="font-bodoni text-lilac text-xl md:text-2xl tracking-[0.1em] text-center mb-10 md:mb-16 uppercase px-4">
+      <h2 className="font-bodoni text-cream text-xl md:text-2xl tracking-[0.1em] text-center mb-10 md:mb-16 uppercase px-4">
         {t('home.newsTitle')}
       </h2>
 
@@ -22,7 +22,7 @@ export default function NewsCarousel() {
           className="bg-transparent border-none cursor-pointer p-2 flex-shrink-0 mt-28 md:mt-32"
           aria-label={t('common.previous')}
         >
-          <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-lilac" />
+          <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-cream" />
         </button>
 
         <div className="flex items-start justify-center gap-4 md:gap-6">
@@ -44,12 +44,12 @@ export default function NewsCarousel() {
                   className="bg-[#6b3550] relative flex items-center justify-center"
                   style={{ aspectRatio: '3/4' }}
                 >
-                  <span className="absolute top-4 left-4 font-playfair text-xs uppercase text-lilac border border-lilac px-4 py-2">
+                  <span className="absolute top-4 left-4 font-playfair text-xs uppercase text-cream border border-cream px-4 py-2">
                     {t('home.newsCta')}
                   </span>
                 </div>
                 <div className="mt-4 text-center px-2">
-                  <p className="font-playfair text-xs uppercase text-lilac tracking-widest">
+                  <p className="font-playfair text-xs uppercase text-cream tracking-widest">
                     {item.category}
                   </p>
                   <p className={`font-bodoni text-sm md:text-base text-[#f0e9e0] mt-2 uppercase tracking-[0.05em] transition-opacity duration-500 ${isCenter ? 'opacity-100' : 'opacity-50'}`}>
@@ -66,7 +66,7 @@ export default function NewsCarousel() {
           className="bg-transparent border-none cursor-pointer p-2 flex-shrink-0 mt-28 md:mt-32"
           aria-label={t('common.next')}
         >
-          <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-lilac" />
+          <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-cream" />
         </button>
       </div>
     </section>

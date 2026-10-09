@@ -74,7 +74,7 @@ export default function DropdownMenu({ isOpen, onClose }) {
                             : `/products?category=${encodeURIComponent(sub)}`
                         )
                       }}
-                      className="font-playfair text-lilac text-base cursor-pointer hover:text-[#f0e9e0] transition-colors duration-300 bg-transparent border-none p-0 text-left"
+                      className="font-playfair text-cream text-base cursor-pointer hover:opacity-70 transition-opacity duration-300 bg-transparent border-none p-0 text-left"
                     >
                       {t(`sections.${sub}`)}
                     </button>

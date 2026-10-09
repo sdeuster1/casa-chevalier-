@@ -163,7 +163,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
 
             <div className="w-full max-w-xl mt-8">
               {query.trim() && results.length === 0 && (
-                <p className="font-playfair italic text-lilac text-sm text-center">
+                <p className="font-playfair italic text-cream text-sm text-center">
                   {t('nav.noResults', { query })}
                 </p>
               )}
@@ -184,7 +184,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
                           className="w-14 h-16 object-cover bg-[#d4cec6]"
                         />
                         <div className="flex flex-col">
-                          <span className="font-playfair italic text-lilac text-[10px] tracking-[0.15em] uppercase">
+                          <span className="font-playfair italic text-cream text-[10px] tracking-[0.15em] uppercase">
                             {sectionLabel(p.section)}
                           </span>
                           <span className="font-bodoni uppercase tracking-[0.15em] text-sm text-cream">
@@ -197,7 +197,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
                 </ul>
               )}
               {!query.trim() && (
-                <p className="font-playfair italic text-lilac/60 text-sm text-center">
+                <p className="font-playfair italic text-cream/60 text-sm text-center">
                   {t('nav.startTyping')}
                 </p>
               )}

@@ -58,14 +58,14 @@ export default function NewsletterPopup() {
           <X className="w-4 h-4 text-cream" />
         </button>
 
-        <Monogram color="#c49fae" size={44} className="mb-6" />
+        <Monogram color="#f0e9e0" size={44} className="mb-6" />
 
         {submitted ? (
           <>
             <h2 className="font-bodoni uppercase text-cream text-xl tracking-[0.15em] mb-3">
               {t('newsletter.welcome')}
             </h2>
-            <p className="font-playfair italic text-lilac text-sm">
+            <p className="font-playfair italic text-cream text-sm">
               {t('newsletter.codeOnWay')}
             </p>
           </>
@@ -74,7 +74,7 @@ export default function NewsletterPopup() {
             <h2 className="font-bodoni uppercase text-cream text-xl md:text-2xl tracking-[0.15em] mb-3">
               {t('newsletter.title')}
             </h2>
-            <p className="font-playfair italic text-lilac text-sm mb-8 max-w-xs">
+            <p className="font-playfair italic text-cream text-sm mb-8 max-w-xs">
               {t('newsletter.body')}
             </p>
 
@@ -120,7 +120,7 @@ export default function NewsletterPopup() {
 
             <button
               onClick={close}
-              className="mt-6 font-playfair text-lilac text-xs underline hover:no-underline transition-all duration-300 cursor-pointer bg-transparent border-none"
+              className="mt-6 font-playfair text-cream text-xs underline hover:no-underline transition-all duration-300 cursor-pointer bg-transparent border-none"
             >
               {t('newsletter.decline')}
             </button>
