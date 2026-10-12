@@ -7,7 +7,7 @@ export default function TextInterlude({ text }) {
   const { t } = useLanguage()
 
   return (
-    <section className="w-full bg-plum py-10 md:py-14">
+    <section className="w-full bg-plum py-[30px] md:py-[45px]">
       <div className="flex flex-col items-center px-6">
         <Monogram color="#f0e9e0" size={30} className="mb-4" />
         <p className="font-playfair italic text-cream text-xl text-center max-w-xl mx-auto">
