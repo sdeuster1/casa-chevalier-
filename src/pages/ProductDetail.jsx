@@ -176,7 +176,7 @@ export default function ProductDetail() {
             </div>
 
             <h1 className="font-bodoni text-dark text-2xl md:text-3xl leading-tight mt-3">
-              {colours.length > 1 ? product.displayName : product.name}
+              {product.name}
             </h1>
             <p className="font-playfair text-plum text-lg mt-3">
               {formatPrice(product.price, product.currency)}

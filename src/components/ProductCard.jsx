@@ -66,12 +66,11 @@ export default function ProductCard({ product, highlighted = false, cardRef }) {
 
       <Link to={to} className="pt-4 flex flex-col gap-1 no-underline">
         <span className="font-bodoni uppercase tracking-[0.14em] text-[11px] md:text-xs text-dark leading-snug">
-          {product.displayName}
+          {product.name}
         </span>
-        {product.colour && (
+        {colours > 1 && (
           <span className="font-playfair italic text-dark/55 text-xs">
-            {product.colour}
-            {colours > 1 && <span className="not-italic"> · {t('product.moreColours', { count: colours })}</span>}
+            {t('product.moreColours', { count: colours })}
           </span>
         )}
         <span className="font-playfair text-plum text-sm mt-1">
