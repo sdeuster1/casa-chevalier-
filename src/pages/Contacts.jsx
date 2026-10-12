@@ -5,8 +5,10 @@ import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
 import { useLanguage } from '../i18n/LanguageContext'
 
+const CONTACT_EMAIL = 'info@casachevalier.com'
+
 const details = [
-  { icon: Mail, label: 'email', value: 'Info@casachevalier.com' },
+  { icon: Mail, label: 'email', value: CONTACT_EMAIL },
   { icon: Phone, label: 'telephone', value: '+39 02 393 5831' },
   { icon: MapPin, label: 'atelier', valueKey: 'address' },
 ]
@@ -14,20 +16,6 @@ const details = [
 export default function Contacts() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { t } = useLanguage()
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
-  const [sent, setSent] = useState(false)
-
-  const setField = (k) => (e) => setForm({ ...form, [k]: e.target.value })
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setSent(true)
-    setTimeout(() => {
-      setSent(false)
-      setForm({ name: '', email: '', subject: '', message: '' })
-    }, 3000)
-  }
-
   return (
     <div className="min-h-screen bg-cream">
       <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} variant="dark" />
@@ -72,50 +60,27 @@ export default function Contacts() {
               </div>
             </div>
 
-            {/* Right: contact form */}
-            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-              <Field label={t('contacts.name')} value={form.name} onChange={setField('name')} required />
-              <Field label={t('contacts.email')} type="email" value={form.email} onChange={setField('email')} required />
-              <Field label={t('contacts.subject')} value={form.subject} onChange={setField('subject')} required />
-              <label className="flex flex-col gap-1">
-                <span className="font-playfair italic text-dark/60 text-xs">{t('contacts.message')}</span>
-                <textarea
-                  required
-                  rows={5}
-                  value={form.message}
-                  onChange={setField('message')}
-                  className="bg-transparent text-dark font-playfair text-sm py-2 w-full outline-none border-0 border-b border-dark/30 focus:border-plum transition-colors resize-none"
-                />
-              </label>
-              <button
-                type="submit"
-                className="mt-4 self-start font-bodoni uppercase text-cream bg-plum text-xs tracking-[0.2em] py-3 px-8 cursor-pointer hover:opacity-90 transition-opacity duration-300"
+            {/* Right: email prompt. Messages go straight to the inbox, so
+                nothing a customer sends can get lost. */}
+            <div className="flex flex-col items-start">
+              <h3 className="font-bodoni uppercase text-dark text-sm tracking-[0.15em] mb-3">
+                {t('contacts.writeTitle')}
+              </h3>
+              <p className="font-playfair text-dark/70 text-sm max-w-sm">
+                {t('contacts.writeBody')}
+              </p>
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="mt-8 font-bodoni uppercase text-cream bg-plum text-xs tracking-[0.2em] py-3 px-8 no-underline hover:opacity-90 transition-opacity duration-300"
               >
-                {sent ? t('contacts.sent') : t('contacts.send')}
-              </button>
-              {sent && (
-                <p className="font-playfair italic text-plum text-sm">
-                  {t('contacts.thanks')}
-                </p>
-              )}
-            </form>
+                {t('contacts.writeButton')}
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
       <Footer />
     </div>
-  )
-}
-
-function Field({ label, className = '', ...rest }) {
-  return (
-    <label className={`flex flex-col gap-1 ${className}`}>
-      <span className="font-playfair italic text-dark/60 text-xs">{label}</span>
-      <input
-        {...rest}
-        className="bg-transparent text-dark font-playfair text-sm py-2 w-full outline-none border-0 border-b border-dark/30 focus:border-plum transition-colors"
-      />
-    </label>
   )
 }

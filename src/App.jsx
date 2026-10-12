@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Splash from './pages/Splash'
 import Home from './pages/Home'
 import Products from './pages/Products'
@@ -8,7 +8,6 @@ import FAQ from './pages/FAQ'
 import News from './pages/News'
 import Philosophy from './pages/Philosophy'
 import Shop from './pages/Shop'
-import Account from './pages/Account'
 import Wishlist from './pages/Wishlist'
 import Legal from './pages/Legal'
 import HorseTransition from './components/HorseTransition'
@@ -35,7 +34,8 @@ export default function App() {
                 <Route path="/news" element={<News />} />
                 <Route path="/philosophy" element={<Philosophy />} />
                 <Route path="/shop" element={<Shop />} />
-                <Route path="/account" element={<Account />} />
+                {/* No customer accounts yet: old links go to the homepage */}
+                <Route path="/account" element={<Navigate to="/home" replace />} />
                 <Route path="/wishlist" element={<Wishlist />} />
                 <Route path="/policies/:handle" element={<Legal />} />
                 <Route path="/pages/:handle" element={<Legal />} />
