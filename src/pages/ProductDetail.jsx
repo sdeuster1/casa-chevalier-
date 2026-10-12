@@ -376,7 +376,7 @@ export default function ProductDetail() {
               {related.map((p) => (
                 <button
                   key={p.handle}
-                  onClick={() => { navigate(`/product/${p.handle}`); window.scrollTo(0, 0) }}
+                  onClick={() => navigate(`/product/${p.handle}`)}
                   className="flex flex-col group bg-transparent border-none p-0 text-left cursor-pointer"
                 >
                   <div className="aspect-[3/4] overflow-hidden bg-[#d4cec6]">

@@ -34,8 +34,6 @@ export default function Legal() {
     return () => { cancelled = true }
   }, [doc, key])
 
-  useEffect(() => { window.scrollTo(0, 0) }, [pathname])
-
   const ready = result.key === key
   const title = doc ? doc.title[lang] ?? doc.title.en : ''
 
