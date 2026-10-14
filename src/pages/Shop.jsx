@@ -170,6 +170,10 @@ export default function Shop() {
                 <p className="font-playfair italic text-dark/50 text-xs">
                   {t('bag.taxes')}
                 </p>
+                <ul className="font-playfair text-plum text-xs leading-relaxed flex flex-col gap-1 mt-1">
+                  <li>{t('bag.freeShippingEu')}</li>
+                  <li>{t('bag.freeShippingIntl')}</li>
+                </ul>
                 <div className="border-t border-plum/20 my-3" />
                 <button
                   onClick={handleCheckout}
