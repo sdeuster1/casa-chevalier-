@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
 import { useWishlist } from '../context/WishlistContext'
-import { formatPrice } from '../lib/shopify'
+import { formatPrice, photoFocus } from '../lib/shopify'
 import { useLanguage } from '../i18n/LanguageContext'
 
 export default function Wishlist() {
@@ -50,6 +50,7 @@ export default function Wishlist() {
                       src={product.image}
                       alt={product.name}
                       className="w-full h-full object-cover"
+                      style={{ objectPosition: photoFocus(product) }}
                     />
                     <button
                       onClick={() => remove(product.handle)}

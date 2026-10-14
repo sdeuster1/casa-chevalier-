@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Heart } from 'lucide-react'
-import { formatPrice, sizedImage } from '../lib/shopify'
+import { formatPrice, photoFocus, sizedImage } from '../lib/shopify'
 import { useWishlist } from '../context/WishlistContext'
 import { useProducts } from '../context/ProductsContext'
 import { useLanguage } from '../i18n/LanguageContext'
@@ -34,6 +34,7 @@ export default function ProductCard({ product, highlighted = false, cardRef }) {
               className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
                 hover ? 'md:group-hover:opacity-0' : ''
               }`}
+              style={{ objectPosition: photoFocus(product) }}
             />
           )}
           {hover && (
@@ -42,6 +43,7 @@ export default function ProductCard({ product, highlighted = false, cardRef }) {
               alt=""
               loading="lazy"
               className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700 hidden md:block md:group-hover:opacity-100"
+              style={{ objectPosition: photoFocus(product) }}
             />
           )}
         </Link>

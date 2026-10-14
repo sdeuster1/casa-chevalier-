@@ -7,7 +7,7 @@ import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
 import SizeGuide from '../components/SizeGuide'
 import { sizeGuideFor, TEXT as SIZE_TEXT } from '../data/sizeGuide'
-import { formatPrice, sizedImage } from '../lib/shopify'
+import { formatPrice, photoFocus, sizedImage } from '../lib/shopify'
 import { swatchFor } from '../data/colours'
 import { useProducts } from '../context/ProductsContext'
 import { useCart } from '../context/CartContext'
@@ -155,6 +155,7 @@ export default function ProductDetail() {
                   src={img}
                   alt={t('product.view', { name: product.name, n: i + 1 })}
                   className="w-full h-full object-cover cc-fade-in"
+                  style={{ objectPosition: photoFocus(product) }}
                 />
               </div>
             ))}
@@ -381,7 +382,7 @@ export default function ProductDetail() {
                 >
                   <div className="aspect-[3/4] overflow-hidden bg-[#d4cec6]">
                     {p.image && (
-                      <img src={p.image} alt={p.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                      <img src={p.image} alt={p.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" style={{ objectPosition: photoFocus(p) }} />
                     )}
                   </div>
                   <p className="font-bodoni uppercase tracking-[0.15em] text-xs md:text-sm text-dark mt-3">

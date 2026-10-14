@@ -114,6 +114,13 @@ function splitTitle(title) {
   }
 }
 
+// Where a product photo is anchored when a frame crops it (CSS
+// object-position). The shoots are 2:3 with the head at the very top, so
+// tops stay pinned to the top (the face is never cut, the legs can be);
+// trousers sit low so the waistband and the boots both stay in.
+export const photoFocus = (product) =>
+  product?.section === 'PANTS' ? 'center 70%' : 'center top'
+
 // Shopify's CDN resizes on the fly; grids don't need full-size photos.
 export const sizedImage = (url, width) =>
   url ? `${url}${url.includes('?') ? '&' : '?'}width=${width}` : url

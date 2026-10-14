@@ -4,7 +4,7 @@ import { Heart } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
-import { formatPrice, matchesCategory } from '../lib/shopify'
+import { formatPrice, matchesCategory, photoFocus } from '../lib/shopify'
 import { useProducts } from '../context/ProductsContext'
 import { useWishlist } from '../context/WishlistContext'
 import { useLanguage } from '../i18n/LanguageContext'
@@ -140,6 +140,7 @@ export default function Products() {
                           alt={product.name}
                           onClick={() => navigate(`/product/${product.handle}`)}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
+                          style={{ objectPosition: photoFocus(product) }}
                         />
                       )}
                       {soldOut && (

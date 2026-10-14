@@ -1,17 +1,11 @@
 import { useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { formatPrice } from '../lib/shopify'
+import { formatPrice, photoFocus } from '../lib/shopify'
 import { useProducts } from '../context/ProductsContext'
 import { useLanguage } from '../i18n/LanguageContext'
 
 // Shopify handles of the pieces worn in the photo, in display order
-// Where each card photo is framed in its square (CSS object-position).
-// The shirt sits lower so the frame starts at the neck, not the face.
-const CARD_FOCUS = {
-  'the-saddle-shirt-vanilla-blush': 'center 78%',
-}
-
 const LOOK_HANDLES = [
   'the-stable-vest-dark-chocolate',
   'the-signature-bombacha-heritage-check',
@@ -95,7 +89,7 @@ export default function ShopTheLook() {
             {loading &&
               [...Array(3)].map((_, i) => (
                 <div key={i} className="flex-shrink-0 w-[247px] md:w-[331px] cc-fade-in">
-                  <div className="w-[247px] h-[247px] md:w-[331px] md:h-[331px] bg-[#e5ded4]" />
+                  <div className="w-[247px] md:w-[331px] aspect-[3/4] bg-[#e5ded4]" />
                   <div className="h-3 w-24 bg-[#e5ded4] mt-3" />
                   <div className="h-3 w-16 bg-[#e5ded4] mt-2" />
                 </div>
@@ -108,13 +102,13 @@ export default function ShopTheLook() {
                 className="flex-shrink-0 w-[247px] md:w-[331px] cursor-pointer bg-transparent border-none p-0 text-left"
                 style={{ scrollSnapAlign: 'start' }}
               >
-                <div className="w-[247px] h-[247px] md:w-[331px] md:h-[331px] bg-[#d4cec6] overflow-hidden">
+                <div className="w-[247px] md:w-[331px] aspect-[3/4] bg-[#d4cec6] overflow-hidden">
                   {item.image && (
                     <img
                       src={item.image}
                       alt={item.name}
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                      style={{ objectPosition: CARD_FOCUS[item.handle] || 'center' }}
+                      style={{ objectPosition: photoFocus(item) }}
                     />
                   )}
                 </div>
