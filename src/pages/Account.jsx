@@ -22,7 +22,7 @@ export default function Account() {
           <h1 className="font-bodoni uppercase text-dark text-xl md:text-2xl tracking-[0.15em] text-center mb-2">
             {mode === 'signup' ? t('account.createTitle') : t('account.welcomeBack')}
           </h1>
-          <p className="font-playfair italic text-lilac text-center text-sm mb-10">
+          <p className="font-playfair italic text-mauve text-center text-sm mb-10">
             {mode === 'signup' ? t('account.createSubtitle') : t('account.signInSubtitle')}
           </p>
 
@@ -58,7 +58,7 @@ export default function Account() {
 
           <button
             onClick={() => setMode(mode === 'signup' ? 'login' : 'signup')}
-            className="mt-8 font-playfair text-dark/60 text-xs underline hover:no-underline transition-all duration-300 cursor-pointer bg-transparent border-none"
+            className="mt-8 font-playfair text-dark/70 text-xs underline hover:no-underline transition-all duration-300 cursor-pointer bg-transparent border-none"
           >
             {mode === 'signup' ? t('account.toSignIn') : t('account.toSignUp')}
           </button>

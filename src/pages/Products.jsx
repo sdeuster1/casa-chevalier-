@@ -60,7 +60,7 @@ export default function Products() {
           <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
             {t('products.title')}
           </h1>
-          <p className="font-playfair italic text-lilac text-center text-sm mb-12">
+          <p className="font-playfair italic text-mauve text-center text-sm mb-12">
             {t('products.subtitle')}
           </p>
 
@@ -74,7 +74,7 @@ export default function Products() {
                   className={`font-bodoni uppercase text-xs md:text-sm tracking-[0.2em] bg-transparent border-none cursor-pointer pb-1 transition-all duration-300 ${
                     activeCategory === cat
                       ? 'text-plum border-b border-plum'
-                      : 'text-dark/50 hover:text-dark'
+                      : 'text-dark/70 hover:text-dark'
                   }`}
                 >
                   {sectionLabel(cat).charAt(0) + sectionLabel(cat).slice(1).toLowerCase()}
@@ -107,7 +107,7 @@ export default function Products() {
 
           {!loading && !error && filtered.length === 0 && (
             <div className="text-center py-12">
-              <p className="font-playfair italic text-lilac text-sm">
+              <p className="font-playfair italic text-mauve text-sm">
                 {t('products.empty')}
               </p>
               <button
@@ -162,7 +162,7 @@ export default function Products() {
                     </div>
 
                     <div className="pt-4 flex flex-col">
-                      <span className="font-playfair italic text-lilac text-[10px] tracking-[0.15em] uppercase">
+                      <span className="font-playfair italic text-mauve text-[10px] tracking-[0.15em] uppercase">
                         {sectionLabel(product.section)}
                       </span>
                       <button

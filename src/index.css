@@ -4,6 +4,8 @@
   --color-plum: #4f1d34;
   --color-cream: #f0e9e0;
   --color-lilac: #c49fae;
+  /* Lilac is too light for text on cream; use mauve for text */
+  --color-mauve: #7d4e60;
   --color-coral: #f05652;
   --color-orange: #f99943;
   --color-dark: #1a1a1a;

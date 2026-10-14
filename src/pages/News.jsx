@@ -52,7 +52,7 @@ export default function News() {
           <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
             {t('news.title')}
           </h1>
-          <p className="font-playfair italic text-lilac text-center text-sm mb-16 md:mb-20">
+          <p className="font-playfair italic text-mauve text-center text-sm mb-16 md:mb-20">
             {t('news.subtitle')}
           </p>
 
@@ -73,11 +73,11 @@ export default function News() {
                 </div>
                 <div className="pt-5 flex flex-col gap-2">
                   <div className="flex items-center gap-3">
-                    <span className="font-playfair italic text-lilac text-[10px] tracking-[0.2em] uppercase">
+                    <span className="font-playfair italic text-mauve text-[10px] tracking-[0.2em] uppercase">
                       {copy.category}
                     </span>
                     <span className="w-4 h-px bg-lilac/60"></span>
-                    <span className="font-playfair italic text-lilac text-[10px]">
+                    <span className="font-playfair italic text-mauve text-[10px]">
                       {copy.date}
                     </span>
                   </div>

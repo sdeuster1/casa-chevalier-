@@ -71,7 +71,7 @@ export default function ProductCard({ product, highlighted = false, cardRef }) {
           {product.name}
         </span>
         {colours > 1 && (
-          <span className="font-playfair italic text-dark/55 text-xs">
+          <span className="font-playfair italic text-dark/70 text-xs">
             {t('product.moreColours', { count: colours })}
           </span>
         )}

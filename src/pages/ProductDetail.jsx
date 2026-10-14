@@ -165,7 +165,7 @@ export default function ProductDetail() {
           {/* RIGHT: sticky info column */}
           <div className="md:sticky md:top-24 md:self-start px-6 md:px-0 py-10 md:py-16">
             <div className="flex items-start justify-between">
-              <span className="font-playfair italic text-lilac text-[11px] tracking-[0.2em] uppercase">
+              <span className="font-playfair italic text-mauve text-[11px] tracking-[0.2em] uppercase">
                 {sectionLabel(product.section)}
               </span>
               <button
@@ -189,7 +189,7 @@ export default function ProductDetail() {
               <div className="mt-8">
                 <span className="block font-bodoni uppercase text-dark text-xs tracking-[0.15em] mb-3">
                   {t('product.colour')}
-                  <span className="font-playfair normal-case italic tracking-normal text-dark/60 ml-2">
+                  <span className="font-playfair normal-case italic tracking-normal text-dark/70 ml-2">
                     {product.colour}
                   </span>
                 </span>

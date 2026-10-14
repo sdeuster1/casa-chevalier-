@@ -24,7 +24,7 @@ export default function Wishlist() {
           <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
             {t('wishlist.title')}
           </h1>
-          <p className="font-playfair italic text-lilac text-center text-sm mb-16">
+          <p className="font-playfair italic text-mauve text-center text-sm mb-16">
             {t('wishlist.subtitle')}
           </p>
 
@@ -61,7 +61,7 @@ export default function Wishlist() {
                     </button>
                   </div>
                   <div className="pt-4 flex flex-col">
-                    <span className="font-playfair italic text-lilac text-[10px] tracking-[0.15em] uppercase">
+                    <span className="font-playfair italic text-mauve text-[10px] tracking-[0.15em] uppercase">
                       {sectionLabel(product.section)}
                     </span>
                     <button

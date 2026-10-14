@@ -103,16 +103,16 @@ export default function CartDrawer() {
                       className="font-bodoni uppercase tracking-[0.15em] text-sm text-dark bg-transparent border-none p-0 text-left cursor-pointer hover:opacity-70 transition-opacity"
                     >
                       {line.productTitle}
-                      {line.quantity > 1 && <span className="text-dark/60"> × {line.quantity}</span>}
+                      {line.quantity > 1 && <span className="text-dark/70"> × {line.quantity}</span>}
                     </button>
                     {line.size && (
-                      <p className="font-playfair text-dark/60 text-xs mt-2">{t('bag.size', { size: line.size })}</p>
+                      <p className="font-playfair text-dark/70 text-xs mt-2">{t('bag.size', { size: line.size })}</p>
                     )}
                     <div className="mt-auto flex items-end justify-between pt-4">
                       <button
                         onClick={() => removeItem(line.lineId)}
                         disabled={busy}
-                        className="font-playfair text-dark/60 text-xs underline underline-offset-4 hover:text-plum transition-colors bg-transparent border-none p-0 cursor-pointer disabled:opacity-40"
+                        className="font-playfair text-dark/70 text-xs underline underline-offset-4 hover:text-plum transition-colors bg-transparent border-none p-0 cursor-pointer disabled:opacity-40"
                       >
                         {t('bag.remove')}
                       </button>
@@ -132,7 +132,7 @@ export default function CartDrawer() {
                   {formatPrice(subtotal, currency)}
                 </span>
               </div>
-              <p className="font-playfair italic text-dark/50 text-xs mt-2">{t('bag.taxes')}</p>
+              <p className="font-playfair italic text-dark/70 text-xs mt-2">{t('bag.taxes')}</p>
               <button
                 onClick={handleCheckout}
                 disabled={!checkoutUrl || redirecting || busy}

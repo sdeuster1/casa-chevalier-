@@ -109,10 +109,10 @@ function SizeGuidePanel({ guide, tx, onClose }) {
         {guide.fit && (
           <p className="font-playfair text-sm leading-relaxed mt-6">
             <strong className="font-bold text-dark">{tx(TEXT.fitLabel)}</strong>{' '}
-            <span className="text-dark/60">{tx(guide.fit)}</span>
+            <span className="text-dark/70">{tx(guide.fit)}</span>
           </p>
         )}
-        <p className="font-playfair text-dark/45 text-xs leading-relaxed mt-4">
+        <p className="font-playfair text-dark/70 text-xs leading-relaxed mt-4">
           {tx(TEXT.closing)}
         </p>
     </PanelShell>

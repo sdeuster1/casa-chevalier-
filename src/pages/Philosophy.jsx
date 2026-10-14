@@ -20,7 +20,7 @@ export default function Philosophy() {
           <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] mb-4">
             {t('philosophy.title')}
           </h1>
-          <p className="font-playfair italic text-lilac text-sm md:text-base max-w-lg">
+          <p className="font-playfair italic text-mauve text-sm md:text-base max-w-lg">
             {t('philosophy.intro').map((line, i) => (
               <span key={i} className="block">{line}</span>
             ))}

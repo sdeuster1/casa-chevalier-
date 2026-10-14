@@ -35,7 +35,7 @@ export default function Shop() {
           <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
             {t('bag.title')}
           </h1>
-          <p className="font-playfair italic text-lilac text-center text-sm mb-16">
+          <p className="font-playfair italic text-mauve text-center text-sm mb-16">
             {t('bag.subtitle')}
           </p>
 
@@ -94,7 +94,7 @@ export default function Shop() {
                         {line.productTitle}
                       </button>
                       {line.size && (
-                        <p className="font-playfair text-dark/60 text-xs mt-1">{t('bag.size', { size: line.size })}</p>
+                        <p className="font-playfair text-dark/70 text-xs mt-1">{t('bag.size', { size: line.size })}</p>
                       )}
                       <p className="font-playfair text-sm text-plum mt-1">
                         {formatPrice(line.price, currency)}
@@ -143,7 +143,7 @@ export default function Shop() {
                         <button
                           onClick={() => removeItem(line.lineId)}
                           disabled={busy}
-                          className="font-playfair text-dark/50 text-xs hover:text-plum transition-colors bg-transparent border-none cursor-pointer flex items-center gap-1 disabled:opacity-40"
+                          className="font-playfair text-dark/70 text-xs hover:text-plum transition-colors bg-transparent border-none cursor-pointer flex items-center gap-1 disabled:opacity-40"
                         >
                           <X className="w-3 h-3" /> {t('bag.remove')}
                         </button>
@@ -163,14 +163,14 @@ export default function Shop() {
                 <h3 className="font-bodoni uppercase text-dark text-sm tracking-[0.15em] mb-2">
                   {t('bag.summary')}
                 </h3>
-                <div className="flex justify-between font-playfair text-sm text-dark/80">
+                <div className="flex justify-between font-playfair font-medium text-sm text-dark">
                   <span>{t(itemCount === 1 ? 'bag.subtotalOne' : 'bag.subtotalMany', { count: itemCount })}</span>
                   <span>{formatPrice(subtotal, currency)}</span>
                 </div>
-                <p className="font-playfair italic text-dark/50 text-xs">
+                <p className="font-playfair italic text-dark/70 text-xs">
                   {t('bag.taxes')}
                 </p>
-                <ul className="font-playfair text-plum text-xs leading-relaxed flex flex-col gap-1 mt-1">
+                <ul className="font-playfair font-medium text-plum text-xs leading-relaxed flex flex-col gap-1 mt-1">
                   <li>{t('bag.freeShippingEu')}</li>
                   <li>{t('bag.freeShippingIntl')}</li>
                 </ul>

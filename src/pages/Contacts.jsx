@@ -26,7 +26,7 @@ export default function Contacts() {
           <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
             {t('contacts.title')}
           </h1>
-          <p className="font-playfair italic text-lilac text-center text-sm mb-16 md:mb-20">
+          <p className="font-playfair italic text-mauve text-center text-sm mb-16 md:mb-20">
             {t('contacts.subtitle')}
           </p>
 
@@ -37,7 +37,7 @@ export default function Contacts() {
                 <div key={label} className="flex items-start gap-4">
                   <Icon className="w-5 h-5 text-plum mt-1 shrink-0" strokeWidth={1.5} />
                   <div className="flex flex-col">
-                    <span className="font-playfair italic text-lilac text-[10px] tracking-[0.15em] uppercase">
+                    <span className="font-playfair italic text-mauve text-[10px] tracking-[0.15em] uppercase">
                       {t(`contacts.${label}`)}
                     </span>
                     <span className="font-playfair text-dark text-sm mt-1">
