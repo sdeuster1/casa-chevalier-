@@ -33,7 +33,8 @@ const ONE_SIZE_GENERAL = {
   en: 'One-size pieces are designed with relaxed proportions conceived to adapt to different body shapes.',
 }
 
-// type 'sized': link + panel with the chart. type 'oneSize': note on the page.
+// type 'sized': link + panel with the chart. type 'oneSize': fit note on the
+// page, link + panel with the general one-size text.
 const GUIDES = [
   {
     title: 'CC × RSC The Signature Bombacha',
@@ -111,6 +112,7 @@ export const TEXT = {
   link: { it: 'Guida alle taglie', en: 'Size guide' },
   close: { it: 'Chiudi guida alle taglie', en: 'Close size guide' },
   title: { it: 'Trova la tua taglia', en: 'Find your size' },
+  oneSizeTitle: { it: 'Taglia unica', en: 'One size' },
   intro: {
     it: 'Casa Chevalier segue la taglia italiana. Consulta la tabella di conversione qui sotto per trovare la tua taglia internazionale.',
     en: 'Casa Chevalier follows Italian sizing. Please refer to the conversion chart below to find your corresponding international size.',

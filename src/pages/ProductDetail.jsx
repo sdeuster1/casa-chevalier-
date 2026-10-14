@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
 import SizeGuide from '../components/SizeGuide'
-import { sizeGuideFor, TEXT as SIZE_TEXT } from '../data/sizeGuide'
+import { sizeGuideFor } from '../data/sizeGuide'
 import { formatPrice, photoFocus, sizedImage } from '../lib/shopify'
 import { swatchFor } from '../data/colours'
 import { useProducts } from '../context/ProductsContext'
@@ -220,7 +220,8 @@ export default function ProductDetail() {
               </div>
             )}
 
-            {/* One-size products: fit note in place of the size buttons */}
+            {/* One-size products: fit note in place of the size buttons,
+                with the general one-size text behind the size guide link */}
             {oneSizeNote && (
               <div className="mt-10">
                 {guide.fit && (
@@ -228,9 +229,7 @@ export default function ProductDetail() {
                     {guide.fit[lang] ?? guide.fit.en}
                   </p>
                 )}
-                <p className={`font-playfair text-dark/50 text-xs leading-relaxed ${guide.fit ? 'mt-2' : ''}`}>
-                  {SIZE_TEXT.oneSizeGeneral[lang] ?? SIZE_TEXT.oneSizeGeneral.en}
-                </p>
+                <SizeGuide guide={guide} />
               </div>
             )}
 

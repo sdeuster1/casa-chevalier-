@@ -3,7 +3,8 @@ import { X } from 'lucide-react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { CONVERSIONS, COLUMNS, TEXT } from '../data/sizeGuide'
 
-// "Size guide" link + panel for sized products. Content and text come from
+// "Size guide" link + panel. Sized products get the conversion chart,
+// one-size products the general one-size note. Content and text come from
 // src/data/sizeGuide.js; the layout follows the Casa Chevalier size guide PDF.
 export default function SizeGuide({ guide }) {
   const [open, setOpen] = useState(false)
@@ -39,6 +40,16 @@ function SizeGuidePanel({ guide, tx, onClose }) {
     }
   }, [onClose])
 
+  if (guide.type === 'oneSize') {
+    return (
+      <PanelShell titleText={tx(TEXT.oneSizeTitle)} closeLabel={tx(TEXT.close)} closeRef={closeRef} onClose={onClose}>
+        <p className="font-playfair text-dark/75 text-sm leading-relaxed">
+          {tx(TEXT.oneSizeGeneral)}
+        </p>
+      </PanelShell>
+    )
+  }
+
   const sizes = guide.sizes
   const sizeList = (
     <>
@@ -52,32 +63,7 @@ function SizeGuidePanel({ guide, tx, onClose }) {
   )
 
   return (
-    <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm md:px-6"
-      onClick={onClose}
-    >
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="size-guide-title"
-        className="relative w-full h-full md:h-auto md:max-h-[90vh] md:max-w-2xl overflow-y-auto bg-white px-6 md:px-12 pt-16 pb-10 md:py-14"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          ref={closeRef}
-          onClick={onClose}
-          className="absolute top-4 right-4 bg-transparent border-none cursor-pointer p-2"
-          aria-label={tx(TEXT.close)}
-        >
-          <X className="w-5 h-5 text-plum" strokeWidth={1.5} />
-        </button>
-
-        <h2
-          id="size-guide-title"
-          className="font-bodoni uppercase text-plum text-xl md:text-2xl tracking-[0.15em] mb-4"
-        >
-          {tx(TEXT.title)}
-        </h2>
+    <PanelShell titleText={tx(TEXT.title)} closeLabel={tx(TEXT.close)} closeRef={closeRef} onClose={onClose}>
         <p className="font-playfair text-dark/75 text-sm leading-relaxed mb-8">
           {tx(TEXT.intro)}
         </p>
@@ -129,6 +115,40 @@ function SizeGuidePanel({ guide, tx, onClose }) {
         <p className="font-playfair text-dark/45 text-xs leading-relaxed mt-4">
           {tx(TEXT.closing)}
         </p>
+    </PanelShell>
+  )
+}
+
+// Overlay, white card, close button and title shared by both panels
+function PanelShell({ titleText, closeLabel, closeRef, onClose, children }) {
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm md:px-6"
+      onClick={onClose}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="size-guide-title"
+        className="relative w-full h-full md:h-auto md:max-h-[90vh] md:max-w-2xl overflow-y-auto bg-white px-6 md:px-12 pt-16 pb-10 md:py-14"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          ref={closeRef}
+          onClick={onClose}
+          className="absolute top-4 right-4 bg-transparent border-none cursor-pointer p-2"
+          aria-label={closeLabel}
+        >
+          <X className="w-5 h-5 text-plum" strokeWidth={1.5} />
+        </button>
+
+        <h2
+          id="size-guide-title"
+          className="font-bodoni uppercase text-plum text-xl md:text-2xl tracking-[0.15em] mb-4"
+        >
+          {titleText}
+        </h2>
+        {children}
       </div>
     </div>
   )
