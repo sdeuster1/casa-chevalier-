@@ -38,7 +38,7 @@ export default function ProductDetail() {
   const [added, setAdded] = useState(false)
   const [addError, setAddError] = useState(null)
 
-  const { addItem, busy } = useCart()
+  const { addItem, busy, openDrawer } = useCart()
   const { toggle: toggleWish, has: hasWish } = useWishlist()
   const { t, lang, sectionLabel } = useLanguage()
 
@@ -126,6 +126,7 @@ export default function ProductDetail() {
         return
       }
       setAdded(true)
+      openDrawer()
       setTimeout(() => setAdded(false), 2500)
     } catch {
       setAddError(t('product.addFailed'))
@@ -310,15 +311,6 @@ export default function ProductDetail() {
 
             {addError && (
               <p className="font-playfair italic text-coral text-xs mt-3">{addError}</p>
-            )}
-
-            {added && (
-              <button
-                onClick={() => navigate('/shop')}
-                className="w-full mt-3 font-playfair text-plum text-sm underline hover:no-underline cursor-pointer bg-transparent border-none"
-              >
-                {t('product.viewBag')}
-              </button>
             )}
 
             {/* Expandable sections */}

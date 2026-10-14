@@ -138,7 +138,6 @@ const en = {
     adding: 'Adding…',
     added: 'Added to Bag ✓',
     addToBag: 'Add to Bag',
-    viewBag: 'View bag',
     details: 'Details',
     detailsFallback: 'Handcrafted in Italy.',
     composition: 'Composition',
@@ -164,6 +163,9 @@ const en = {
     freeShippingIntl: 'Free shipping to Switzerland, the UK and the US on orders over €600.',
     redirecting: 'Taking you to checkout…',
     checkout: 'Proceed to Checkout',
+    drawerTitle: 'Shopping Bag ({count})',
+    view: 'View Bag',
+    close: 'Close bag',
   },
 
   wishlist: {
@@ -436,7 +438,6 @@ const it = {
     adding: 'Aggiunta in corso…',
     added: 'Aggiunto alla shopping bag ✓',
     addToBag: 'Aggiungi alla shopping bag',
-    viewBag: 'Vedi shopping bag',
     details: 'Dettagli',
     detailsFallback: 'Realizzato a mano in Italia.',
     composition: 'Composizione',
@@ -462,6 +463,9 @@ const it = {
     freeShippingIntl: 'Spedizione gratuita verso Svizzera, Regno Unito e Stati Uniti per ordini superiori a 600 €.',
     redirecting: 'Ti stiamo portando al checkout…',
     checkout: 'Procedi al checkout',
+    drawerTitle: 'Shopping bag ({count})',
+    view: 'Vedi la shopping bag',
+    close: 'Chiudi la shopping bag',
   },
 
   wishlist: {

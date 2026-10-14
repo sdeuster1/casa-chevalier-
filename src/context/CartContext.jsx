@@ -17,6 +17,8 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState(null)
   const [loading, setLoading] = useState(true)
   const [busy, setBusy] = useState(false)
+  // Slide-in bag (CartDrawer), opened after adding a piece.
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   // Restore an existing cart, or create a fresh one. Re-read on language
   // change so line titles and the checkout link follow the chosen language.
@@ -103,6 +105,9 @@ export function CartProvider({ children }) {
     }
   }, [cart])
 
+  const openDrawer = useCallback(() => setDrawerOpen(true), [])
+  const closeDrawer = useCallback(() => setDrawerOpen(false), [])
+
   const value = {
     items: cart?.lines || [],
     itemCount: cart?.totalQuantity || 0,
@@ -115,6 +120,9 @@ export function CartProvider({ children }) {
     addItem,
     updateQuantity,
     removeItem,
+    drawerOpen,
+    openDrawer,
+    closeDrawer,
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

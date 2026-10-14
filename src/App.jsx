@@ -12,6 +12,7 @@ import Wishlist from './pages/Wishlist'
 import Legal from './pages/Legal'
 import HorseTransition from './components/HorseTransition'
 import ScrollToTop from './components/ScrollToTop'
+import CartDrawer from './components/CartDrawer'
 import { ProductsProvider } from './context/ProductsContext'
 import { CartProvider } from './context/CartContext'
 import { WishlistProvider } from './context/WishlistContext'
@@ -26,6 +27,7 @@ export default function App() {
             <WishlistProvider>
               <ScrollToTop />
               <HorseTransition />
+              <CartDrawer />
               <Routes>
                 <Route path="/" element={<Splash />} />
                 <Route path="/home" element={<Home />} />
