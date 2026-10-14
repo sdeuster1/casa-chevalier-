@@ -62,7 +62,7 @@ const en = {
     news: 'CC News',
     legal: 'Legal',
     rights: '© 2026 Casa Chevalier. All rights reserved.',
-    companyDetails: 'B&M S.r.l. · Via Leonardo Bruni 25, 20158 Milano · VAT no. 03247930278',
+    companyDetails: 'B&M S.r.l. · Via Leonardo Bruni 25, 20158 Milano · VAT no. 03247930278 · REA MI-1780714',
   },
 
   common: {
@@ -74,6 +74,16 @@ const en = {
     addToWishlist: 'Add to wishlist',
     removeFromWishlist: 'Remove from wishlist',
     continueShopping: 'Continue Shopping',
+    retry: 'Try again',
+  },
+
+  pageErrors: {
+    notFoundTitle: 'Page not found',
+    notFoundBody: 'The page you are looking for has moved or no longer exists.',
+    toCollection: 'Discover the collection',
+    crashTitle: 'Something went wrong',
+    crashBody: 'Please reload the page. If the problem persists, write to info@casachevalier.com.',
+    reload: 'Reload page',
   },
 
   home: {
@@ -125,6 +135,7 @@ const en = {
 
   product: {
     notFound: 'Product not found.',
+    unavailable: 'This piece is momentarily unavailable. Please try again shortly.',
     back: 'Back to Collection',
     view: '{name} view {n}',
     size: 'Size: {size}',
@@ -361,7 +372,7 @@ const it = {
     news: 'CC News',
     legal: 'Informazioni legali',
     rights: '© 2026 Casa Chevalier. Tutti i diritti riservati.',
-    companyDetails: 'B&M S.r.l. · Via Leonardo Bruni 25, 20158 Milano · P.IVA 03247930278',
+    companyDetails: 'B&M S.r.l. · Via Leonardo Bruni 25, 20158 Milano · P.IVA 03247930278 · REA MI-1780714',
   },
 
   common: {
@@ -373,6 +384,16 @@ const it = {
     addToWishlist: 'Aggiungi alla lista dei desideri',
     removeFromWishlist: 'Rimuovi dalla lista dei desideri',
     continueShopping: 'Continua lo shopping',
+    retry: 'Riprova',
+  },
+
+  pageErrors: {
+    notFoundTitle: 'Pagina non trovata',
+    notFoundBody: 'La pagina che stai cercando è stata spostata o non esiste più.',
+    toCollection: 'Scopri la collezione',
+    crashTitle: 'Si è verificato un errore',
+    crashBody: 'Ricarica la pagina. Se il problema persiste, scrivi a info@casachevalier.com.',
+    reload: 'Ricarica la pagina',
   },
 
   home: {
@@ -425,6 +446,7 @@ const it = {
 
   product: {
     notFound: 'Prodotto non trovato.',
+    unavailable: 'Questo capo è momentaneamente non disponibile. Riprova tra poco.',
     back: 'Torna alla collezione',
     view: '{name} vista {n}',
     size: 'Taglia: {size}',

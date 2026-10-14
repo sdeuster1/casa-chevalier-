@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useParams, useNavigate } from 'react-router-dom'
 import { Heart, Plus, Minus } from 'lucide-react'
 import DOMPurify from 'dompurify'
 import Navbar from '../components/Navbar'
@@ -7,7 +7,7 @@ import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
 import SizeGuide from '../components/SizeGuide'
 import { sizeGuideFor } from '../data/sizeGuide'
-import { formatPrice, photoFocus, sizedImage } from '../lib/shopify'
+import { formatPrice, photoFocus, RENAMED_HANDLES, sizedImage } from '../lib/shopify'
 import { swatchFor } from '../data/colours'
 import { useProducts } from '../context/ProductsContext'
 import { useCart } from '../context/CartContext'
@@ -28,7 +28,7 @@ const sanitizeDescription = (html) =>
 export default function ProductDetail() {
   const { id: handle } = useParams()
   const navigate = useNavigate()
-  const { products, loading, colourVersions } = useProducts()
+  const { products, loading, error, retry, colourVersions } = useProducts()
   const product = products.find((p) => p.handle === handle)
 
   const [menuOpen, setMenuOpen] = useState(false)
@@ -60,18 +60,27 @@ export default function ProductDetail() {
     )
   }
 
+  // An old address of a renamed product: go to its new one
+  const renamedTo = RENAMED_HANDLES[handle]
+  if (!product && renamedTo && products.some((p) => p.handle === renamedTo)) {
+    return <Navigate to={`/product/${renamedTo}`} replace />
+  }
+
   if (!product) {
     return (
       <div className="min-h-screen bg-cream">
         <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} variant="dark" />
         <DropdownMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
         <div className="pt-40 pb-40 text-center">
-          <p className="font-playfair italic text-plum text-lg mb-6">{t('product.notFound')}</p>
+          {/* Shopify unreachable is not the same as a missing product */}
+          <p className="font-playfair italic text-plum text-lg mb-6 px-6">
+            {error ? t('product.unavailable') : t('product.notFound')}
+          </p>
           <button
-            onClick={() => navigate('/products')}
+            onClick={error ? retry : () => navigate('/products')}
             className="font-bodoni uppercase text-cream bg-plum text-xs tracking-[0.2em] py-3 px-8 cursor-pointer"
           >
-            {t('product.back')}
+            {error ? t('common.retry') : t('product.back')}
           </button>
         </div>
         <Footer />
@@ -153,7 +162,8 @@ export default function ProductDetail() {
             {gallery.map((img, i) => (
               <div key={i} className="w-full aspect-[3/4] bg-[#d4cec6]">
                 <img
-                  src={img}
+                  src={sizedImage(img, 1400)}
+                  loading={i === 0 ? 'eager' : 'lazy'}
                   alt={t('product.view', { name: product.name, n: i + 1 })}
                   className="w-full h-full object-cover cc-fade-in"
                   style={{ objectPosition: photoFocus(product) }}
@@ -373,7 +383,7 @@ export default function ProductDetail() {
                 >
                   <div className="aspect-[3/4] overflow-hidden bg-[#d4cec6]">
                     {p.image && (
-                      <img src={p.image} alt={p.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" style={{ objectPosition: photoFocus(p) }} />
+                      <img src={sizedImage(p.image, 700)} alt={p.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" style={{ objectPosition: photoFocus(p) }} />
                     )}
                   </div>
                   <p className="font-bodoni uppercase tracking-[0.15em] text-xs md:text-sm text-dark mt-3">

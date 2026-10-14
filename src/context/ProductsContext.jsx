@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useEffect, useState, useMemo } from 'react'
+import { createContext, useCallback, useContext, useEffect, useState, useMemo } from 'react'
 import { fetchProducts } from '../lib/shopify'
 import { useLanguage } from '../i18n/LanguageContext'
 
@@ -10,6 +10,8 @@ export function ProductsProvider({ children }) {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  // Bumped by retry() to fetch again after a failed load
+  const [attempt, setAttempt] = useState(0)
 
   useEffect(() => {
     let cancelled = false
@@ -18,6 +20,7 @@ export function ProductsProvider({ children }) {
       .then((list) => {
         if (!cancelled) {
           setProducts(list)
+          setError(null)
           setLoading(false)
         }
       })
@@ -29,7 +32,13 @@ export function ProductsProvider({ children }) {
         }
       })
     return () => { cancelled = true }
-  }, [lang])
+  }, [lang, attempt])
+
+  const retry = useCallback(() => {
+    setLoading(true)
+    setError(null)
+    setAttempt((n) => n + 1)
+  }, [])
 
   // Categories derived from whatever collections actually exist in Shopify,
   // so a new collection appears in the filter with no code change.
@@ -50,7 +59,7 @@ export function ProductsProvider({ children }) {
 
   return (
     <ProductsContext.Provider
-      value={{ products, categories, loading, error, findProduct, colourVersions }}
+      value={{ products, categories, loading, error, retry, findProduct, colourVersions }}
     >
       {children}
     </ProductsContext.Provider>

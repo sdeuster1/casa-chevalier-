@@ -4,7 +4,7 @@ import { Heart } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
-import { formatPrice, matchesCategory, photoFocus } from '../lib/shopify'
+import { formatPrice, matchesCategory, photoFocus, sizedImage } from '../lib/shopify'
 import { useProducts } from '../context/ProductsContext'
 import { useWishlist } from '../context/WishlistContext'
 import { useLanguage } from '../i18n/LanguageContext'
@@ -14,7 +14,7 @@ export default function Products() {
   const [manualCategory, setManualCategory] = useState(null)
   const [highlightTick, setHighlightTick] = useState(0)
   const productRefs = useRef({})
-  const { products, loading, error } = useProducts()
+  const { products, loading, error, retry } = useProducts()
   const categories = ['ALL', 'PANTS', 'SHIRTS', 'JACKETS', 'VESTS', 'ACCESSORIES']
   const { toggle: toggleWish, has: hasWish } = useWishlist()
   const navigate = useNavigate()
@@ -100,9 +100,17 @@ export default function Products() {
           )}
 
           {error && !loading && (
-            <p className="font-playfair italic text-plum text-center text-sm py-12">
-              {t('products.unavailable')}
-            </p>
+            <div className="text-center py-12">
+              <p className="font-playfair italic text-plum text-sm">
+                {t('products.unavailable')}
+              </p>
+              <button
+                onClick={retry}
+                className="mt-4 font-bodoni uppercase text-plum text-[10px] tracking-[0.2em] border-0 border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
+              >
+                {t('common.retry')}
+              </button>
+            </div>
           )}
 
           {!loading && !error && filtered.length === 0 && (
@@ -136,7 +144,8 @@ export default function Products() {
                     <div className="relative aspect-[3/4] overflow-hidden bg-[#d4cec6]">
                       {product.image && (
                         <img
-                          src={product.image}
+                          src={sizedImage(product.image, 900)}
+                          loading="lazy"
                           alt={product.name}
                           onClick={() => navigate(`/product/${product.handle}`)}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"

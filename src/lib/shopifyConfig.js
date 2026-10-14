@@ -16,6 +16,6 @@ export const SHOPIFY_DOMAIN =
   env.VITE_SHOPIFY_DOMAIN || 'casachevalier.myshopify.com'
 export const SHOPIFY_STOREFRONT_TOKEN =
   env.VITE_SHOPIFY_STOREFRONT_TOKEN || '6c89c607a3e3e705f11515d81d36cabb'
-export const SHOPIFY_API_VERSION = '2025-01'
+export const SHOPIFY_API_VERSION = '2026-07'
 
 export const SHOPIFY_ENDPOINT = `https://${SHOPIFY_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`

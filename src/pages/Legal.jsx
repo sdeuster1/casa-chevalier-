@@ -29,7 +29,11 @@ export default function Legal() {
     if (!doc) return
     let cancelled = false
     fetchLegalBody(doc)
-      .then((body) => !cancelled && setResult({ key, html: clean(body), failed: false }))
+      .then((body) => {
+        // A missing or empty document shows the "unavailable" note, not a blank page
+        const html = clean(body)
+        if (!cancelled) setResult({ key, html, failed: !html.trim() })
+      })
       .catch(() => !cancelled && setResult({ key, html: '', failed: true }))
     return () => { cancelled = true }
   }, [doc, key])

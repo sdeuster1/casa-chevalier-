@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
 import { useWishlist } from '../context/WishlistContext'
-import { formatPrice, photoFocus } from '../lib/shopify'
+import { formatPrice, photoFocus, sizedImage } from '../lib/shopify'
 import { useLanguage } from '../i18n/LanguageContext'
 
 export default function Wishlist() {
@@ -47,7 +47,8 @@ export default function Wishlist() {
                 <div key={product.handle} className="flex flex-col group">
                   <div className="relative aspect-[3/4] overflow-hidden bg-[#d4cec6]">
                     <img
-                      src={product.image}
+                      src={sizedImage(product.image, 700)}
+                      loading="lazy"
                       alt={product.name}
                       className="w-full h-full object-cover"
                       style={{ objectPosition: photoFocus(product) }}

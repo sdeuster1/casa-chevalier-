@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { formatPrice, photoFocus } from '../lib/shopify'
+import { formatPrice, photoFocus, sizedImage } from '../lib/shopify'
 import { useProducts } from '../context/ProductsContext'
 import { useLanguage } from '../i18n/LanguageContext'
 
@@ -113,7 +113,8 @@ export default function ShopTheLook() {
                   {item.image && (
                     <div className="w-full h-full" style={{ transform: `scale(${CARD_ZOOM[item.handle] || 1})`, transformOrigin: 'center 25%' }}>
                       <img
-                        src={item.image}
+                        src={sizedImage(item.image, 800)}
+                        loading="lazy"
                         alt={item.name}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                         style={{ objectPosition: photoFocus(item) }}

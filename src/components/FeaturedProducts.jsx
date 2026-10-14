@@ -2,8 +2,10 @@ import { useProducts } from '../context/ProductsContext'
 import ProductCard from './ProductCard'
 
 // Shopify handles of the four pieces shown on the homepage, in order.
+// A list means "the first of these that exists": the blazer still has its
+// placeholder handle in Shopify and keeps working before and after the rename.
 const FEATURED_HANDLES = [
-  'test-blazer',
+  ['the-equestrian-blazer-heritage-check', 'test-blazer'],
   'the-stable-vest-dark-chocolate',
   'cc-rsc-the-timeless-polo-rust-cream',
   'the-saddle-shirt-vanilla-blush',
@@ -14,7 +16,9 @@ const FEATURED_HANDLES = [
 export default function FeaturedProducts() {
   const { products, loading } = useProducts()
   const featured = FEATURED_HANDLES
-    .map((handle) => products.find((p) => p.handle === handle))
+    .map((entry) =>
+      [entry].flat().map((h) => products.find((p) => p.handle === h)).find(Boolean)
+    )
     .filter(Boolean)
 
   return (

@@ -46,7 +46,7 @@ const GUIDES = [
   },
   {
     title: 'The Equestrian Blazer',
-    handles: ['the-equestrian-blazer', 'test-blazer'],
+    handles: ['the-equestrian-blazer', 'test-blazer'], // test-blazer: placeholder handle, kept for old links
     type: 'sized',
     name: 'THE EQUESTRIAN BLAZER',
     sizes: [38, 40, 42],

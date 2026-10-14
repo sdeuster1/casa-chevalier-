@@ -18,6 +18,10 @@ export function setShopifyLanguage(lang) {
   language = lang.toUpperCase()
 }
 
+// A request that hangs is abandoned after this long, so pages can show an
+// error and a retry instead of loading forever.
+const TIMEOUT_MS = 15000
+
 async function shopifyFetch(query, variables = {}) {
   const res = await fetch(ENDPOINT, {
     method: 'POST',
@@ -26,6 +30,7 @@ async function shopifyFetch(query, variables = {}) {
       'X-Shopify-Storefront-Access-Token': TOKEN,
     },
     body: JSON.stringify({ query, variables: { ...variables, language } }),
+    signal: AbortSignal.timeout(TIMEOUT_MS),
   })
 
   if (!res.ok) {
@@ -120,6 +125,12 @@ function splitTitle(title) {
 // trousers sit low so the waistband and the boots both stay in.
 export const photoFocus = (product) =>
   product?.section === 'PANTS' ? 'center 70%' : 'center top'
+
+// Product handles that were renamed in Shopify: old address → new one.
+// Old links (shared, indexed, saved) are sent on to the product.
+export const RENAMED_HANDLES = {
+  'test-blazer': 'the-equestrian-blazer-heritage-check',
+}
 
 // Shopify's CDN resizes on the fly; grids don't need full-size photos.
 export const sizedImage = (url, width) =>
@@ -304,6 +315,10 @@ export async function createCart() {
   const data = await shopifyFetch(
     `mutation Create($language: LanguageCode) @inContext(language: $language) { cartCreate { cart { ${CART_FIELDS} } userErrors { message } } }`
   )
+  const errs = data.cartCreate.userErrors
+  if (errs?.length || !data.cartCreate.cart) {
+    throw new Error(errs?.map((e) => e.message).join('; ') || 'Cart could not be created')
+  }
   return normalizeCart(data.cartCreate.cart)
 }
 

@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
 import { useCart } from '../context/CartContext'
-import { formatPrice } from '../lib/shopify'
+import { formatPrice, sizedImage } from '../lib/shopify'
 import { useLanguage } from '../i18n/LanguageContext'
 
 export default function Shop() {
@@ -80,7 +80,7 @@ export default function Shop() {
                   <div key={line.lineId} className="flex gap-4 md:gap-6 py-5 md:py-6">
                     {line.image && (
                       <img
-                        src={line.image}
+                        src={sizedImage(line.image, 300)}
                         alt={line.productTitle}
                         onClick={() => navigate(`/product/${line.productHandle}`)}
                         className="w-20 h-24 md:w-24 md:h-32 object-cover bg-[#d4cec6] cursor-pointer"

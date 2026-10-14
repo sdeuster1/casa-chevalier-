@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { X } from 'lucide-react'
 import { useCart } from '../context/CartContext'
-import { formatPrice } from '../lib/shopify'
+import { formatPrice, sizedImage } from '../lib/shopify'
 import { useLanguage } from '../i18n/LanguageContext'
 
 // Slide-in shopping bag. Opens after "Add to bag" so the customer can go
@@ -91,7 +91,7 @@ export default function CartDrawer() {
                 <div key={line.lineId} className="flex gap-5 py-6">
                   {line.image && (
                     <img
-                      src={line.image}
+                      src={sizedImage(line.image, 300)}
                       alt={line.productTitle}
                       onClick={() => goTo(`/product/${line.productHandle}`)}
                       className="w-24 h-32 object-cover bg-[#d4cec6] cursor-pointer shrink-0"
