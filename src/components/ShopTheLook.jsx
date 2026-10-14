@@ -5,6 +5,13 @@ import { formatPrice, photoFocus } from '../lib/shopify'
 import { useProducts } from '../context/ProductsContext'
 import { useLanguage } from '../i18n/LanguageContext'
 
+// Extra zoom on a card photo, by handle. The vest shot is a full-length
+// figure, so it is brought 20% closer, zooming on the upper body so the
+// head stays in frame.
+const CARD_ZOOM = {
+  'the-stable-vest-dark-chocolate': 1.2,
+}
+
 // Shopify handles of the pieces worn in the photo, in display order
 const LOOK_HANDLES = [
   'the-stable-vest-dark-chocolate',
@@ -104,12 +111,14 @@ export default function ShopTheLook() {
               >
                 <div className="w-[247px] md:w-[331px] aspect-[3/4] bg-[#d4cec6] overflow-hidden">
                   {item.image && (
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                      style={{ objectPosition: photoFocus(item) }}
-                    />
+                    <div className="w-full h-full" style={{ transform: `scale(${CARD_ZOOM[item.handle] || 1})`, transformOrigin: 'center 25%' }}>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                        style={{ objectPosition: photoFocus(item) }}
+                      />
+                    </div>
                   )}
                 </div>
                 <p className="font-bodoni uppercase text-xs tracking-[0.15em] text-dark mt-3">
