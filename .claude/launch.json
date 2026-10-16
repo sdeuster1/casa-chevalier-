@@ -6,6 +6,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["vite", "--port", "5174"],
       "port": 5174
+    },
+    {
+      "name": "casa-chevalier-phone",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["vite", "--host", "--port", "5180"],
+      "port": 5180
     }
   ]
 }
