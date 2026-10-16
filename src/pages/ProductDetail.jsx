@@ -17,6 +17,8 @@ import ProductTitle from '../components/ProductTitle'
 import ColourSwatches from '../components/ColourSwatches'
 
 const LOW_STOCK_THRESHOLD = 5
+// The "Only 5 left in size 40" note is switched off for now; set to true to bring it back
+const SHOW_LOW_STOCK = false
 
 // "You May Also Like": the pieces each product is styled with, by handle.
 // Every product shows three; any free places are filled at random. A list
@@ -192,7 +194,7 @@ export default function ProductDetail() {
           <ProductGallery key={product.handle} product={product} />
 
           {/* RIGHT: sticky info column */}
-          <div className="md:sticky md:top-24 md:self-start px-6 md:px-0 py-10 md:py-16">
+          <div className="md:sticky md:top-24 md:self-start px-6 md:px-0 pt-8 pb-10 md:pt-6 md:pb-12">
             <div className="flex items-start justify-between gap-4">
               <h1 className="font-bodoni text-dark text-2xl md:text-3xl leading-tight">
                 <ProductTitle title={product.name} colourClassName="text-lg md:text-xl text-dark/60 mt-1" />
@@ -205,14 +207,14 @@ export default function ProductDetail() {
                 <Heart className="w-5 h-5 text-plum" fill={wished ? '#4f1d34' : 'none'} strokeWidth={1.5} />
               </button>
             </div>
-            <p className="font-playfair text-plum text-lg mt-3">
+            <p className="font-playfair text-plum text-lg mt-2">
               {formatPrice(product.price, product.currency)}
             </p>
 
             {/* Colour — one swatch per colour version of this piece */}
             {colours.length > 1 && (
-              <div className="mt-8">
-                <span className="block font-bodoni uppercase text-dark text-[13px] tracking-[0.15em] mb-3">
+              <div className="mt-6">
+                <span className="block font-bodoni uppercase text-dark text-[13px] tracking-[0.15em] mb-2">
                   {t('product.colour')}
                   <span className="font-playfair normal-case tracking-normal text-dark/70 ml-2">
                     {product.colour}
@@ -225,15 +227,15 @@ export default function ProductDetail() {
             {/* One-size products: just the size guide link in place of the
                 size buttons; the fit note and one-size text are inside it */}
             {oneSizeNote && (
-              <div className="mt-6">
+              <div className="mt-5">
                 <SizeGuide guide={guide} />
               </div>
             )}
 
             {/* Size selector — only when the product actually has sizes */}
             {product.hasSizes && !oneSizeNote && (
-              <div className="mt-10">
-                <span className="block font-bodoni uppercase text-dark text-[13px] tracking-[0.15em] mb-3">
+              <div className="mt-6">
+                <span className="block font-bodoni uppercase text-dark text-[13px] tracking-[0.15em] mb-2">
                   {t('product.sizeLabel')}
                 </span>
                 <div className="grid grid-cols-5 gap-2">
@@ -267,19 +269,13 @@ export default function ProductDetail() {
               </div>
             )}
 
-            {/* Short description — custom.short_description, under the sizes */}
-            {product.shortDescription && (
-              <p className="font-playfair text-dark/80 text-[15px] leading-relaxed mt-6 max-w-md whitespace-pre-line">
-                {product.shortDescription}
-              </p>
-            )}
-
             {/* Low-stock note — honest scarcity, only when genuinely low */}
-            {selectedVariant &&
+            {SHOW_LOW_STOCK &&
+              selectedVariant &&
               selectedVariant.available &&
               selectedVariant.quantity > 0 &&
               selectedVariant.quantity <= LOW_STOCK_THRESHOLD && (
-                <p className="font-playfair text-plum text-sm mt-4">
+                <p className="font-playfair text-plum text-sm mt-3">
                   {product.hasSizes && size
                     ? t('product.remainingInSize', { count: selectedVariant.quantity, size })
                     : t('product.remaining', { count: selectedVariant.quantity })}
@@ -288,7 +284,7 @@ export default function ProductDetail() {
 
             {/* Origin, just above the buy button */}
             {!NOT_MADE_IN_ITALY.includes(product.handle) && (
-              <p className="font-playfair text-dark/80 text-[15px] mt-6">
+              <p className="font-playfair text-dark/80 text-[15px] mt-4">
                 {t('product.madeIn')}
               </p>
             )}
@@ -297,7 +293,7 @@ export default function ProductDetail() {
             <button
               onClick={handleBuy}
               disabled={busy || outOfStock}
-              className={`w-full mt-8 font-bodoni uppercase text-[13px] tracking-[0.25em] py-4 transition-opacity duration-300 ${
+              className={`w-full mt-4 font-bodoni uppercase text-[13px] tracking-[0.25em] py-4 transition-opacity duration-300 ${
                 outOfStock
                   ? 'bg-plum/30 text-cream cursor-not-allowed'
                   : 'bg-plum text-cream cursor-pointer hover:opacity-90'
@@ -316,8 +312,16 @@ export default function ProductDetail() {
               <p className="font-playfair text-coral text-sm mt-3">{addError}</p>
             )}
 
+            {/* Short description — custom.short_description, under the buy
+                button so the button is in the first screen */}
+            {product.shortDescription && (
+              <p className="font-playfair text-dark/80 text-[15px] leading-relaxed mt-6 max-w-md whitespace-pre-line">
+                {product.shortDescription}
+              </p>
+            )}
+
             {/* Expandable sections */}
-            <div className="mt-10 flex flex-col border-t border-plum/20">
+            <div className="mt-6 flex flex-col border-t border-plum/20">
               {[
                 {
                   key: 'details',
