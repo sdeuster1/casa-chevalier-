@@ -17,6 +17,10 @@ import { useLanguage } from '../i18n/LanguageContext'
 
 const LOW_STOCK_THRESHOLD = 5
 
+// Every piece is made in Italy, so the origin line shows on all products.
+// Add a product's handle here if one is ever made elsewhere.
+const NOT_MADE_IN_ITALY = []
+
 // Shopify descriptions are often pasted from Word and carry fonts, sizes and
 // colours. Keep only structure (paragraphs, breaks, bold, italic, lists) and
 // drop every attribute, so the site's own typography always applies.
@@ -286,6 +290,13 @@ export default function ProductDetail() {
                     : t('product.remaining', { count: selectedVariant.quantity })}
                 </p>
               )}
+
+            {/* Origin, just above the buy button */}
+            {!NOT_MADE_IN_ITALY.includes(product.handle) && (
+              <p className="font-playfair text-dark/80 text-[15px] mt-6">
+                {t('product.madeIn')}
+              </p>
+            )}
 
             {/* Buy button */}
             <button
