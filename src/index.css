@@ -11,6 +11,8 @@
   --color-dark: #1a1a1a;
   --font-bodoni: "Bodoni Moda", serif;
   --font-playfair: "Playfair Display", serif;
+  /* Closest match to the logo lettering (city line under the logo) */
+  --font-logo: "Marcellus", serif;
 }
 
 html {
@@ -113,4 +115,11 @@ body {
   color: var(--color-plum);
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+/* No italics anywhere on the site, including emphasis inside text that
+   comes from Shopify (legal pages, product descriptions). */
+em,
+i {
+  font-style: normal;
 }

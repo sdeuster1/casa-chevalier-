@@ -57,7 +57,7 @@ export default function Footer() {
             {t('footer.subscribeNote')}
           </p>
           {status === 'done' ? (
-            <p className="font-playfair italic text-white text-[15px] max-w-xs" role="status">
+            <p className="font-playfair text-white text-[15px] max-w-xs" role="status">
               {t('newsletter.codeOnWay')}
             </p>
           ) : (
@@ -93,7 +93,7 @@ export default function Footer() {
                 aria-hidden="true"
               />
               {(status === 'invalid_email' || status === 'error') && (
-                <p className="font-playfair italic text-white text-sm mt-2" role="alert">
+                <p className="font-playfair text-white text-sm mt-2" role="alert">
                   {t(status === 'invalid_email' ? 'newsletter.invalidEmail' : 'newsletter.error')}
                 </p>
               )}

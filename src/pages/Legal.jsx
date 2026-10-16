@@ -60,7 +60,7 @@ export default function Legal() {
             </div>
           )}
           {ready && result.failed && (
-            <p className="font-playfair italic text-plum text-center text-[15px]">{t('legal.error')}</p>
+            <p className="font-playfair text-plum text-center text-[15px]">{t('legal.error')}</p>
           )}
           {ready && !result.failed && (
             <div

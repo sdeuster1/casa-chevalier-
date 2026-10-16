@@ -35,7 +35,7 @@ export default function Shop() {
           <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
             {t('bag.title')}
           </h1>
-          <p className="font-playfair italic text-mauve text-center text-[15px] mb-16">
+          <p className="font-playfair text-mauve text-center text-[15px] mb-16">
             {t('bag.subtitle')}
           </p>
 
@@ -149,7 +149,7 @@ export default function Shop() {
                         </button>
                       </div>
                       {limitNote[line.lineId] && (
-                        <p className="font-playfair italic text-plum text-sm mt-2">
+                        <p className="font-playfair text-plum text-sm mt-2">
                           {t('bag.onlyAvailable', { count: line.available })}
                         </p>
                       )}
@@ -167,7 +167,7 @@ export default function Shop() {
                   <span>{t(itemCount === 1 ? 'bag.subtotalOne' : 'bag.subtotalMany', { count: itemCount })}</span>
                   <span>{formatPrice(subtotal, currency)}</span>
                 </div>
-                <p className="font-playfair italic text-dark/70 text-sm">
+                <p className="font-playfair text-dark/70 text-sm">
                   {t('bag.taxes')}
                 </p>
                 <ul className="font-playfair font-medium text-plum text-sm leading-relaxed flex flex-col gap-1 mt-1">

@@ -45,7 +45,7 @@ export default function ProductDetail() {
 
   const { addItem, busy, openDrawer } = useCart()
   const { toggle: toggleWish, has: hasWish } = useWishlist()
-  const { t, lang, sectionLabel } = useLanguage()
+  const { t, lang } = useLanguage()
 
   if (loading) {
     return (
@@ -78,7 +78,7 @@ export default function ProductDetail() {
         <DropdownMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
         <div className="pt-40 pb-40 text-center">
           {/* Shopify unreachable is not the same as a missing product */}
-          <p className="font-playfair italic text-plum text-lg mb-6 px-6">
+          <p className="font-playfair text-plum text-lg mb-6 px-6">
             {error ? t('product.unavailable') : t('product.notFound')}
           </p>
           <button
@@ -166,22 +166,18 @@ export default function ProductDetail() {
 
           {/* RIGHT: sticky info column */}
           <div className="md:sticky md:top-24 md:self-start px-6 md:px-0 py-10 md:py-16">
-            <div className="flex items-start justify-between">
-              <span className="font-playfair text-mauve text-[12px] tracking-[0.2em] uppercase">
-                {sectionLabel(product.section)}
-              </span>
+            <div className="flex items-start justify-between gap-4">
+              <h1 className="font-bodoni text-dark text-2xl md:text-3xl leading-tight">
+                {product.name}
+              </h1>
               <button
                 onClick={() => toggleWish(product.handle)}
-                className="bg-transparent border-none cursor-pointer p-0"
+                className="shrink-0 mt-1.5 bg-transparent border-none cursor-pointer p-0"
                 aria-label={wished ? t('common.removeFromWishlist') : t('common.addToWishlist')}
               >
                 <Heart className="w-5 h-5 text-plum" fill={wished ? '#4f1d34' : 'none'} strokeWidth={1.5} />
               </button>
             </div>
-
-            <h1 className="font-bodoni text-dark text-2xl md:text-3xl leading-tight mt-3">
-              {product.name}
-            </h1>
             <p className="font-playfair text-plum text-lg mt-3">
               {formatPrice(product.price, product.currency)}
             </p>
@@ -191,7 +187,7 @@ export default function ProductDetail() {
               <div className="mt-8">
                 <span className="block font-bodoni uppercase text-dark text-[13px] tracking-[0.15em] mb-3">
                   {t('product.colour')}
-                  <span className="font-playfair normal-case italic tracking-normal text-dark/70 ml-2">
+                  <span className="font-playfair normal-case tracking-normal text-dark/70 ml-2">
                     {product.colour}
                   </span>
                 </span>
@@ -227,7 +223,7 @@ export default function ProductDetail() {
             {oneSizeNote && (
               <div className="mt-10">
                 {guide.fit && (
-                  <p className="font-playfair italic text-dark/70 text-[15px] leading-relaxed">
+                  <p className="font-playfair text-dark/70 text-[15px] leading-relaxed">
                     {guide.fit[lang] ?? guide.fit.en}
                   </p>
                 )}
@@ -264,7 +260,7 @@ export default function ProductDetail() {
                   })}
                 </div>
                 {sizeError && (
-                  <p className="font-playfair italic text-coral text-sm mt-2">
+                  <p className="font-playfair text-coral text-sm mt-2">
                     {t('product.sizeRequired')}
                   </p>
                 )}
@@ -284,7 +280,7 @@ export default function ProductDetail() {
               selectedVariant.available &&
               selectedVariant.quantity > 0 &&
               selectedVariant.quantity <= LOW_STOCK_THRESHOLD && (
-                <p className="font-playfair italic text-plum text-sm mt-4">
+                <p className="font-playfair text-plum text-sm mt-4">
                   {product.hasSizes && size
                     ? t('product.remainingInSize', { count: selectedVariant.quantity, size })
                     : t('product.remaining', { count: selectedVariant.quantity })}
@@ -318,7 +314,7 @@ export default function ProductDetail() {
             </button>
 
             {addError && (
-              <p className="font-playfair italic text-coral text-sm mt-3">{addError}</p>
+              <p className="font-playfair text-coral text-sm mt-3">{addError}</p>
             )}
 
             {/* Expandable sections */}

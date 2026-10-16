@@ -10,7 +10,7 @@ export default function TextInterlude({ text }) {
     <section className="w-full bg-plum py-[30px] md:py-[45px]">
       <div className="flex flex-col items-center px-6">
         <Monogram color="#f0e9e0" size={30} className="mb-4" />
-        <p className="font-playfair italic text-cream text-xl text-center max-w-xl mx-auto">
+        <p className="font-playfair text-cream text-xl text-center max-w-xl mx-auto">
           {text}
         </p>
         <button

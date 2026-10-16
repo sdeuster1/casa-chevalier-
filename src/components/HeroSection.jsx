@@ -42,8 +42,15 @@ export default function HeroSection() {
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/20" />
 
+      {/* City line under the logo. It belongs to the hero, not the fixed
+          navbar, so it scrolls away with the page. The left padding equals
+          the letter spacing so the word stays centred under the logo. */}
+      <p className="absolute left-1/2 -translate-x-1/2 top-[44px] md:top-[52px] m-0 font-logo uppercase text-cream text-[10px] md:text-[14px] leading-none tracking-[0.5em] pl-[0.5em] pointer-events-none">
+        Milano
+      </p>
+
       <div className="absolute inset-x-0 bottom-0 pb-16 md:pb-20 px-6 flex flex-col items-center text-center">
-        <span className="font-playfair italic text-cream/85 text-sm md:text-[15px] tracking-[0.2em] mb-4">
+        <span className="font-playfair text-cream/85 text-sm md:text-[15px] tracking-[0.2em] mb-4">
           {t('home.heroEyebrow')}
         </span>
         <h1 className="font-bodoni uppercase text-cream text-3xl md:text-5xl tracking-[0.12em] leading-tight mb-8">

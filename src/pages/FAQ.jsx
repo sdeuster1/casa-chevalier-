@@ -20,7 +20,7 @@ export default function FAQ() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
           {/* Left: heading */}
           <div className="md:sticky md:top-32 self-start">
-            <p className="font-playfair italic text-mauve text-[12px] tracking-[0.25em] uppercase mb-6">
+            <p className="font-playfair text-mauve text-[12px] tracking-[0.25em] uppercase mb-6">
               {t('faq.eyebrow')}
             </p>
             <h1 className="font-bodoni text-plum text-4xl md:text-6xl leading-tight">

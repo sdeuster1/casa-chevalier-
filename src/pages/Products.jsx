@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { Heart } from 'lucide-react'
+import { ChevronDown, Heart } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
@@ -30,7 +30,7 @@ export default function Products() {
     if (urlCategory) return urlCategory.toUpperCase()
     if (urlProductId) {
       const p = products.find((x) => x.handle === urlProductId)
-      if (p) return p.category
+      if (p) return p.section
     }
     return 'ALL'
   }, [manualCategory, urlCategory, urlProductId, products])
@@ -57,29 +57,34 @@ export default function Products() {
 
       <section className="pt-28 md:pt-36 pb-16 md:pb-24 px-6 md:px-12">
         <div className="max-w-6xl mx-auto">
-          <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
-            {t('products.title')}
-          </h1>
-          <p className="font-playfair italic text-mauve text-center text-[15px] mb-12">
+          {/* Title kept for search engines and screen readers, not shown */}
+          <h1 className="sr-only">{t('products.title')}</h1>
+          <p className="font-playfair text-mauve text-center text-[15px] mb-12">
             {t('products.subtitle')}
           </p>
 
-          {/* Category filter */}
+          {/* Category filter: one quiet dropdown instead of rows of buttons */}
           {!loading && categories.length > 1 && (
-            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 mb-14 md:mb-20">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setManualCategory(cat)}
-                  className={`font-bodoni uppercase text-[13px] md:text-sm tracking-[0.2em] bg-transparent border-none cursor-pointer pb-1 transition-all duration-300 ${
-                    activeCategory === cat
-                      ? 'text-plum border-b border-plum'
-                      : 'text-dark/70 hover:text-dark'
-                  }`}
+            <div className="flex justify-center mb-14 md:mb-20">
+              <label className="relative inline-flex items-center">
+                <span className="sr-only">{t('products.filterLabel')}</span>
+                <select
+                  value={categories.includes(activeCategory) ? activeCategory : 'ALL'}
+                  onChange={(e) => setManualCategory(e.target.value)}
+                  className="appearance-none bg-transparent font-bodoni uppercase text-plum text-[13px] md:text-sm tracking-[0.2em] border-0 border-b border-plum rounded-none pb-1 pr-7 cursor-pointer focus:outline-none focus-visible:outline-1 focus-visible:outline-plum focus-visible:outline-offset-4"
                 >
-                  {sectionLabel(cat).charAt(0) + sectionLabel(cat).slice(1).toLowerCase()}
-                </button>
-              ))}
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {sectionLabel(cat)}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown
+                  className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 text-plum pointer-events-none"
+                  strokeWidth={1.5}
+                  aria-hidden="true"
+                />
+              </label>
             </div>
           )}
 
@@ -101,7 +106,7 @@ export default function Products() {
 
           {error && !loading && (
             <div className="text-center py-12">
-              <p className="font-playfair italic text-plum text-[15px]">
+              <p className="font-playfair text-plum text-[15px]">
                 {t('products.unavailable')}
               </p>
               <button
@@ -115,7 +120,7 @@ export default function Products() {
 
           {!loading && !error && filtered.length === 0 && (
             <div className="text-center py-12">
-              <p className="font-playfair italic text-mauve text-[15px]">
+              <p className="font-playfair text-mauve text-[15px]">
                 {t('products.empty')}
               </p>
               <button
@@ -171,12 +176,9 @@ export default function Products() {
                     </div>
 
                     <div className="pt-4 flex flex-col">
-                      <span className="font-playfair text-mauve text-[12px] tracking-[0.15em] uppercase">
-                        {sectionLabel(product.section)}
-                      </span>
                       <button
                         onClick={() => navigate(`/product/${product.handle}`)}
-                        className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark mt-1 bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
+                        className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
                       >
                         {product.name}
                       </button>

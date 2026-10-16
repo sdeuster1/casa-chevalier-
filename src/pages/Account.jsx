@@ -22,7 +22,7 @@ export default function Account() {
           <h1 className="font-bodoni uppercase text-dark text-xl md:text-2xl tracking-[0.15em] text-center mb-2">
             {mode === 'signup' ? t('account.createTitle') : t('account.welcomeBack')}
           </h1>
-          <p className="font-playfair italic text-mauve text-center text-[15px] mb-10">
+          <p className="font-playfair text-mauve text-center text-[15px] mb-10">
             {mode === 'signup' ? t('account.createSubtitle') : t('account.signInSubtitle')}
           </p>
 

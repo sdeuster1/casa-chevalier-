@@ -52,7 +52,7 @@ export default function News() {
           <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
             {t('news.title')}
           </h1>
-          <p className="font-playfair italic text-mauve text-center text-[15px] mb-16 md:mb-20">
+          <p className="font-playfair text-mauve text-center text-[15px] mb-16 md:mb-20">
             {t('news.subtitle')}
           </p>
 
@@ -66,18 +66,18 @@ export default function News() {
                   style={{ backgroundColor: a.tone }}
                 >
                   <div className="w-full h-full flex items-center justify-center">
-                    <span className="font-playfair italic text-plum/40 text-sm tracking-widest">
+                    <span className="font-playfair text-plum/40 text-sm tracking-widest">
                       [Editorial Image]
                     </span>
                   </div>
                 </div>
                 <div className="pt-5 flex flex-col gap-2">
                   <div className="flex items-center gap-3">
-                    <span className="font-playfair italic text-mauve text-[12px] tracking-[0.2em] uppercase">
+                    <span className="font-playfair text-mauve text-[12px] tracking-[0.2em] uppercase">
                       {copy.category}
                     </span>
                     <span className="w-4 h-px bg-lilac/60"></span>
-                    <span className="font-playfair italic text-mauve text-[13px]">
+                    <span className="font-playfair text-mauve text-[13px]">
                       {copy.date}
                     </span>
                   </div>

@@ -21,7 +21,7 @@ export default function NotFound() {
         <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] mb-6">
           {t('pageErrors.notFoundTitle')}
         </h1>
-        <p className="font-playfair italic text-dark/70 text-[15px] md:text-base max-w-md mb-10">
+        <p className="font-playfair text-dark/70 text-[15px] md:text-base max-w-md mb-10">
           {t('pageErrors.notFoundBody')}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 items-center">

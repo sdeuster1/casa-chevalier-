@@ -128,6 +128,7 @@ const en = {
     title: 'The Collection',
     subtitle: 'Equestrian sartorial pieces, handcrafted in Italy',
     unavailable: 'The collection is momentarily unavailable. Please try again shortly.',
+    filterLabel: 'Category',
     empty: 'No pieces in this category yet.',
     viewAll: 'View All',
   },
@@ -326,7 +327,7 @@ const it = {
   },
 
   sections: {
-    ALL: 'TUTTO',
+    ALL: 'LA COLLEZIONE',
     PANTS: 'PANTALONI',
     SHIRTS: 'CAMICIE',
     JACKETS: 'GIACCHE',
@@ -439,6 +440,7 @@ const it = {
     title: 'La Collezione',
     subtitle: 'Capi sartoriali equestri, realizzati a mano in Italia',
     unavailable: 'La collezione è momentaneamente non disponibile. Riprova tra poco.',
+    filterLabel: 'Categoria',
     empty: 'Non ci sono ancora capi in questa categoria.',
     viewAll: 'Vedi tutto',
   },

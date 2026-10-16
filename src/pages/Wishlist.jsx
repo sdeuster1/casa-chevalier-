@@ -12,7 +12,7 @@ export default function Wishlist() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { items, remove } = useWishlist()
   const navigate = useNavigate()
-  const { t, sectionLabel } = useLanguage()
+  const { t } = useLanguage()
 
   return (
     <div className="min-h-screen bg-cream">
@@ -24,7 +24,7 @@ export default function Wishlist() {
           <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
             {t('wishlist.title')}
           </h1>
-          <p className="font-playfair italic text-mauve text-center text-[15px] mb-16">
+          <p className="font-playfair text-mauve text-center text-[15px] mb-16">
             {t('wishlist.subtitle')}
           </p>
 
@@ -62,12 +62,9 @@ export default function Wishlist() {
                     </button>
                   </div>
                   <div className="pt-4 flex flex-col">
-                    <span className="font-playfair text-mauve text-[12px] tracking-[0.15em] uppercase">
-                      {sectionLabel(product.section)}
-                    </span>
                     <button
                       onClick={() => navigate(`/product/${product.handle}`)}
-                      className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark mt-1 bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
+                      className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
                     >
                       {product.name}
                     </button>

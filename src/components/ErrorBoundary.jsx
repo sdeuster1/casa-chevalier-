@@ -38,7 +38,7 @@ function CrashMessage() {
       <h1 className="font-bodoni uppercase text-plum text-xl md:text-2xl tracking-[0.2em] mb-4">
         {t('pageErrors.crashTitle')}
       </h1>
-      <p className="font-playfair italic text-dark/70 text-[15px] max-w-md mb-10">
+      <p className="font-playfair text-dark/70 text-[15px] max-w-md mb-10">
         {t('pageErrors.crashBody')}
       </p>
       <button

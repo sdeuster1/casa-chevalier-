@@ -65,7 +65,7 @@ export default function NewsletterPopup() {
             <h2 className="font-bodoni uppercase text-cream text-xl tracking-[0.15em] mb-3">
               {t('newsletter.welcome')}
             </h2>
-            <p className="font-playfair italic text-cream text-[15px]">
+            <p className="font-playfair text-cream text-[15px]">
               {t('newsletter.codeOnWay')}
             </p>
           </>
@@ -74,7 +74,7 @@ export default function NewsletterPopup() {
             <h2 className="font-bodoni uppercase text-cream text-xl md:text-2xl tracking-[0.15em] mb-3">
               {t('newsletter.title')}
             </h2>
-            <p className="font-playfair italic text-cream text-[15px] mb-8 max-w-xs">
+            <p className="font-playfair text-cream text-[15px] mb-8 max-w-xs">
               {t('newsletter.body')}
             </p>
 
@@ -106,7 +106,7 @@ export default function NewsletterPopup() {
                 {status === 'sending' ? t('newsletter.sending') : t('newsletter.claim')}
               </button>
               {(status === 'invalid_email' || status === 'error') && (
-                <p className="font-playfair italic text-coral text-sm -mt-3" role="alert">
+                <p className="font-playfair text-coral text-sm -mt-3" role="alert">
                   {t(status === 'invalid_email' ? 'newsletter.invalidEmail' : 'newsletter.error')}
                 </p>
               )}

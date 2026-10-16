@@ -132,7 +132,7 @@ export default function CartDrawer() {
                   {formatPrice(subtotal, currency)}
                 </span>
               </div>
-              <p className="font-playfair italic text-dark/70 text-sm mt-2">{t('bag.taxes')}</p>
+              <p className="font-playfair text-dark/70 text-sm mt-2">{t('bag.taxes')}</p>
               <button
                 onClick={handleCheckout}
                 disabled={!checkoutUrl || redirecting || busy}
