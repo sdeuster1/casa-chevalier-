@@ -7,7 +7,7 @@ import ProductCard from './ProductCard'
 const FEATURED_HANDLES = [
   ['the-equestrian-blazer-heritage-check', 'test-blazer'],
   'the-stable-vest-dark-chocolate',
-  'cc-rsc-the-timeless-polo-rust-cream',
+  'the-everyday-breeches-sand',
   'the-saddle-shirt-vanilla-blush',
 ]
 
