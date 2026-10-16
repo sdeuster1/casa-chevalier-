@@ -63,8 +63,8 @@ export default function ProductCard({ product, highlighted = false, cardRef }) {
           aria-label={wished ? t('common.removeFromWishlist') : t('common.addToWishlist')}
         >
           <Heart
-            className="w-[18px] h-[18px] text-plum drop-shadow-[0_0_2px_rgba(240,233,224,0.9)]"
-            fill={wished ? '#4f1d34' : 'none'}
+            className="w-[18px] h-[18px] text-white drop-shadow-[0_0_2px_rgba(0,0,0,0.35)]"
+            fill={wished ? '#ffffff' : 'none'}
             strokeWidth={1.25}
           />
         </button>
