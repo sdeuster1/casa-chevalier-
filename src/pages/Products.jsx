@@ -62,9 +62,9 @@ export default function Products() {
           <h1 className="sr-only">{t('products.title')}</h1>
 
           {/* Compact header: category dropdown on the left, the line about
-              the collection beside it (underneath on phones) */}
-          <div className="flex flex-col md:flex-row md:items-center gap-x-8 gap-y-2 mb-8 md:mb-10">
-            <label className="relative inline-flex items-center self-start shrink-0">
+              the collection centred on the page (underneath on phones) */}
+          <div className="flex flex-col md:grid md:grid-cols-[1fr_auto_1fr] md:items-center gap-x-8 gap-y-2 mb-8 md:mb-10">
+            <label className="relative inline-flex items-center self-start justify-self-start shrink-0">
               <span className="sr-only">{t('products.filterLabel')}</span>
               <select
                 value={categories.includes(activeCategory) ? activeCategory : 'ALL'}
