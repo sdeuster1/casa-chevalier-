@@ -29,6 +29,20 @@ function ShopifyProductLink() {
   return <Navigate to={`/product/${handle}`} replace />
 }
 
+// The team's own visits stay out of the analytics: open the site once with
+// ?internal=1 to stop counting this browser (?internal=0 counts it again).
+function skipInternalVisits(event) {
+  try {
+    const flag = new URLSearchParams(window.location.search).get('internal')
+    if (flag === '1') localStorage.setItem('cc-internal', '1')
+    if (flag === '0') localStorage.removeItem('cc-internal')
+    if (localStorage.getItem('cc-internal') === '1') return null
+  } catch {
+    // Storage blocked (private window): count the visit as usual
+  }
+  return event
+}
+
 // Everything that renders inside one safety net, reset on every navigation
 function Pages() {
   const { pathname } = useLocation()
@@ -74,7 +88,7 @@ export default function App() {
             </WishlistProvider>
             {/* Vercel Web Analytics: cookieless page views, counted on every
                 page change. Only active on the deployed site, not locally. */}
-            <Analytics />
+            <Analytics beforeSend={skipInternalVisits} />
           </CartProvider>
         </ProductsProvider>
       </LanguageProvider>
