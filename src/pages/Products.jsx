@@ -10,6 +10,21 @@ import { useWishlist } from '../context/WishlistContext'
 import { useLanguage } from '../i18n/LanguageContext'
 import ProductTitle from '../components/ProductTitle'
 
+// Pieces moved from Shopify's order in the full collection: each one is shown
+// right after the other handle. The Bombacha sits between the two Saddle
+// Shirts so they are not side by side.
+const PLACE_AFTER = {
+  'the-signature-bombacha-heritage-check': 'the-saddle-shirt-vanilla-blush',
+}
+
+const arrange = (list) =>
+  Object.entries(PLACE_AFTER).reduce((acc, [handle, after]) => {
+    const item = acc.find((p) => p.handle === handle)
+    const rest = acc.filter((p) => p !== item)
+    const i = rest.findIndex((p) => p.handle === after)
+    return item && i >= 0 ? [...rest.slice(0, i + 1), item, ...rest.slice(i + 1)] : acc
+  }, list)
+
 export default function Products() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [manualCategory, setManualCategory] = useState(null)
@@ -48,7 +63,7 @@ export default function Products() {
 
   const filtered =
     activeCategory === 'ALL'
-      ? products
+      ? arrange(products)
       : products.filter((p) => matchesCategory(p, activeCategory))
 
   return (

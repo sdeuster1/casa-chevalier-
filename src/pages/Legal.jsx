@@ -15,6 +15,13 @@ const clean = (html) =>
     ALLOWED_ATTR: ['href'],
   })
 
+// The English translations open with "In case of discrepancy, the Italian
+// version prevails". Keep the note, but at the end of the document.
+const translationNoteLast = (html) => {
+  const note = html.match(/<p>(?:(?!<\/p>)[\s\S])*prevails(?:(?!<\/p>)[\s\S])*<\/p>/i)?.[0]
+  return note ? html.replace(note, '') + note : html
+}
+
 export default function Legal() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { pathname } = useLocation()
@@ -31,7 +38,7 @@ export default function Legal() {
     fetchLegalBody(doc)
       .then((body) => {
         // A missing or empty document shows the "unavailable" note, not a blank page
-        const html = clean(body)
+        const html = translationNoteLast(clean(body))
         if (!cancelled) setResult({ key, html, failed: !html.trim() })
       })
       .catch(() => !cancelled && setResult({ key, html: '', failed: true }))

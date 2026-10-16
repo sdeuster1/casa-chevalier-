@@ -10,7 +10,7 @@ const CONTACT_EMAIL = 'info@casachevalier.com'
 const details = [
   { icon: Mail, label: 'email', value: CONTACT_EMAIL },
   { icon: Phone, label: 'telephone', value: '+39 02 393 5831' },
-  { icon: MapPin, label: 'atelier', valueKey: 'address' },
+  { icon: MapPin, label: 'office', valueKey: 'address' },
 ]
 
 export default function Contacts() {
@@ -53,9 +53,6 @@ export default function Contacts() {
                 </h3>
                 <p className="font-playfair text-dark/70 text-[15px]">
                   {t('contacts.hoursWeek')}
-                </p>
-                <p className="font-playfair text-dark/70 text-[15px]">
-                  {t('contacts.hoursSaturday')}
                 </p>
               </div>
             </div>
