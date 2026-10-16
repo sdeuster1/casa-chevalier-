@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Navigate, useParams, useNavigate } from 'react-router-dom'
 import { Heart, Plus, Minus } from 'lucide-react'
 import DOMPurify from 'dompurify'
@@ -18,6 +18,34 @@ import ColourSwatches from '../components/ColourSwatches'
 
 const LOW_STOCK_THRESHOLD = 5
 
+// "You May Also Like": the pieces each product is styled with, by handle.
+// Every product shows three; any free places are filled at random. A list
+// means "the first of these that exists" (the blazer's handle may change).
+const PAIRS_WITH = {
+  'the-everyday-breeches-sand': ['the-stable-vest-sand', 'the-saddle-shirt-bronze'],
+  'the-everyday-breeches-dark-chocolate': ['the-stable-vest-dark-chocolate', 'the-saddle-shirt-vanilla-blush'],
+  'the-signature-bombacha-heritage-check': [
+    ['the-equestrian-blazer-heritage-check', 'test-blazer'],
+    'the-saddle-shirt-vanilla-blush',
+  ],
+  'the-pocket-belt-dark-chocolate': ['the-everyday-breeches-dark-chocolate', 'the-stable-vest-dark-chocolate'],
+}
+const RELATED_COUNT = 3
+
+// The CC × RSC pieces launch later, so they are never suggested at random
+const notSuggested = (p) => p.handle.startsWith('cc-rsc-')
+
+const relatedFor = (product, products) => {
+  const find = (entry) => [entry].flat().map((h) => products.find((p) => p.handle === h)).find(Boolean)
+  const chosen = (PAIRS_WITH[product.handle] || []).map(find).filter(Boolean)
+  const others = products
+    .filter((p) => p.handle !== product.handle && !chosen.includes(p) && !notSuggested(p))
+    .map((p) => ({ p, r: Math.random() }))
+    .sort((a, b) => a.r - b.r)
+    .map(({ p }) => p)
+  return [...chosen, ...others].slice(0, RELATED_COUNT)
+}
+
 // Every piece is made in Italy, so the origin line shows on all products.
 // Add a product's handle here if one is ever made elsewhere.
 const NOT_MADE_IN_ITALY = []
@@ -36,6 +64,8 @@ export default function ProductDetail() {
   const navigate = useNavigate()
   const { products, loading, error, retry, colourVersions } = useProducts()
   const product = products.find((p) => p.handle === handle)
+  // Random picks are drawn once per product, not on every render
+  const related = useMemo(() => (product ? relatedFor(product, products) : []), [product, products])
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [chosenSize, setChosenSize] = useState(null)
@@ -146,10 +176,6 @@ export default function ProductDetail() {
       setAddError(t('product.addFailed'))
     }
   }
-
-  const related = products
-    .filter((p) => p.section === product.section && p.handle !== product.handle)
-    .slice(0, 3)
 
   const outOfStock = selectedVariant && !selectedVariant.available
 
