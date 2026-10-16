@@ -4,6 +4,7 @@ import { X } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import { formatPrice, sizedImage } from '../lib/shopify'
 import { useLanguage } from '../i18n/LanguageContext'
+import ProductTitle from './ProductTitle'
 
 // Slide-in shopping bag. Opens after "Add to bag" so the customer can go
 // straight to checkout or keep browsing. The full bag stays at /shop.
@@ -102,7 +103,7 @@ export default function CartDrawer() {
                       onClick={() => goTo(`/product/${line.productHandle}`)}
                       className="font-bodoni tracking-[0.02em] text-[15px] text-dark bg-transparent border-none p-0 text-left cursor-pointer hover:opacity-70 transition-opacity"
                     >
-                      {line.productTitle}
+                      <ProductTitle title={line.productTitle} />
                       {line.quantity > 1 && <span className="text-dark/70"> × {line.quantity}</span>}
                     </button>
                     {line.size && (

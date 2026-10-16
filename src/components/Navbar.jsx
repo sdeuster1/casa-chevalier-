@@ -7,6 +7,7 @@ import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 import { useLanguage } from '../i18n/LanguageContext'
 import LanguageSwitch from './LanguageSwitch'
+import ProductTitle from './ProductTitle'
 
 export default function Navbar({ onMenuToggle, variant = 'light' }) {
   const [searchOpen, setSearchOpen] = useState(false)
@@ -188,7 +189,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
                         />
                         <div className="flex flex-col">
                           <span className="font-bodoni tracking-[0.02em] text-[15px] text-cream">
-                            {p.name}
+                            <ProductTitle title={p.name} />
                           </span>
                         </div>
                       </button>

@@ -7,6 +7,7 @@ import Footer from '../components/Footer'
 import { useCart } from '../context/CartContext'
 import { formatPrice, sizedImage } from '../lib/shopify'
 import { useLanguage } from '../i18n/LanguageContext'
+import ProductTitle from '../components/ProductTitle'
 
 export default function Shop() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -91,7 +92,7 @@ export default function Shop() {
                         onClick={() => navigate(`/product/${line.productHandle}`)}
                         className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark bg-transparent border-none p-0 text-left cursor-pointer hover:opacity-70 transition-opacity"
                       >
-                        {line.productTitle}
+                        <ProductTitle title={line.productTitle} />
                       </button>
                       {line.size && (
                         <p className="font-playfair text-dark/70 text-sm mt-1">{t('bag.size', { size: line.size })}</p>

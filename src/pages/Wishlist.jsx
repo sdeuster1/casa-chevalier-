@@ -7,6 +7,7 @@ import Footer from '../components/Footer'
 import { useWishlist } from '../context/WishlistContext'
 import { formatPrice, photoFocus, sizedImage } from '../lib/shopify'
 import { useLanguage } from '../i18n/LanguageContext'
+import ProductTitle from '../components/ProductTitle'
 
 export default function Wishlist() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -66,7 +67,7 @@ export default function Wishlist() {
                       onClick={() => navigate(`/product/${product.handle}`)}
                       className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
                     >
-                      {product.name}
+                      <ProductTitle title={product.name} />
                     </button>
                     <p className="font-playfair text-[15px] text-plum mt-1">
                       {formatPrice(product.price)}

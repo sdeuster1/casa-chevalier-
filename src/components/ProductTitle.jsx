@@ -1,0 +1,15 @@
+import { splitTitle } from '../lib/shopify'
+
+// A product's name with its colour on the line underneath, from the
+// Shopify title ("The Saddle Shirt - Vanilla Blush" → "The Saddle Shirt" /
+// "Vanilla Blush"). Both lines take the surrounding font; the colour line
+// is lighter, or styled with colourClassName.
+export default function ProductTitle({ title, colourClassName = 'opacity-60' }) {
+  const { baseName, colour } = splitTitle(title || '')
+  return (
+    <>
+      <span className="block">{baseName}</span>
+      {colour && <span className={`block ${colourClassName}`}>{colour}</span>}
+    </>
+  )
+}

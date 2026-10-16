@@ -4,6 +4,8 @@ import { formatPrice, photoFocus, sizedImage } from '../lib/shopify'
 import { useWishlist } from '../context/WishlistContext'
 import { useProducts } from '../context/ProductsContext'
 import { useLanguage } from '../i18n/LanguageContext'
+import { swatchFor } from '../data/colours'
+import ProductTitle from './ProductTitle'
 
 // Product tile in the luxury-retail pattern: full 2:3 photo (the shoots are
 // 2:3, so nothing is cropped), second photo on hover, then a quiet text block.
@@ -13,7 +15,8 @@ export default function ProductCard({ product, highlighted = false, cardRef }) {
   const { t } = useLanguage()
   const wished = has(product.handle)
   const soldOut = !product.availableForSale
-  const colours = colourVersions(product).length + 1
+  // Every colour of this piece, in a fixed order, for the swatches
+  const colours = [product, ...colourVersions(product)].sort((a, b) => a.handle.localeCompare(b.handle))
   const hover = product.images[1]
   const to = `/product/${product.handle}`
 
@@ -68,17 +71,39 @@ export default function ProductCard({ product, highlighted = false, cardRef }) {
 
       <Link to={to} className="pt-4 flex flex-col gap-1 no-underline">
         <span className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark leading-snug">
-          {product.name}
+          <ProductTitle title={product.name} />
         </span>
-        {colours > 1 && (
-          <span className="font-playfair text-dark/70 text-sm">
-            {t('product.moreColours', { count: colours })}
-          </span>
-        )}
         <span className="font-playfair text-plum text-[15px] mt-1">
           {formatPrice(product.price, product.currency)}
         </span>
       </Link>
+
+      {/* One small swatch per colour, like the product page; each opens
+          that colour. Outside the link above (links can't be nested). */}
+      {colours.length > 1 && (
+        <div className="flex gap-1.5 mt-3">
+          {colours.map((c) => {
+            const current = c.handle === product.handle
+            const hex = swatchFor(c.colour)
+            return (
+              <Link
+                key={c.handle}
+                to={`/product/${c.handle}`}
+                aria-label={c.colour}
+                title={c.colour}
+                className={`block w-7 h-[18px] p-[2px] border transition-colors ${
+                  current ? 'border-plum' : 'border-transparent hover:border-plum/40'
+                }`}
+              >
+                <span
+                  className="block w-full h-full bg-[#e5ded4] bg-cover bg-center border border-dark/10"
+                  style={hex ? { backgroundColor: hex } : { backgroundImage: `url(${sizedImage(c.image, 80)})` }}
+                />
+              </Link>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }

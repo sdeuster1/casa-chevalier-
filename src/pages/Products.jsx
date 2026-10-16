@@ -8,6 +8,7 @@ import { formatPrice, matchesCategory, photoFocus, sizedImage } from '../lib/sho
 import { useProducts } from '../context/ProductsContext'
 import { useWishlist } from '../context/WishlistContext'
 import { useLanguage } from '../i18n/LanguageContext'
+import ProductTitle from '../components/ProductTitle'
 
 export default function Products() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -55,38 +56,37 @@ export default function Products() {
       <Navbar onMenuToggle={() => setMenuOpen(!menuOpen)} variant="dark" />
       <DropdownMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
-      <section className="pt-28 md:pt-36 pb-16 md:pb-24 px-6 md:px-12">
+      <section className="pt-24 md:pt-28 pb-16 md:pb-24 px-6 md:px-12">
         <div className="max-w-6xl mx-auto">
           {/* Title kept for search engines and screen readers, not shown */}
           <h1 className="sr-only">{t('products.title')}</h1>
-          <p className="font-playfair text-mauve text-center text-[15px] mb-12">
-            {t('products.subtitle')}
-          </p>
 
-          {/* Category filter: one quiet dropdown instead of rows of buttons */}
-          {!loading && categories.length > 1 && (
-            <div className="flex justify-center mb-14 md:mb-20">
-              <label className="relative inline-flex items-center">
-                <span className="sr-only">{t('products.filterLabel')}</span>
-                <select
-                  value={categories.includes(activeCategory) ? activeCategory : 'ALL'}
-                  onChange={(e) => setManualCategory(e.target.value)}
-                  className="appearance-none bg-transparent font-bodoni uppercase text-plum text-[13px] md:text-sm tracking-[0.2em] border-0 border-b border-plum rounded-none pb-1 pr-7 cursor-pointer focus:outline-none focus-visible:outline-1 focus-visible:outline-plum focus-visible:outline-offset-4"
-                >
-                  {categories.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {sectionLabel(cat)}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown
-                  className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 text-plum pointer-events-none"
-                  strokeWidth={1.5}
-                  aria-hidden="true"
-                />
-              </label>
-            </div>
-          )}
+          {/* Compact header: category dropdown on the left, the line about
+              the collection beside it (underneath on phones) */}
+          <div className="flex flex-col md:flex-row md:items-center gap-x-8 gap-y-2 mb-8 md:mb-10">
+            <label className="relative inline-flex items-center self-start shrink-0">
+              <span className="sr-only">{t('products.filterLabel')}</span>
+              <select
+                value={categories.includes(activeCategory) ? activeCategory : 'ALL'}
+                onChange={(e) => setManualCategory(e.target.value)}
+                className="appearance-none bg-transparent font-bodoni uppercase text-plum text-[13px] md:text-sm tracking-[0.2em] border-0 border-b border-plum rounded-none pb-1 pr-7 cursor-pointer focus:outline-none focus-visible:outline-1 focus-visible:outline-plum focus-visible:outline-offset-4"
+              >
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {sectionLabel(cat)}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
+                className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 text-plum pointer-events-none"
+                strokeWidth={1.5}
+                aria-hidden="true"
+              />
+            </label>
+            <p className="font-playfair text-mauve text-[15px] m-0">
+              {t('products.subtitle')}
+            </p>
+          </div>
 
           {/* Loading skeleton — quiet fade, in keeping with the rest */}
           {loading && (
@@ -180,7 +180,7 @@ export default function Products() {
                         onClick={() => navigate(`/product/${product.handle}`)}
                         className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
                       >
-                        {product.name}
+                        <ProductTitle title={product.name} />
                       </button>
                       <p className="font-playfair text-[15px] text-plum mt-1">
                         {formatPrice(product.price, product.currency)}

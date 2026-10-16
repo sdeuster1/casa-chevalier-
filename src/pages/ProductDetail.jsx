@@ -14,6 +14,7 @@ import { useProducts } from '../context/ProductsContext'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 import { useLanguage } from '../i18n/LanguageContext'
+import ProductTitle from '../components/ProductTitle'
 
 const LOW_STOCK_THRESHOLD = 5
 
@@ -168,7 +169,7 @@ export default function ProductDetail() {
           <div className="md:sticky md:top-24 md:self-start px-6 md:px-0 py-10 md:py-16">
             <div className="flex items-start justify-between gap-4">
               <h1 className="font-bodoni text-dark text-2xl md:text-3xl leading-tight">
-                {product.name}
+                <ProductTitle title={product.name} colourClassName="text-lg md:text-xl text-dark/60 mt-1" />
               </h1>
               <button
                 onClick={() => toggleWish(product.handle)}
@@ -382,7 +383,7 @@ export default function ProductDetail() {
                     )}
                   </div>
                   <p className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark mt-3">
-                    {p.name}
+                    <ProductTitle title={p.name} />
                   </p>
                   <p className="font-playfair text-[15px] text-plum mt-1">
                     {formatPrice(p.price, p.currency)}

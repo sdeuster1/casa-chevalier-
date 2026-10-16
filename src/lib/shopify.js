@@ -107,9 +107,9 @@ export function matchesCategory(product, section) {
 
 // ---------- Naming ----------
 // Shopify titles carry the colour after a dash ("The Stable Vest - Sand").
-// Splitting it off lets colour versions find each other; cards and the
-// product page still show the full Shopify title.
-function splitTitle(title) {
+// Splitting it off lets colour versions find each other, and names are
+// shown as the piece on one line with its colour underneath.
+export function splitTitle(title) {
   const i = title.lastIndexOf(' - ')
   const base = i > 0 ? title.slice(0, i).trim() : title.trim()
   const colour = i > 0 ? title.slice(i + 3).trim() : null

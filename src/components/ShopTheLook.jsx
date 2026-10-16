@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { formatPrice, photoFocus, sizedImage } from '../lib/shopify'
 import { useProducts } from '../context/ProductsContext'
 import { useLanguage } from '../i18n/LanguageContext'
+import ProductTitle from './ProductTitle'
 
 // Extra zoom on a card photo, by handle. The vest shot is a full-length
 // figure, so it is brought 20% closer, zooming on the upper body so the
@@ -123,7 +124,7 @@ export default function ShopTheLook() {
                   )}
                 </div>
                 <p className="font-bodoni text-[15px] tracking-[0.02em] text-dark mt-3">
-                  {item.name}
+                  <ProductTitle title={item.name} />
                 </p>
                 <p className="font-playfair text-[15px] text-plum mt-1">
                   {formatPrice(item.price, item.currency)}
