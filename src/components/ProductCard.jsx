@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom'
 import { Heart } from 'lucide-react'
-import { formatPrice, photoFocus, sizedImage } from '../lib/shopify'
+import { formatPrice, photoFocus, sizedImage, splitTitle } from '../lib/shopify'
 import { useWishlist } from '../context/WishlistContext'
 import { useProducts } from '../context/ProductsContext'
 import { useLanguage } from '../i18n/LanguageContext'
-import { swatchFor } from '../data/colours'
-import ProductTitle from './ProductTitle'
+import ColourSwatches from './ColourSwatches'
 
 // Product tile in the luxury-retail pattern: full 2:3 photo (the shoots are
 // 2:3, so nothing is cropped), second photo on hover, then a quiet text block.
@@ -15,10 +14,12 @@ export default function ProductCard({ product, highlighted = false, cardRef }) {
   const { t } = useLanguage()
   const wished = has(product.handle)
   const soldOut = !product.availableForSale
-  // Every colour of this piece, in a fixed order, for the swatches
-  const colours = [product, ...colourVersions(product)].sort((a, b) => a.handle.localeCompare(b.handle))
+  // Every colour of this piece for the swatches: the one shown first,
+  // then the others in a fixed order
+  const colours = [product, ...colourVersions(product).sort((a, b) => a.handle.localeCompare(b.handle))]
   const hover = product.images[1]
   const to = `/product/${product.handle}`
+  const { baseName, colour } = splitTitle(product.name)
 
   return (
     <div
@@ -69,41 +70,31 @@ export default function ProductCard({ product, highlighted = false, cardRef }) {
         </button>
       </div>
 
-      <Link to={to} className="pt-4 flex flex-col gap-1 no-underline">
-        <span className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark leading-snug">
-          <ProductTitle title={product.name} />
-        </span>
-        <span className="font-playfair text-plum text-[15px] mt-1">
-          {formatPrice(product.price, product.currency)}
-        </span>
-      </Link>
-
-      {/* One small swatch per colour, like the product page; each opens
-          that colour. Outside the link above (links can't be nested). */}
-      {colours.length > 1 && (
-        <div className="flex gap-1.5 mt-3">
-          {colours.map((c) => {
-            const current = c.handle === product.handle
-            const hex = swatchFor(c.colour)
-            return (
-              <Link
-                key={c.handle}
-                to={`/product/${c.handle}`}
-                aria-label={c.colour}
-                title={c.colour}
-                className={`block w-7 h-[18px] p-[2px] border transition-colors ${
-                  current ? 'border-plum' : 'border-transparent hover:border-plum/40'
-                }`}
-              >
-                <span
-                  className="block w-full h-full bg-[#e5ded4] bg-cover bg-center border border-dark/10"
-                  style={hex ? { backgroundColor: hex } : { backgroundImage: `url(${sizedImage(c.image, 80)})` }}
-                />
-              </Link>
-            )
-          })}
+      {/* Name on the left, price on the right; underneath the name its
+          colour with the other colours' swatches beside it. Separate links,
+          since the swatches are links too and links can't be nested. */}
+      <div className="pt-4 flex items-start justify-between gap-3 font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark leading-snug">
+        <div className="min-w-0">
+          <Link to={to} className="block text-dark no-underline">
+            {baseName}
+          </Link>
+          {(colour || colours.length > 1) && (
+            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+              {colour && (
+                <Link to={to} className="text-dark/60 no-underline">
+                  {colour}
+                </Link>
+              )}
+              {colours.length > 1 && (
+                <ColourSwatches colours={colours} currentHandle={product.handle} size="xs" />
+              )}
+            </div>
+          )}
         </div>
-      )}
+        <Link to={to} className="text-dark no-underline whitespace-nowrap shrink-0">
+          {formatPrice(product.price, product.currency)}
+        </Link>
+      </div>
     </div>
   )
 }

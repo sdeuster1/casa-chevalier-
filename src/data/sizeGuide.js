@@ -33,8 +33,8 @@ const ONE_SIZE_GENERAL = {
   en: 'One-size pieces are designed with relaxed proportions conceived to adapt to different body shapes.',
 }
 
-// type 'sized': link + panel with the chart. type 'oneSize': fit note on the
-// page, link + panel with the general one-size text.
+// type 'sized': link + panel with the chart. type 'oneSize': link + panel
+// with the fit note and the general one-size text.
 const GUIDES = [
   {
     title: 'CC × RSC The Signature Bombacha',

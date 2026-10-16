@@ -175,14 +175,14 @@ export default function Products() {
                       </button>
                     </div>
 
-                    <div className="pt-4 flex flex-col">
+                    <div className="pt-4 flex items-start justify-between gap-3">
                       <button
                         onClick={() => navigate(`/product/${product.handle}`)}
-                        className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
+                        className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark min-w-0 bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
                       >
                         <ProductTitle title={product.name} />
                       </button>
-                      <p className="font-playfair text-[15px] text-plum mt-1">
+                      <p className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark whitespace-nowrap shrink-0 m-0">
                         {formatPrice(product.price, product.currency)}
                       </p>
                     </div>

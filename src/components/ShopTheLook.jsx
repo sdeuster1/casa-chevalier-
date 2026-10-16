@@ -123,12 +123,14 @@ export default function ShopTheLook() {
                     </div>
                   )}
                 </div>
-                <p className="font-bodoni text-[15px] tracking-[0.02em] text-dark mt-3">
-                  <ProductTitle title={item.name} />
-                </p>
-                <p className="font-playfair text-[15px] text-plum mt-1">
-                  {formatPrice(item.price, item.currency)}
-                </p>
+                <div className="flex items-start justify-between gap-3 mt-3">
+                  <p className="font-bodoni text-[15px] tracking-[0.02em] text-dark min-w-0 m-0">
+                    <ProductTitle title={item.name} />
+                  </p>
+                  <p className="font-bodoni text-[15px] tracking-[0.02em] text-dark whitespace-nowrap shrink-0 m-0">
+                    {formatPrice(item.price, item.currency)}
+                  </p>
+                </div>
               </button>
             ))}
           </div>

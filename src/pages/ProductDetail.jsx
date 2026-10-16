@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, Navigate, useParams, useNavigate } from 'react-router-dom'
+import { Navigate, useParams, useNavigate } from 'react-router-dom'
 import { Heart, Plus, Minus } from 'lucide-react'
 import DOMPurify from 'dompurify'
 import Navbar from '../components/Navbar'
@@ -9,12 +9,12 @@ import SizeGuide from '../components/SizeGuide'
 import ProductGallery from '../components/ProductGallery'
 import { sizeGuideFor } from '../data/sizeGuide'
 import { formatPrice, photoFocus, RENAMED_HANDLES, sizedImage } from '../lib/shopify'
-import { swatchFor } from '../data/colours'
 import { useProducts } from '../context/ProductsContext'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 import { useLanguage } from '../i18n/LanguageContext'
 import ProductTitle from '../components/ProductTitle'
+import ColourSwatches from '../components/ColourSwatches'
 
 const LOW_STOCK_THRESHOLD = 5
 
@@ -46,7 +46,7 @@ export default function ProductDetail() {
 
   const { addItem, busy, openDrawer } = useCart()
   const { toggle: toggleWish, has: hasWish } = useWishlist()
-  const { t, lang } = useLanguage()
+  const { t } = useLanguage()
 
   if (loading) {
     return (
@@ -192,42 +192,14 @@ export default function ProductDetail() {
                     {product.colour}
                   </span>
                 </span>
-                <div className="flex gap-2">
-                  {colours.map((c) => {
-                    const current = c.handle === product.handle
-                    const hex = swatchFor(c.colour)
-                    return (
-                      <Link
-                        key={c.handle}
-                        to={`/product/${c.handle}`}
-                        replace
-                        aria-label={c.colour}
-                        aria-current={current ? 'true' : undefined}
-                        title={c.colour}
-                        className={`block w-12 h-8 p-[3px] border transition-colors ${
-                          current ? 'border-plum' : 'border-transparent hover:border-plum/40'
-                        }`}
-                      >
-                        <span
-                          className="block w-full h-full bg-[#e5ded4] bg-cover bg-center border border-dark/10"
-                          style={hex ? { backgroundColor: hex } : { backgroundImage: `url(${sizedImage(c.image, 120)})` }}
-                        />
-                      </Link>
-                    )
-                  })}
-                </div>
+                <ColourSwatches colours={colours} currentHandle={product.handle} size="md" replace />
               </div>
             )}
 
-            {/* One-size products: fit note in place of the size buttons,
-                with the general one-size text behind the size guide link */}
+            {/* One-size products: just the size guide link in place of the
+                size buttons; the fit note and one-size text are inside it */}
             {oneSizeNote && (
-              <div className="mt-10">
-                {guide.fit && (
-                  <p className="font-playfair text-dark/70 text-[15px] leading-relaxed">
-                    {guide.fit[lang] ?? guide.fit.en}
-                  </p>
-                )}
+              <div className="mt-6">
                 <SizeGuide guide={guide} />
               </div>
             )}
@@ -382,12 +354,14 @@ export default function ProductDetail() {
                       <img src={sizedImage(p.image, 700)} alt={p.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" style={{ objectPosition: photoFocus(p) }} />
                     )}
                   </div>
-                  <p className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark mt-3">
-                    <ProductTitle title={p.name} />
-                  </p>
-                  <p className="font-playfair text-[15px] text-plum mt-1">
-                    {formatPrice(p.price, p.currency)}
-                  </p>
+                  <div className="flex items-start justify-between gap-3 mt-3">
+                    <p className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark min-w-0 m-0">
+                      <ProductTitle title={p.name} />
+                    </p>
+                    <p className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark whitespace-nowrap shrink-0 m-0">
+                      {formatPrice(p.price, p.currency)}
+                    </p>
+                  </div>
                 </button>
               ))}
             </div>

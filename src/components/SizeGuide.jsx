@@ -43,6 +43,11 @@ function SizeGuidePanel({ guide, tx, onClose }) {
   if (guide.type === 'oneSize') {
     return (
       <PanelShell titleText={tx(TEXT.oneSizeTitle)} closeLabel={tx(TEXT.close)} closeRef={closeRef} onClose={onClose}>
+        {guide.fit && (
+          <p className="font-playfair text-dark text-[15px] leading-relaxed mb-3">
+            {tx(guide.fit)}
+          </p>
+        )}
         <p className="font-playfair text-dark/75 text-[15px] leading-relaxed">
           {tx(TEXT.oneSizeGeneral)}
         </p>
