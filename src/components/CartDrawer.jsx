@@ -100,7 +100,7 @@ export default function CartDrawer() {
                   <div className="flex-1 flex flex-col">
                     <button
                       onClick={() => goTo(`/product/${line.productHandle}`)}
-                      className="font-bodoni uppercase tracking-[0.15em] text-sm text-dark bg-transparent border-none p-0 text-left cursor-pointer hover:opacity-70 transition-opacity"
+                      className="font-bodoni tracking-[0.02em] text-[15px] text-dark bg-transparent border-none p-0 text-left cursor-pointer hover:opacity-70 transition-opacity"
                     >
                       {line.productTitle}
                       {line.quantity > 1 && <span className="text-dark/70"> × {line.quantity}</span>}

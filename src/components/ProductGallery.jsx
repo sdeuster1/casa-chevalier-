@@ -4,7 +4,8 @@ import { useLanguage } from '../i18n/LanguageContext'
 
 // Product photos. Phones: one photo at a time, swiped sideways, with dots
 // underneath so the name, price and sizes stay in the first screen.
-// Desktop (md and up): the photos stacked under each other.
+// Desktop (md and up): the photos stacked under each other, with a slim
+// 18px gap between them.
 export default function ProductGallery({ product }) {
   const { t } = useLanguage()
   const trackRef = useRef(null)
@@ -31,7 +32,7 @@ export default function ProductGallery({ product }) {
       <div
         ref={trackRef}
         onScroll={handleScroll}
-        className="flex md:flex-col overflow-x-auto md:overflow-visible snap-x snap-mandatory no-scrollbar"
+        className="flex md:flex-col md:gap-[18px] overflow-x-auto md:overflow-visible snap-x snap-mandatory no-scrollbar"
       >
         {images.map((img, i) => (
           <div key={i} className="w-full shrink-0 snap-center aspect-[3/4] bg-[#d4cec6]">

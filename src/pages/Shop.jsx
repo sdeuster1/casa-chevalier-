@@ -89,7 +89,7 @@ export default function Shop() {
                     <div className="flex-1 flex flex-col">
                       <button
                         onClick={() => navigate(`/product/${line.productHandle}`)}
-                        className="font-bodoni uppercase tracking-[0.15em] text-[13px] md:text-sm text-dark bg-transparent border-none p-0 text-left cursor-pointer hover:opacity-70 transition-opacity"
+                        className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark bg-transparent border-none p-0 text-left cursor-pointer hover:opacity-70 transition-opacity"
                       >
                         {line.productTitle}
                       </button>

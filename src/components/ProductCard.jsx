@@ -67,7 +67,7 @@ export default function ProductCard({ product, highlighted = false, cardRef }) {
       </div>
 
       <Link to={to} className="pt-4 flex flex-col gap-1 no-underline">
-        <span className="font-bodoni uppercase tracking-[0.14em] text-[13px] md:text-sm text-dark leading-snug">
+        <span className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark leading-snug">
           {product.name}
         </span>
         {colours > 1 && (

@@ -187,10 +187,10 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
                           className="w-14 h-16 object-cover bg-[#d4cec6]"
                         />
                         <div className="flex flex-col">
-                          <span className="font-playfair italic text-cream text-[12px] tracking-[0.15em] uppercase">
+                          <span className="font-playfair text-cream text-[12px] tracking-[0.15em] uppercase">
                             {sectionLabel(p.section)}
                           </span>
-                          <span className="font-bodoni uppercase tracking-[0.15em] text-sm text-cream">
+                          <span className="font-bodoni tracking-[0.02em] text-[15px] text-cream">
                             {p.name}
                           </span>
                         </div>

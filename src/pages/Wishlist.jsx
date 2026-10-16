@@ -62,24 +62,18 @@ export default function Wishlist() {
                     </button>
                   </div>
                   <div className="pt-4 flex flex-col">
-                    <span className="font-playfair italic text-mauve text-[12px] tracking-[0.15em] uppercase">
+                    <span className="font-playfair text-mauve text-[12px] tracking-[0.15em] uppercase">
                       {sectionLabel(product.section)}
                     </span>
                     <button
                       onClick={() => navigate(`/product/${product.handle}`)}
-                      className="font-bodoni uppercase tracking-[0.15em] text-[13px] md:text-sm text-dark mt-1 bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
+                      className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark mt-1 bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
                     >
                       {product.name}
                     </button>
                     <p className="font-playfair text-[15px] text-plum mt-1">
                       {formatPrice(product.price)}
                     </p>
-                    <button
-                      onClick={() => navigate(`/product/${product.handle}`)}
-                      className="mt-4 self-start font-bodoni uppercase text-plum text-[12px] md:text-[13px] tracking-[0.2em] border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity duration-300"
-                    >
-                      {t('common.viewProduct')}
-                    </button>
                   </div>
                 </div>
               ))}
