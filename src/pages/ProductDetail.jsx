@@ -23,13 +23,21 @@ const SHOW_LOW_STOCK = false
 // "You May Also Like": the pieces each product is styled with, by handle.
 // Every product shows three; any free places are filled at random. A list
 // means "the first of these that exists" (the blazer's handle may change).
+const BLAZER = ['the-equestrian-blazer-heritage-check', 'test-blazer']
 const PAIRS_WITH = {
-  'the-everyday-breeches-sand': ['the-stable-vest-sand', 'the-saddle-shirt-bronze'],
-  'the-everyday-breeches-dark-chocolate': ['the-stable-vest-dark-chocolate', 'the-saddle-shirt-vanilla-blush'],
-  'the-signature-bombacha-heritage-check': [
-    ['the-equestrian-blazer-heritage-check', 'test-blazer'],
-    'the-saddle-shirt-vanilla-blush',
+  'the-everyday-breeches-sand': [
+    'the-everyday-breeches-dark-chocolate',
+    'the-signature-bombacha-heritage-check',
+    'the-saddle-shirt-bronze',
   ],
+  'the-everyday-breeches-dark-chocolate': ['the-stable-vest-dark-chocolate', 'the-saddle-shirt-vanilla-blush', BLAZER],
+  'the-stable-vest-dark-chocolate': ['the-everyday-breeches-dark-chocolate', 'the-saddle-shirt-vanilla-blush', BLAZER],
+  'the-saddle-shirt-bronze': [
+    'the-saddle-shirt-vanilla-blush',
+    'the-everyday-breeches-dark-chocolate',
+    'the-everyday-breeches-sand',
+  ],
+  'the-signature-bombacha-heritage-check': [BLAZER, 'the-saddle-shirt-vanilla-blush'],
   'the-pocket-belt-dark-chocolate': ['the-everyday-breeches-dark-chocolate', 'the-stable-vest-dark-chocolate'],
 }
 const RELATED_COUNT = 3
