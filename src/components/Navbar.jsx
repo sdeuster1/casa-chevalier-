@@ -9,6 +9,19 @@ import { useLanguage } from '../i18n/LanguageContext'
 import LanguageSwitch from './LanguageSwitch'
 import ProductTitle from './ProductTitle'
 
+// Words that find each section in search, singular and plural, in both
+// languages, so "camicia", "camicie" and "shirt" all find the shirts
+const SEARCH_WORDS = {
+  PANTS: 'pants trousers breeches bombacha pantaloni pantalone',
+  SHIRTS: 'shirts camicie camicia blouse camicetta',
+  JACKETS: 'jackets blazer giacche giacca',
+  VESTS: 'vests waistcoat gilet gilè panciotto',
+  ACCESSORIES: 'accessories accessory belt accessori accessorio cintura cinture',
+}
+
+// Lower case, accents removed: "Gilè" matches "gile"
+const normalise = (text) => text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+
 export default function Navbar({ onMenuToggle, variant = 'light' }) {
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState('')
@@ -20,10 +33,15 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
   const { items: wishItems } = useWishlist()
   const wishCount = wishItems.length
 
-  const results = query.trim()
-    ? products.filter((p) =>
-        (p.name + ' ' + p.category + ' ' + sectionLabel(p.section)).toLowerCase().includes(query.toLowerCase())
-      )
+  // Every word typed must appear somewhere: "camicia bronze" finds the bronze shirt
+  const words = normalise(query).split(/\s+/).filter(Boolean)
+  const results = words.length
+    ? products.filter((p) => {
+        const text = normalise(
+          [p.name, p.category, sectionLabel(p.section), SEARCH_WORDS[p.section] || ''].join(' ')
+        )
+        return words.every((w) => text.includes(w))
+      })
     : []
 
   const closeSearch = () => {
