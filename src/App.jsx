@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from 'react-router-dom'
+import { Analytics } from '@vercel/analytics/react'
 import Splash from './pages/Splash'
 import Home from './pages/Home'
 import Products from './pages/Products'
@@ -71,6 +72,9 @@ export default function App() {
             <WishlistProvider>
               <Pages />
             </WishlistProvider>
+            {/* Vercel Web Analytics: cookieless page views, counted on every
+                page change. Only active on the deployed site, not locally. */}
+            <Analytics />
           </CartProvider>
         </ProductsProvider>
       </LanguageProvider>
