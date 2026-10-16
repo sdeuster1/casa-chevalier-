@@ -22,7 +22,7 @@ export default function Account() {
           <h1 className="font-bodoni uppercase text-dark text-xl md:text-2xl tracking-[0.15em] text-center mb-2">
             {mode === 'signup' ? t('account.createTitle') : t('account.welcomeBack')}
           </h1>
-          <p className="font-playfair italic text-mauve text-center text-sm mb-10">
+          <p className="font-playfair italic text-mauve text-center text-[15px] mb-10">
             {mode === 'signup' ? t('account.createSubtitle') : t('account.signInSubtitle')}
           </p>
 
@@ -32,25 +32,25 @@ export default function Account() {
                 type="text"
                 required
                 placeholder={t('account.fullName')}
-                className="bg-transparent text-dark placeholder-dark/40 font-playfair text-sm py-2 w-full outline-none border-0 border-b border-dark/30"
+                className="bg-transparent text-dark placeholder-dark/40 font-playfair text-[15px] py-2 w-full outline-none border-0 border-b border-dark/30"
               />
             )}
             <input
               type="email"
               required
               placeholder={t('account.email')}
-              className="bg-transparent text-dark placeholder-dark/40 font-playfair text-sm py-2 w-full outline-none border-0 border-b border-dark/30"
+              className="bg-transparent text-dark placeholder-dark/40 font-playfair text-[15px] py-2 w-full outline-none border-0 border-b border-dark/30"
             />
             <input
               type="password"
               required
               placeholder={t('account.password')}
-              className="bg-transparent text-dark placeholder-dark/40 font-playfair text-sm py-2 w-full outline-none border-0 border-b border-dark/30"
+              className="bg-transparent text-dark placeholder-dark/40 font-playfair text-[15px] py-2 w-full outline-none border-0 border-b border-dark/30"
             />
 
             <button
               type="submit"
-              className="mt-4 font-bodoni uppercase text-cream bg-plum text-xs tracking-[0.2em] py-3 px-6 cursor-pointer hover:opacity-90 transition-opacity duration-300"
+              className="mt-4 font-bodoni uppercase text-cream bg-plum text-[13px] tracking-[0.2em] py-3 px-6 cursor-pointer hover:opacity-90 transition-opacity duration-300"
             >
               {mode === 'signup' ? t('account.signUp') : t('account.signIn')}
             </button>
@@ -58,7 +58,7 @@ export default function Account() {
 
           <button
             onClick={() => setMode(mode === 'signup' ? 'login' : 'signup')}
-            className="mt-8 font-playfair text-dark/70 text-xs underline hover:no-underline transition-all duration-300 cursor-pointer bg-transparent border-none"
+            className="mt-8 font-playfair text-dark/70 text-sm underline hover:no-underline transition-all duration-300 cursor-pointer bg-transparent border-none"
           >
             {mode === 'signup' ? t('account.toSignIn') : t('account.toSignUp')}
           </button>

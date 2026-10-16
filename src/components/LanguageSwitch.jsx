@@ -5,7 +5,7 @@ export default function LanguageSwitch({ className = '' }) {
   const { lang, setLang, t } = useLanguage()
 
   return (
-    <div className={`flex items-center gap-1.5 font-bodoni text-[10px] md:text-xs tracking-[0.15em] ${className}`} aria-label={t('lang.switchTo')}>
+    <div className={`flex items-center gap-1.5 font-bodoni text-[12px] md:text-[13px] tracking-[0.15em] ${className}`} aria-label={t('lang.switchTo')}>
       {LANGUAGES.map((code, i) => (
         <span key={code} className="flex items-center gap-1.5">
           {i > 0 && <span className="opacity-40">|</span>}

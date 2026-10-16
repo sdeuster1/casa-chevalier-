@@ -82,7 +82,7 @@ export default function CartDrawer() {
 
         {items.length === 0 ? (
           <div className="flex-1 px-6 md:px-10">
-            <p className="font-playfair text-dark/70 text-sm">{t('bag.empty')}</p>
+            <p className="font-playfair text-dark/70 text-[15px]">{t('bag.empty')}</p>
           </div>
         ) : (
           <>
@@ -106,17 +106,17 @@ export default function CartDrawer() {
                       {line.quantity > 1 && <span className="text-dark/70"> × {line.quantity}</span>}
                     </button>
                     {line.size && (
-                      <p className="font-playfair text-dark/70 text-xs mt-2">{t('bag.size', { size: line.size })}</p>
+                      <p className="font-playfair text-dark/70 text-sm mt-2">{t('bag.size', { size: line.size })}</p>
                     )}
                     <div className="mt-auto flex items-end justify-between pt-4">
                       <button
                         onClick={() => removeItem(line.lineId)}
                         disabled={busy}
-                        className="font-playfair text-dark/70 text-xs underline underline-offset-4 hover:text-plum transition-colors bg-transparent border-none p-0 cursor-pointer disabled:opacity-40"
+                        className="font-playfair text-dark/70 text-sm underline underline-offset-4 hover:text-plum transition-colors bg-transparent border-none p-0 cursor-pointer disabled:opacity-40"
                       >
                         {t('bag.remove')}
                       </button>
-                      <span className="font-playfair text-sm text-plum">
+                      <span className="font-playfair text-[15px] text-plum">
                         {formatPrice(line.price * line.quantity, currency)}
                       </span>
                     </div>
@@ -132,17 +132,17 @@ export default function CartDrawer() {
                   {formatPrice(subtotal, currency)}
                 </span>
               </div>
-              <p className="font-playfair italic text-dark/70 text-xs mt-2">{t('bag.taxes')}</p>
+              <p className="font-playfair italic text-dark/70 text-sm mt-2">{t('bag.taxes')}</p>
               <button
                 onClick={handleCheckout}
                 disabled={!checkoutUrl || redirecting || busy}
-                className="w-full mt-6 font-bodoni uppercase text-cream bg-plum text-xs tracking-[0.25em] py-4 cursor-pointer hover:opacity-90 transition-opacity duration-300 disabled:opacity-50"
+                className="w-full mt-6 font-bodoni uppercase text-cream bg-plum text-[13px] tracking-[0.25em] py-4 cursor-pointer hover:opacity-90 transition-opacity duration-300 disabled:opacity-50"
               >
                 {redirecting ? t('bag.redirecting') : t('bag.checkout')}
               </button>
               <button
                 onClick={() => goTo('/shop')}
-                className="w-full mt-4 font-bodoni uppercase text-plum text-xs tracking-[0.2em] underline underline-offset-4 hover:no-underline bg-transparent border-none cursor-pointer"
+                className="w-full mt-4 font-bodoni uppercase text-plum text-[13px] tracking-[0.2em] underline underline-offset-4 hover:no-underline bg-transparent border-none cursor-pointer"
               >
                 {t('bag.view')}
               </button>

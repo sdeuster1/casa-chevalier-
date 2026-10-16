@@ -26,7 +26,7 @@ export default function Contacts() {
           <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
             {t('contacts.title')}
           </h1>
-          <p className="font-playfair italic text-mauve text-center text-sm mb-16 md:mb-20">
+          <p className="font-playfair italic text-mauve text-center text-[15px] mb-16 md:mb-20">
             {t('contacts.subtitle')}
           </p>
 
@@ -37,10 +37,10 @@ export default function Contacts() {
                 <div key={label} className="flex items-start gap-4">
                   <Icon className="w-5 h-5 text-plum mt-1 shrink-0" strokeWidth={1.5} />
                   <div className="flex flex-col">
-                    <span className="font-playfair italic text-mauve text-[10px] tracking-[0.15em] uppercase">
+                    <span className="font-playfair italic text-mauve text-[12px] tracking-[0.15em] uppercase">
                       {t(`contacts.${label}`)}
                     </span>
-                    <span className="font-playfair text-dark text-sm mt-1">
+                    <span className="font-playfair text-dark text-[15px] mt-1">
                       {valueKey ? t(`contacts.${valueKey}`) : value}
                     </span>
                   </div>
@@ -51,10 +51,10 @@ export default function Contacts() {
                 <h3 className="font-bodoni uppercase text-dark text-sm tracking-[0.15em] mb-3">
                   {t('contacts.hoursTitle')}
                 </h3>
-                <p className="font-playfair text-dark/70 text-sm">
+                <p className="font-playfair text-dark/70 text-[15px]">
                   {t('contacts.hoursWeek')}
                 </p>
-                <p className="font-playfair text-dark/70 text-sm">
+                <p className="font-playfair text-dark/70 text-[15px]">
                   {t('contacts.hoursSaturday')}
                 </p>
               </div>
@@ -66,12 +66,12 @@ export default function Contacts() {
               <h3 className="font-bodoni uppercase text-dark text-sm tracking-[0.15em] mb-3">
                 {t('contacts.writeTitle')}
               </h3>
-              <p className="font-playfair text-dark/70 text-sm max-w-sm">
+              <p className="font-playfair text-dark/70 text-[15px] max-w-sm">
                 {t('contacts.writeBody')}
               </p>
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
-                className="mt-8 font-bodoni uppercase text-cream bg-plum text-xs tracking-[0.2em] py-3 px-8 no-underline hover:opacity-90 transition-opacity duration-300"
+                className="mt-8 font-bodoni uppercase text-cream bg-plum text-[13px] tracking-[0.2em] py-3 px-8 no-underline hover:opacity-90 transition-opacity duration-300"
               >
                 {t('contacts.writeButton')}
               </a>

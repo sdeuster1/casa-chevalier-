@@ -50,14 +50,14 @@ export default function Footer() {
           <h3 className="font-bodoni text-white text-base md:text-lg mb-2 uppercase tracking-[0.1em]">
             {t('footer.subscribeTitle')}
           </h3>
-          <p className="font-playfair text-white/80 text-sm mb-1">
+          <p className="font-playfair text-white/80 text-[15px] mb-1">
             {t('footer.subscribeOffer')}
           </p>
-          <p className="font-playfair text-white/60 text-xs mb-6">
+          <p className="font-playfair text-white/60 text-sm mb-6">
             {t('footer.subscribeNote')}
           </p>
           {status === 'done' ? (
-            <p className="font-playfair italic text-white text-sm max-w-xs" role="status">
+            <p className="font-playfair italic text-white text-[15px] max-w-xs" role="status">
               {t('newsletter.codeOnWay')}
             </p>
           ) : (
@@ -70,7 +70,7 @@ export default function Footer() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t('footer.emailPlaceholder')}
                   aria-label={t('footer.emailPlaceholder')}
-                  className="bg-transparent text-white placeholder-white/50 font-playfair text-sm py-2 flex-1 outline-none border-none min-w-0"
+                  className="bg-transparent text-white placeholder-white/50 font-playfair text-[15px] py-2 flex-1 outline-none border-none min-w-0"
                 />
                 <button
                   type="submit"
@@ -93,11 +93,11 @@ export default function Footer() {
                 aria-hidden="true"
               />
               {(status === 'invalid_email' || status === 'error') && (
-                <p className="font-playfair italic text-white text-xs mt-2" role="alert">
+                <p className="font-playfair italic text-white text-sm mt-2" role="alert">
                   {t(status === 'invalid_email' ? 'newsletter.invalidEmail' : 'newsletter.error')}
                 </p>
               )}
-              <p className="font-playfair text-white/60 text-[11px] leading-relaxed mt-3">
+              <p className="font-playfair text-white/60 text-[13px] leading-relaxed mt-3">
                 {t('newsletter.consent')}{' '}
                 <a href={PRIVACY_POLICY_URL} target="_blank" rel="noopener noreferrer" className="underline text-white/80 hover:text-white">
                   {t('newsletter.privacy')}
@@ -111,7 +111,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-10">
           {[...columns, legalColumn].map((col) => (
             <div key={col.title}>
-              <h4 className="font-bodoni text-white uppercase text-xs md:text-sm mb-3 md:mb-4 tracking-[0.1em]">
+              <h4 className="font-bodoni text-white uppercase text-[13px] md:text-sm mb-3 md:mb-4 tracking-[0.1em]">
                 {t(`footer.${col.title}`)}
               </h4>
               <ul className="list-none p-0 m-0 flex flex-col gap-2">
@@ -119,7 +119,7 @@ export default function Footer() {
                   <li key={link.to}>
                     <Link
                       to={link.to}
-                      className="font-playfair text-white/70 text-xs hover:text-white transition-colors duration-300 no-underline"
+                      className="font-playfair text-white/70 text-sm hover:text-white transition-colors duration-300 no-underline"
                     >
                       {link.text ?? t(`footer.${link.label}`)}
                     </Link>
@@ -132,10 +132,10 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/20 mt-10 md:mt-12 pt-6 text-center">
-        <p className="font-playfair text-white/50 text-xs">
+        <p className="font-playfair text-white/50 text-sm">
           {t('footer.rights')}
         </p>
-        <p className="font-playfair text-white/50 text-xs mt-2">
+        <p className="font-playfair text-white/50 text-sm mt-2">
           {t('footer.companyDetails')}
         </p>
       </div>

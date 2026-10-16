@@ -60,17 +60,17 @@ export default function Legal() {
             </div>
           )}
           {ready && result.failed && (
-            <p className="font-playfair italic text-plum text-center text-sm">{t('legal.error')}</p>
+            <p className="font-playfair italic text-plum text-center text-[15px]">{t('legal.error')}</p>
           )}
           {ready && !result.failed && (
             <div
-              className="cc-legal cc-rich-text font-playfair text-dark/75 text-sm md:text-[15px] leading-relaxed"
+              className="cc-legal cc-rich-text font-playfair text-dark/75 text-[15px] md:text-[15px] leading-relaxed"
               dangerouslySetInnerHTML={{ __html: result.html }}
             />
           )}
           {!doc && (
             <p className="text-center">
-              <Link to="/home" className="font-bodoni uppercase text-plum text-xs tracking-[0.2em] border-b border-plum pb-0.5 no-underline">
+              <Link to="/home" className="font-bodoni uppercase text-plum text-[13px] tracking-[0.2em] border-b border-plum pb-0.5 no-underline">
                 {t('legal.backHome')}
               </Link>
             </p>

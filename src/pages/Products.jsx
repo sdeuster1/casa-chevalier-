@@ -60,7 +60,7 @@ export default function Products() {
           <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
             {t('products.title')}
           </h1>
-          <p className="font-playfair italic text-mauve text-center text-sm mb-12">
+          <p className="font-playfair italic text-mauve text-center text-[15px] mb-12">
             {t('products.subtitle')}
           </p>
 
@@ -71,7 +71,7 @@ export default function Products() {
                 <button
                   key={cat}
                   onClick={() => setManualCategory(cat)}
-                  className={`font-bodoni uppercase text-xs md:text-sm tracking-[0.2em] bg-transparent border-none cursor-pointer pb-1 transition-all duration-300 ${
+                  className={`font-bodoni uppercase text-[13px] md:text-sm tracking-[0.2em] bg-transparent border-none cursor-pointer pb-1 transition-all duration-300 ${
                     activeCategory === cat
                       ? 'text-plum border-b border-plum'
                       : 'text-dark/70 hover:text-dark'
@@ -101,12 +101,12 @@ export default function Products() {
 
           {error && !loading && (
             <div className="text-center py-12">
-              <p className="font-playfair italic text-plum text-sm">
+              <p className="font-playfair italic text-plum text-[15px]">
                 {t('products.unavailable')}
               </p>
               <button
                 onClick={retry}
-                className="mt-4 font-bodoni uppercase text-plum text-[10px] tracking-[0.2em] border-0 border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
+                className="mt-4 font-bodoni uppercase text-plum text-[12px] tracking-[0.2em] border-0 border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
               >
                 {t('common.retry')}
               </button>
@@ -115,12 +115,12 @@ export default function Products() {
 
           {!loading && !error && filtered.length === 0 && (
             <div className="text-center py-12">
-              <p className="font-playfair italic text-mauve text-sm">
+              <p className="font-playfair italic text-mauve text-[15px]">
                 {t('products.empty')}
               </p>
               <button
                 onClick={() => setManualCategory('ALL')}
-                className="mt-4 font-bodoni uppercase text-plum text-[10px] tracking-[0.2em] border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
+                className="mt-4 font-bodoni uppercase text-plum text-[12px] tracking-[0.2em] border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
               >
                 {t('products.viewAll')}
               </button>
@@ -153,7 +153,7 @@ export default function Products() {
                         />
                       )}
                       {soldOut && (
-                        <span className="absolute top-3 left-3 bg-cream/90 font-bodoni uppercase text-plum text-[9px] tracking-[0.2em] px-2 py-1">
+                        <span className="absolute top-3 left-3 bg-cream/90 font-bodoni uppercase text-plum text-[12px] tracking-[0.2em] px-2 py-1">
                           {t('common.soldOut')}
                         </span>
                       )}
@@ -171,21 +171,21 @@ export default function Products() {
                     </div>
 
                     <div className="pt-4 flex flex-col">
-                      <span className="font-playfair italic text-mauve text-[10px] tracking-[0.15em] uppercase">
+                      <span className="font-playfair italic text-mauve text-[12px] tracking-[0.15em] uppercase">
                         {sectionLabel(product.section)}
                       </span>
                       <button
                         onClick={() => navigate(`/product/${product.handle}`)}
-                        className="font-bodoni uppercase tracking-[0.15em] text-xs md:text-sm text-dark mt-1 bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
+                        className="font-bodoni uppercase tracking-[0.15em] text-[13px] md:text-sm text-dark mt-1 bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
                       >
                         {product.name}
                       </button>
-                      <p className="font-playfair text-sm text-plum mt-1">
+                      <p className="font-playfair text-[15px] text-plum mt-1">
                         {formatPrice(product.price, product.currency)}
                       </p>
                       <button
                         onClick={() => navigate(`/product/${product.handle}`)}
-                        className="mt-4 self-start font-bodoni uppercase text-plum text-[10px] md:text-xs tracking-[0.2em] border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity duration-300"
+                        className="mt-4 self-start font-bodoni uppercase text-plum text-[12px] md:text-[13px] tracking-[0.2em] border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity duration-300"
                       >
                         {t('common.viewProduct')}
                       </button>

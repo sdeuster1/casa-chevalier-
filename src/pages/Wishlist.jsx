@@ -24,19 +24,19 @@ export default function Wishlist() {
           <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] text-center mb-4">
             {t('wishlist.title')}
           </h1>
-          <p className="font-playfair italic text-mauve text-center text-sm mb-16">
+          <p className="font-playfair italic text-mauve text-center text-[15px] mb-16">
             {t('wishlist.subtitle')}
           </p>
 
           {items.length === 0 ? (
             <div className="flex flex-col items-center text-center gap-6 py-12">
               <Heart className="w-8 h-8 text-plum" strokeWidth={1} />
-              <p className="font-playfair text-dark/70 text-sm max-w-xs">
+              <p className="font-playfair text-dark/70 text-[15px] max-w-xs">
                 {t('wishlist.empty')}
               </p>
               <button
                 onClick={() => navigate('/products')}
-                className="font-bodoni uppercase text-cream bg-plum text-xs tracking-[0.2em] py-3 px-8 cursor-pointer hover:opacity-90 transition-opacity duration-300"
+                className="font-bodoni uppercase text-cream bg-plum text-[13px] tracking-[0.2em] py-3 px-8 cursor-pointer hover:opacity-90 transition-opacity duration-300"
               >
                 {t('wishlist.explore')}
               </button>
@@ -62,21 +62,21 @@ export default function Wishlist() {
                     </button>
                   </div>
                   <div className="pt-4 flex flex-col">
-                    <span className="font-playfair italic text-mauve text-[10px] tracking-[0.15em] uppercase">
+                    <span className="font-playfair italic text-mauve text-[12px] tracking-[0.15em] uppercase">
                       {sectionLabel(product.section)}
                     </span>
                     <button
                       onClick={() => navigate(`/product/${product.handle}`)}
-                      className="font-bodoni uppercase tracking-[0.15em] text-xs md:text-sm text-dark mt-1 bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
+                      className="font-bodoni uppercase tracking-[0.15em] text-[13px] md:text-sm text-dark mt-1 bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
                     >
                       {product.name}
                     </button>
-                    <p className="font-playfair text-sm text-plum mt-1">
+                    <p className="font-playfair text-[15px] text-plum mt-1">
                       {formatPrice(product.price)}
                     </p>
                     <button
                       onClick={() => navigate(`/product/${product.handle}`)}
-                      className="mt-4 self-start font-bodoni uppercase text-plum text-[10px] md:text-xs tracking-[0.2em] border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity duration-300"
+                      className="mt-4 self-start font-bodoni uppercase text-plum text-[12px] md:text-[13px] tracking-[0.2em] border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity duration-300"
                     >
                       {t('common.viewProduct')}
                     </button>

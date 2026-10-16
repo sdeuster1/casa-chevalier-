@@ -38,12 +38,12 @@ function CrashMessage() {
       <h1 className="font-bodoni uppercase text-plum text-xl md:text-2xl tracking-[0.2em] mb-4">
         {t('pageErrors.crashTitle')}
       </h1>
-      <p className="font-playfair italic text-dark/70 text-sm max-w-md mb-10">
+      <p className="font-playfair italic text-dark/70 text-[15px] max-w-md mb-10">
         {t('pageErrors.crashBody')}
       </p>
       <button
         onClick={() => window.location.reload()}
-        className="font-bodoni uppercase text-cream bg-plum text-xs tracking-[0.2em] py-3 px-8 border-none cursor-pointer hover:opacity-90 transition-opacity"
+        className="font-bodoni uppercase text-cream bg-plum text-[13px] tracking-[0.2em] py-3 px-8 border-none cursor-pointer hover:opacity-90 transition-opacity"
       >
         {t('pageErrors.reload')}
       </button>

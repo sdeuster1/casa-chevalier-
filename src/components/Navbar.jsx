@@ -75,7 +75,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
           </button>
 
           {/* Desktop: shopping is one click away, not behind the menu */}
-          <div className={`hidden xl:flex items-center gap-7 font-bodoni uppercase text-[11px] tracking-[0.2em] transition-colors duration-500 ${fg}`}>
+          <div className={`hidden xl:flex items-center gap-7 font-bodoni uppercase text-[12px] tracking-[0.2em] transition-colors duration-500 ${fg}`}>
             <Link to="/products" className="text-inherit no-underline hover:opacity-70 transition-opacity">{t('nav.shop')}</Link>
             <Link to="/philosophy" className="text-inherit no-underline hover:opacity-70 transition-opacity">{t('nav.philosophy')}</Link>
             {/* CC News hidden until there is news to show
@@ -109,7 +109,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
             <Heart className={`w-4 h-4 md:w-5 md:h-5 cursor-pointer transition-colors duration-500 ${fg}`} />
             {wishCount > 0 && (
               <span
-                className={`absolute -bottom-1 -right-1 ${badgeBg} ${badgeText} rounded-full w-3.5 h-3.5 flex items-center justify-center text-[9px] font-playfair leading-none`}
+                className={`absolute -bottom-1 -right-1 ${badgeBg} ${badgeText} rounded-full w-3.5 h-3.5 flex items-center justify-center text-[10px] font-playfair leading-none`}
               >
                 {wishCount > 9 ? '9+' : wishCount}
               </span>
@@ -126,7 +126,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
             <ShoppingBag className={`w-4 h-4 md:w-5 md:h-5 cursor-pointer transition-colors duration-500 ${fg}`} />
             {itemCount > 0 && (
               <span
-                className={`absolute -bottom-1 -right-1 ${badgeBg} ${badgeText} rounded-full w-4 h-4 flex items-center justify-center text-[9px] font-playfair leading-none`}
+                className={`absolute -bottom-1 -right-1 ${badgeBg} ${badgeText} rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-playfair leading-none`}
               >
                 {itemCount > 9 ? '9+' : itemCount}
               </span>
@@ -139,7 +139,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
         <div className="fixed inset-0 z-[70] bg-plum/95 backdrop-blur-sm flex flex-col">
           <div className="flex items-center justify-between px-4 md:px-10 py-4">
             <div className="w-5" />
-            <span className="font-bodoni uppercase text-cream text-xs md:text-lg tracking-[0.15em] md:tracking-[0.2em]">
+            <span className="font-bodoni uppercase text-cream text-[13px] md:text-lg tracking-[0.15em] md:tracking-[0.2em]">
               {t('nav.search')}
             </span>
             <button
@@ -166,7 +166,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
 
             <div className="w-full max-w-xl mt-8">
               {query.trim() && results.length === 0 && (
-                <p className="font-playfair italic text-cream text-sm text-center">
+                <p className="font-playfair italic text-cream text-[15px] text-center">
                   {t('nav.noResults', { query })}
                 </p>
               )}
@@ -187,7 +187,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
                           className="w-14 h-16 object-cover bg-[#d4cec6]"
                         />
                         <div className="flex flex-col">
-                          <span className="font-playfair italic text-cream text-[10px] tracking-[0.15em] uppercase">
+                          <span className="font-playfair italic text-cream text-[12px] tracking-[0.15em] uppercase">
                             {sectionLabel(p.section)}
                           </span>
                           <span className="font-bodoni uppercase tracking-[0.15em] text-sm text-cream">
@@ -200,7 +200,7 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
                 </ul>
               )}
               {!query.trim() && (
-                <p className="font-playfair italic text-cream/60 text-sm text-center">
+                <p className="font-playfair italic text-cream/60 text-[15px] text-center">
                   {t('nav.startTyping')}
                 </p>
               )}

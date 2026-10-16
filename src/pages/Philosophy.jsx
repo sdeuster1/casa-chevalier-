@@ -20,7 +20,7 @@ export default function Philosophy() {
           <h1 className="font-bodoni uppercase text-plum text-2xl md:text-3xl tracking-[0.2em] mb-4">
             {t('philosophy.title')}
           </h1>
-          <p className="font-playfair italic text-mauve text-sm md:text-base max-w-lg">
+          <p className="font-playfair italic text-mauve text-[15px] md:text-base max-w-lg">
             {t('philosophy.intro').map((line, i) => (
               <span key={i} className="block">{line}</span>
             ))}
@@ -41,7 +41,7 @@ export default function Philosophy() {
 
           <div className="flex flex-col gap-6 md:max-w-md md:pl-4 md:-mt-[0.35em]">
             {t('philosophy.body').map((paragraph, i) => (
-              <p key={i} className="font-playfair text-dark/75 text-sm md:text-base leading-relaxed">
+              <p key={i} className="font-playfair text-dark/75 text-[15px] md:text-base leading-relaxed">
                 {paragraph}
               </p>
             ))}
@@ -52,7 +52,7 @@ export default function Philosophy() {
             </p>
             <div className="flex flex-col gap-2 -mt-2">
               {t('philosophy.motto').map((line, i) => (
-                <span key={i} className="font-bodoni uppercase text-plum text-xs md:text-sm tracking-[0.2em]">
+                <span key={i} className="font-bodoni uppercase text-plum text-[13px] md:text-sm tracking-[0.2em]">
                   {line}
                 </span>
               ))}

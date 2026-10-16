@@ -44,12 +44,12 @@ export default function NewsCarousel() {
                   className="bg-[#6b3550] relative flex items-center justify-center"
                   style={{ aspectRatio: '3/4' }}
                 >
-                  <span className="absolute top-4 left-4 font-playfair text-xs uppercase text-cream border border-cream px-4 py-2">
+                  <span className="absolute top-4 left-4 font-playfair text-[13px] uppercase text-cream border border-cream px-4 py-2">
                     {t('home.newsCta')}
                   </span>
                 </div>
                 <div className="mt-4 text-center px-2">
-                  <p className="font-playfair text-xs uppercase text-cream tracking-widest">
+                  <p className="font-playfair text-[13px] uppercase text-cream tracking-widest">
                     {item.category}
                   </p>
                   <p className={`font-bodoni text-sm md:text-base text-[#f0e9e0] mt-2 uppercase tracking-[0.05em] transition-opacity duration-500 ${isCenter ? 'opacity-100' : 'opacity-50'}`}>

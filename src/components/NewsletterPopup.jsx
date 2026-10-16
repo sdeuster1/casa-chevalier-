@@ -65,7 +65,7 @@ export default function NewsletterPopup() {
             <h2 className="font-bodoni uppercase text-cream text-xl tracking-[0.15em] mb-3">
               {t('newsletter.welcome')}
             </h2>
-            <p className="font-playfair italic text-cream text-sm">
+            <p className="font-playfair italic text-cream text-[15px]">
               {t('newsletter.codeOnWay')}
             </p>
           </>
@@ -74,7 +74,7 @@ export default function NewsletterPopup() {
             <h2 className="font-bodoni uppercase text-cream text-xl md:text-2xl tracking-[0.15em] mb-3">
               {t('newsletter.title')}
             </h2>
-            <p className="font-playfair italic text-cream text-sm mb-8 max-w-xs">
+            <p className="font-playfair italic text-cream text-[15px] mb-8 max-w-xs">
               {t('newsletter.body')}
             </p>
 
@@ -85,7 +85,7 @@ export default function NewsletterPopup() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={t('newsletter.emailPlaceholder')}
-                className="bg-transparent text-cream placeholder-cream/50 font-playfair text-sm py-2 w-full outline-none border-0 border-b border-cream/50 text-center"
+                className="bg-transparent text-cream placeholder-cream/50 font-playfair text-[15px] py-2 w-full outline-none border-0 border-b border-cream/50 text-center"
               />
               {/* Hidden from people; bots that fill it in are ignored */}
               <input
@@ -101,16 +101,16 @@ export default function NewsletterPopup() {
               <button
                 type="submit"
                 disabled={status === 'sending'}
-                className="font-bodoni uppercase text-plum bg-cream text-xs tracking-[0.2em] py-3 px-6 cursor-pointer hover:opacity-90 transition-opacity duration-300 disabled:opacity-60"
+                className="font-bodoni uppercase text-plum bg-cream text-[13px] tracking-[0.2em] py-3 px-6 cursor-pointer hover:opacity-90 transition-opacity duration-300 disabled:opacity-60"
               >
                 {status === 'sending' ? t('newsletter.sending') : t('newsletter.claim')}
               </button>
               {(status === 'invalid_email' || status === 'error') && (
-                <p className="font-playfair italic text-coral text-xs -mt-3" role="alert">
+                <p className="font-playfair italic text-coral text-sm -mt-3" role="alert">
                   {t(status === 'invalid_email' ? 'newsletter.invalidEmail' : 'newsletter.error')}
                 </p>
               )}
-              <p className="font-playfair text-cream/55 text-[11px] leading-relaxed -mt-1">
+              <p className="font-playfair text-cream/55 text-[13px] leading-relaxed -mt-1">
                 {t('newsletter.consent')}{' '}
                 <a href={PRIVACY_POLICY_URL} target="_blank" rel="noopener noreferrer" className="underline text-cream/75 hover:text-cream">
                   {t('newsletter.privacy')}
@@ -120,7 +120,7 @@ export default function NewsletterPopup() {
 
             <button
               onClick={close}
-              className="mt-6 font-playfair text-cream text-xs underline hover:no-underline transition-all duration-300 cursor-pointer bg-transparent border-none"
+              className="mt-6 font-playfair text-cream text-sm underline hover:no-underline transition-all duration-300 cursor-pointer bg-transparent border-none"
             >
               {t('newsletter.decline')}
             </button>

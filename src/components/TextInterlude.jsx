@@ -15,7 +15,7 @@ export default function TextInterlude({ text }) {
         </p>
         <button
           onClick={() => navigate('/products')}
-          className="mt-5 font-playfair text-cream text-sm tracking-[0.15em] underline hover:no-underline transition-all duration-300 cursor-pointer bg-transparent border-none"
+          className="mt-5 font-playfair text-cream text-[15px] tracking-[0.15em] underline hover:no-underline transition-all duration-300 cursor-pointer bg-transparent border-none"
         >
           {t('common.discover')}
         </button>

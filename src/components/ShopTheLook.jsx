@@ -122,10 +122,10 @@ export default function ShopTheLook() {
                     </div>
                   )}
                 </div>
-                <p className="font-bodoni uppercase text-xs tracking-[0.15em] text-dark mt-3">
+                <p className="font-bodoni uppercase text-[13px] tracking-[0.15em] text-dark mt-3">
                   {item.name}
                 </p>
-                <p className="font-playfair text-sm text-plum mt-1">
+                <p className="font-playfair text-[15px] text-plum mt-1">
                   {formatPrice(item.price, item.currency)}
                 </p>
               </button>

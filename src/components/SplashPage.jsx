@@ -40,7 +40,7 @@ export default function SplashPage() {
         />
         <button
           onClick={() => navigate('/home')}
-          className="font-playfair italic text-white text-sm tracking-[0.15em] underline hover:no-underline transition-all duration-300 cursor-pointer bg-transparent border-none"
+          className="font-playfair italic text-white text-[15px] tracking-[0.15em] underline hover:no-underline transition-all duration-300 cursor-pointer bg-transparent border-none"
         >
           {t('common.discover')}
         </button>

@@ -49,7 +49,7 @@ export default function ProductCard({ product, highlighted = false, cardRef }) {
         </Link>
 
         {soldOut && (
-          <span className="absolute top-3 left-3 bg-cream/90 font-bodoni uppercase text-plum text-[9px] tracking-[0.2em] px-2 py-1">
+          <span className="absolute top-3 left-3 bg-cream/90 font-bodoni uppercase text-plum text-[12px] tracking-[0.2em] px-2 py-1">
             {t('common.soldOut')}
           </span>
         )}
@@ -67,15 +67,15 @@ export default function ProductCard({ product, highlighted = false, cardRef }) {
       </div>
 
       <Link to={to} className="pt-4 flex flex-col gap-1 no-underline">
-        <span className="font-bodoni uppercase tracking-[0.14em] text-[11px] md:text-xs text-dark leading-snug">
+        <span className="font-bodoni uppercase tracking-[0.14em] text-[13px] md:text-sm text-dark leading-snug">
           {product.name}
         </span>
         {colours > 1 && (
-          <span className="font-playfair italic text-dark/70 text-xs">
+          <span className="font-playfair italic text-dark/70 text-sm">
             {t('product.moreColours', { count: colours })}
           </span>
         )}
-        <span className="font-playfair text-plum text-sm mt-1">
+        <span className="font-playfair text-plum text-[15px] mt-1">
           {formatPrice(product.price, product.currency)}
         </span>
       </Link>

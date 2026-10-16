@@ -43,7 +43,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/20" />
 
       <div className="absolute inset-x-0 bottom-0 pb-16 md:pb-20 px-6 flex flex-col items-center text-center">
-        <span className="font-playfair italic text-cream/85 text-xs md:text-sm tracking-[0.2em] mb-4">
+        <span className="font-playfair italic text-cream/85 text-sm md:text-[15px] tracking-[0.2em] mb-4">
           {t('home.heroEyebrow')}
         </span>
         <h1 className="font-bodoni uppercase text-cream text-3xl md:text-5xl tracking-[0.12em] leading-tight mb-8">
@@ -52,13 +52,13 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <Link
             to="/products"
-            className="font-bodoni uppercase text-plum bg-cream text-[11px] tracking-[0.25em] px-10 py-4 no-underline hover:opacity-90 transition-opacity"
+            className="font-bodoni uppercase text-plum bg-cream text-[12px] tracking-[0.25em] px-10 py-4 no-underline hover:opacity-90 transition-opacity"
           >
             {t('home.heroCta')}
           </Link>
           <Link
             to="/philosophy"
-            className="font-bodoni uppercase text-cream border border-cream/80 text-[11px] tracking-[0.25em] px-10 py-4 no-underline hover:bg-cream hover:text-plum transition-colors"
+            className="font-bodoni uppercase text-cream border border-cream/80 text-[12px] tracking-[0.25em] px-10 py-4 no-underline hover:bg-cream hover:text-plum transition-colors"
           >
             {t('home.heroCta2')}
           </Link>

@@ -15,7 +15,7 @@ export default function SizeGuide({ guide }) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="mt-4 font-bodoni uppercase text-plum text-[10px] tracking-[0.2em] border-0 border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
+        className="mt-4 font-bodoni uppercase text-plum text-[12px] tracking-[0.2em] border-0 border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
       >
         {tx(TEXT.link)}
       </button>
@@ -43,7 +43,7 @@ function SizeGuidePanel({ guide, tx, onClose }) {
   if (guide.type === 'oneSize') {
     return (
       <PanelShell titleText={tx(TEXT.oneSizeTitle)} closeLabel={tx(TEXT.close)} closeRef={closeRef} onClose={onClose}>
-        <p className="font-playfair text-dark/75 text-sm leading-relaxed">
+        <p className="font-playfair text-dark/75 text-[15px] leading-relaxed">
           {tx(TEXT.oneSizeGeneral)}
         </p>
       </PanelShell>
@@ -64,19 +64,19 @@ function SizeGuidePanel({ guide, tx, onClose }) {
 
   return (
     <PanelShell titleText={tx(TEXT.title)} closeLabel={tx(TEXT.close)} closeRef={closeRef} onClose={onClose}>
-        <p className="font-playfair text-dark/75 text-sm leading-relaxed mb-8">
+        <p className="font-playfair text-dark/75 text-[15px] leading-relaxed mb-8">
           {tx(TEXT.intro)}
         </p>
 
         <h3 className="font-bodoni font-bold uppercase text-plum text-sm md:text-base tracking-[0.12em] mb-2">
           {guide.name}
         </h3>
-        <p className="font-playfair text-dark/75 text-sm mb-5">
+        <p className="font-playfair text-dark/75 text-[15px] mb-5">
           {tx(TEXT.available)} {sizeList}.
         </p>
 
         {/* Conversion chart — fixed layout so five columns always fit the width */}
-        <table className="w-full table-fixed border-collapse font-playfair text-sm text-center">
+        <table className="w-full table-fixed border-collapse font-playfair text-[15px] text-center">
           <thead>
             <tr className="bg-plum">
               {COLUMNS.map((c) => (
@@ -107,12 +107,12 @@ function SizeGuidePanel({ guide, tx, onClose }) {
         </table>
 
         {guide.fit && (
-          <p className="font-playfair text-sm leading-relaxed mt-6">
+          <p className="font-playfair text-[15px] leading-relaxed mt-6">
             <strong className="font-bold text-dark">{tx(TEXT.fitLabel)}</strong>{' '}
             <span className="text-dark/70">{tx(guide.fit)}</span>
           </p>
         )}
-        <p className="font-playfair text-dark/70 text-xs leading-relaxed mt-4">
+        <p className="font-playfair text-dark/70 text-sm leading-relaxed mt-4">
           {tx(TEXT.closing)}
         </p>
     </PanelShell>

@@ -85,7 +85,7 @@ export default function InstagramFeed() {
                   href={INSTAGRAM_PROFILE_URL || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-8 inline-flex items-center gap-3 border border-plum text-plum px-6 py-3 font-bodoni uppercase text-[11px] tracking-[0.2em] no-underline hover:bg-plum hover:text-cream transition-colors"
+                  className="mt-8 inline-flex items-center gap-3 border border-plum text-plum px-6 py-3 font-bodoni uppercase text-[12px] tracking-[0.2em] no-underline hover:bg-plum hover:text-cream transition-colors"
                 >
                   <InstagramGlyph className="w-4 h-4" />
                   {t('instagram.follow')}

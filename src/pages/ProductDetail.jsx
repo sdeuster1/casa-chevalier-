@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
 import SizeGuide from '../components/SizeGuide'
+import ProductGallery from '../components/ProductGallery'
 import { sizeGuideFor } from '../data/sizeGuide'
 import { formatPrice, photoFocus, RENAMED_HANDLES, sizedImage } from '../lib/shopify'
 import { swatchFor } from '../data/colours'
@@ -78,7 +79,7 @@ export default function ProductDetail() {
           </p>
           <button
             onClick={error ? retry : () => navigate('/products')}
-            className="font-bodoni uppercase text-cream bg-plum text-xs tracking-[0.2em] py-3 px-8 cursor-pointer"
+            className="font-bodoni uppercase text-cream bg-plum text-[13px] tracking-[0.2em] py-3 px-8 cursor-pointer"
           >
             {error ? t('common.retry') : t('product.back')}
           </button>
@@ -110,7 +111,6 @@ export default function ProductDetail() {
   // Colour versions of this piece ("The Stable Vest - Sand" / "- Dark Chocolate"), stable order
   const colours = [product, ...colourVersions(product)].sort((a, b) => a.handle.localeCompare(b.handle))
 
-  const gallery = product.images.length ? product.images : []
   const wished = hasWish(product.handle)
   const selectedVariant = product.variants.find(
     (v) => v.title === size || v.options.Size === size
@@ -158,24 +158,12 @@ export default function ProductDetail() {
             gap 10%, info 46% ending at the right margin. Mobile is full-width. */}
         <div className="grid grid-cols-1 md:grid-cols-[minmax(0,44fr)_minmax(0,46fr)] md:gap-x-[10%] md:px-10">
           {/* LEFT: image gallery */}
-          <div className="flex flex-col">
-            {gallery.map((img, i) => (
-              <div key={i} className="w-full aspect-[3/4] bg-[#d4cec6]">
-                <img
-                  src={sizedImage(img, 1400)}
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                  alt={t('product.view', { name: product.name, n: i + 1 })}
-                  className="w-full h-full object-cover cc-fade-in"
-                  style={{ objectPosition: photoFocus(product) }}
-                />
-              </div>
-            ))}
-          </div>
+          <ProductGallery key={product.handle} product={product} />
 
           {/* RIGHT: sticky info column */}
           <div className="md:sticky md:top-24 md:self-start px-6 md:px-0 py-10 md:py-16">
             <div className="flex items-start justify-between">
-              <span className="font-playfair italic text-mauve text-[11px] tracking-[0.2em] uppercase">
+              <span className="font-playfair italic text-mauve text-[12px] tracking-[0.2em] uppercase">
                 {sectionLabel(product.section)}
               </span>
               <button
@@ -197,7 +185,7 @@ export default function ProductDetail() {
             {/* Colour — one swatch per colour version of this piece */}
             {colours.length > 1 && (
               <div className="mt-8">
-                <span className="block font-bodoni uppercase text-dark text-xs tracking-[0.15em] mb-3">
+                <span className="block font-bodoni uppercase text-dark text-[13px] tracking-[0.15em] mb-3">
                   {t('product.colour')}
                   <span className="font-playfair normal-case italic tracking-normal text-dark/70 ml-2">
                     {product.colour}
@@ -235,7 +223,7 @@ export default function ProductDetail() {
             {oneSizeNote && (
               <div className="mt-10">
                 {guide.fit && (
-                  <p className="font-playfair italic text-dark/70 text-sm leading-relaxed">
+                  <p className="font-playfair italic text-dark/70 text-[15px] leading-relaxed">
                     {guide.fit[lang] ?? guide.fit.en}
                   </p>
                 )}
@@ -246,7 +234,7 @@ export default function ProductDetail() {
             {/* Size selector — only when the product actually has sizes */}
             {product.hasSizes && !oneSizeNote && (
               <div className="mt-10">
-                <span className="block font-bodoni uppercase text-dark text-xs tracking-[0.15em] mb-3">
+                <span className="block font-bodoni uppercase text-dark text-[13px] tracking-[0.15em] mb-3">
                   {t('product.sizeLabel')}
                 </span>
                 <div className="grid grid-cols-5 gap-2">
@@ -258,7 +246,7 @@ export default function ProductDetail() {
                         key={v.id}
                         disabled={disabled}
                         onClick={() => { setChosenSize(label); setSizeError(false) }}
-                        className={`py-2 border font-playfair text-sm transition-colors ${
+                        className={`py-2 border font-playfair text-[15px] transition-colors ${
                           disabled
                             ? 'border-plum/15 text-dark/25 line-through cursor-not-allowed'
                             : size === label
@@ -272,7 +260,7 @@ export default function ProductDetail() {
                   })}
                 </div>
                 {sizeError && (
-                  <p className="font-playfair italic text-coral text-xs mt-2">
+                  <p className="font-playfair italic text-coral text-sm mt-2">
                     {t('product.sizeRequired')}
                   </p>
                 )}
@@ -282,7 +270,7 @@ export default function ProductDetail() {
 
             {/* Short description — custom.short_description, under the sizes */}
             {product.shortDescription && (
-              <p className="font-playfair italic text-dark/70 text-sm leading-relaxed mt-6 max-w-md whitespace-pre-line">
+              <p className="font-playfair text-dark/80 text-[15px] leading-relaxed mt-6 max-w-md whitespace-pre-line">
                 {product.shortDescription}
               </p>
             )}
@@ -292,7 +280,7 @@ export default function ProductDetail() {
               selectedVariant.available &&
               selectedVariant.quantity > 0 &&
               selectedVariant.quantity <= LOW_STOCK_THRESHOLD && (
-                <p className="font-playfair italic text-plum text-xs mt-4">
+                <p className="font-playfair italic text-plum text-sm mt-4">
                   {product.hasSizes && size
                     ? t('product.remainingInSize', { count: selectedVariant.quantity, size })
                     : t('product.remaining', { count: selectedVariant.quantity })}
@@ -303,7 +291,7 @@ export default function ProductDetail() {
             <button
               onClick={handleBuy}
               disabled={busy || outOfStock}
-              className={`w-full mt-8 font-bodoni uppercase text-xs tracking-[0.25em] py-4 transition-opacity duration-300 ${
+              className={`w-full mt-8 font-bodoni uppercase text-[13px] tracking-[0.25em] py-4 transition-opacity duration-300 ${
                 outOfStock
                   ? 'bg-plum/30 text-cream cursor-not-allowed'
                   : 'bg-plum text-cream cursor-pointer hover:opacity-90'
@@ -319,7 +307,7 @@ export default function ProductDetail() {
             </button>
 
             {addError && (
-              <p className="font-playfair italic text-coral text-xs mt-3">{addError}</p>
+              <p className="font-playfair italic text-coral text-sm mt-3">{addError}</p>
             )}
 
             {/* Expandable sections */}
@@ -345,19 +333,19 @@ export default function ProductDetail() {
                       onClick={() => setOpenSection(open ? null : sec.key)}
                       className="w-full flex items-center justify-between py-4 bg-transparent border-none cursor-pointer"
                     >
-                      <span className="font-bodoni uppercase text-dark text-xs tracking-[0.15em]">
+                      <span className="font-bodoni uppercase text-dark text-[13px] tracking-[0.15em]">
                         {sec.label}
                       </span>
                       {open ? <Minus className="w-4 h-4 text-plum" /> : <Plus className="w-4 h-4 text-plum" />}
                     </button>
                     {open && sec.html && (
                       <div
-                        className="cc-rich-text font-playfair text-dark/70 text-sm leading-relaxed pb-4 pr-4"
+                        className="cc-rich-text font-playfair text-dark/70 text-[15px] leading-relaxed pb-4 pr-4"
                         dangerouslySetInnerHTML={{ __html: sec.html }}
                       />
                     )}
                     {open && !sec.html && (
-                      <p className="font-playfair text-dark/70 text-sm leading-relaxed pb-4 pr-4 whitespace-pre-line">
+                      <p className="font-playfair text-dark/70 text-[15px] leading-relaxed pb-4 pr-4 whitespace-pre-line">
                         {sec.body}
                       </p>
                     )}
@@ -386,10 +374,10 @@ export default function ProductDetail() {
                       <img src={sizedImage(p.image, 700)} alt={p.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" style={{ objectPosition: photoFocus(p) }} />
                     )}
                   </div>
-                  <p className="font-bodoni uppercase tracking-[0.15em] text-xs md:text-sm text-dark mt-3">
+                  <p className="font-bodoni uppercase tracking-[0.15em] text-[13px] md:text-sm text-dark mt-3">
                     {p.name}
                   </p>
-                  <p className="font-playfair text-sm text-plum mt-1">
+                  <p className="font-playfair text-[15px] text-plum mt-1">
                     {formatPrice(p.price, p.currency)}
                   </p>
                 </button>
