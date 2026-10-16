@@ -13,6 +13,7 @@ export default function SplashPage() {
       <div className="relative w-full md:w-1/2 h-1/2 md:h-full bg-[#1a1a1a] overflow-hidden">
         <video
           src="/media/splash.mp4"
+          poster="/media/splash-poster.jpg"
           autoPlay
           muted
           loop
