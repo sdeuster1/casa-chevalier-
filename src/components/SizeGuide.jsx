@@ -49,7 +49,7 @@ function SizeGuidePanel({ guide, tx, onClose }) {
           </p>
         )}
         <p className="font-playfair text-dark/75 text-[15px] leading-relaxed">
-          {tx(TEXT.oneSizeGeneral)}
+          {tx(guide.general || TEXT.oneSizeGeneral)}
         </p>
       </PanelShell>
     )

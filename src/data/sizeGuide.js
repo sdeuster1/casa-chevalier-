@@ -34,7 +34,7 @@ const ONE_SIZE_GENERAL = {
 }
 
 // type 'sized': link + panel with the chart. type 'oneSize': link + panel
-// with the fit note and the general one-size text.
+// with the fit note and the general one-size text (or the guide's own `general`).
 const GUIDES = [
   {
     title: 'CC × RSC The Signature Bombacha',
@@ -99,11 +99,18 @@ const GUIDES = [
     },
   },
   {
-    // General line only, no fit line
+    // Its own second line in place of the general one-size text
     title: 'The Pocket Belt',
     handles: ['the-pocket-belt'],
     type: 'oneSize',
-    fit: null,
+    fit: {
+      it: 'Taglia unica — Vestibilità regolabile.',
+      en: 'One Size — Adjustable fit.',
+    },
+    general: {
+      it: 'Progettata per adattarsi comodamente a diverse circonferenze vita.',
+      en: 'Designed to adapt comfortably to different waist sizes.',
+    },
   },
 ]
 
