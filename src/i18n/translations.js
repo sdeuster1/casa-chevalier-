@@ -222,7 +222,7 @@ const en = {
       {
         question: 'Where are Casa Chevalier pieces made?',
         answer:
-          'Every garment is designed and handcrafted in Italy, drawing on traditional equestrian tailoring techniques passed down through generations of artisans.',
+          'Every garment is designed and handcrafted in Italy, drawing on traditional tailoring techniques passed down through generations of artisans.',
       },
       {
         question: 'What is your shipping policy?',
@@ -532,7 +532,7 @@ const it = {
       {
         question: 'Dove vengono realizzati i capi Casa Chevalier?',
         answer:
-          "Ogni capo è disegnato e realizzato a mano in Italia, secondo le tecniche della sartoria equestre tradizionale tramandate da generazioni di artigiani.",
+          "Ogni capo è disegnato e realizzato a mano in Italia, secondo le tecniche della sartoria tradizionale tramandate da generazioni di artigiani.",
       },
       {
         question: 'Quali sono le condizioni di spedizione?',
