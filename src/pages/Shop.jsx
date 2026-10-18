@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ShoppingBag, Minus, Plus, X } from 'lucide-react'
 import Navbar from '../components/Navbar'
@@ -8,6 +8,7 @@ import { useCart } from '../context/CartContext'
 import { formatPrice, sizedImage } from '../lib/shopify'
 import { useLanguage } from '../i18n/LanguageContext'
 import ProductTitle from '../components/ProductTitle'
+import { track } from '../lib/analytics'
 
 export default function Shop() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -20,9 +21,20 @@ export default function Shop() {
   const navigate = useNavigate()
   const { t } = useLanguage()
 
+  useEffect(() => { track('bag_opened', { source: 'bag_page' }) }, [])
+
   const handleCheckout = () => {
     if (!checkoutUrl) return
     setRedirecting(true)
+    // Last step we can see: payment happens on Shopify's own checkout.
+    // Sent straight away, since the page is about to leave the site.
+    track('checkout_clicked', {
+      source: 'bag_page',
+      item_count: itemCount,
+      value: subtotal,
+      currency,
+      product_handles: items.map((l) => l.productHandle),
+    }, { send_instantly: true })
     window.location.href = checkoutUrl
   }
 

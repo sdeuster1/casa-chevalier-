@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react'
 import { subscribeToNewsletter, PRIVACY_POLICY_URL } from '../lib/newsletter'
 import { useLanguage } from '../i18n/LanguageContext'
 import { LEGAL_DOCUMENTS } from '../lib/legal'
+import { openCookieSettings, track } from '../lib/analytics'
 
 const columns = [
   {
@@ -40,7 +41,11 @@ export default function Footer() {
     setStatus('sending')
     const result = await subscribeToNewsletter({ email, locale: lang, source: 'footer', website })
     setStatus(result === 'ok' ? 'done' : result)
-    if (result === 'ok') setEmail('')
+    if (result === 'ok') {
+      setEmail('')
+      // Only that someone signed up here; never the address
+      track('newsletter_signed_up', { source: 'footer' })
+    }
   }
   return (
     <footer className="w-full bg-[#f99943] py-12 md:py-16 px-6 md:px-12">
@@ -125,6 +130,17 @@ export default function Footer() {
                     </Link>
                   </li>
                 ))}
+                {/* Change the cookie choice at any time (CookieConsent) */}
+                {col.title === 'legal' && (
+                  <li>
+                    <button
+                      onClick={openCookieSettings}
+                      className="font-playfair text-white/70 text-sm hover:text-white transition-colors duration-300 bg-transparent border-none p-0 cursor-pointer text-left"
+                    >
+                      {t('cookies.settings')}
+                    </button>
+                  </li>
+                )}
               </ul>
             </div>
           ))}

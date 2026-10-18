@@ -8,6 +8,7 @@ import {
   removeCartLine,
 } from '../lib/shopify'
 import { useLanguage } from '../i18n/LanguageContext'
+import { track, lineProps } from '../lib/analytics'
 
 const CartContext = createContext(null)
 const CART_ID_KEY = 'cc_shopify_cart_id'
@@ -98,9 +99,12 @@ export function CartProvider({ children }) {
         target.lines.find((l) => l.variantId === variantId)?.quantity || 0
       applyCart(updated)
 
-      const after =
-        updated.lines.find((l) => l.variantId === variantId)?.quantity || 0
+      const line = updated.lines.find((l) => l.variantId === variantId)
+      const after = line?.quantity || 0
       const gained = after - before
+      if (gained > 0) {
+        track('added_to_bag', { ...lineProps(line, updated.currency), quantity: gained, source: 'product_page' })
+      }
       return {
         capped: gained < quantity,
         added: gained,
@@ -121,6 +125,16 @@ export function CartProvider({ children }) {
       const updated = await updateCartLine(cart.id, lineId, quantity)
       applyCart(updated)
       const line = updated.lines.find((l) => l.lineId === lineId)
+      // + and − in the bag count as adding and removing too
+      const old = cart.lines.find((l) => l.lineId === lineId)
+      const change = (line?.quantity || 0) - (old?.quantity || 0)
+      if (old && change) {
+        track(change > 0 ? 'added_to_bag' : 'removed_from_bag', {
+          ...lineProps(line || old, updated.currency),
+          quantity: Math.abs(change),
+          source: 'bag',
+        })
+      }
       return { capped: Boolean(line) && line.quantity < quantity }
     } catch (err) {
       console.error('Update quantity failed:', err)
@@ -136,6 +150,10 @@ export function CartProvider({ children }) {
     try {
       const updated = await removeCartLine(cart.id, lineId)
       applyCart(updated)
+      const line = cart.lines.find((l) => l.lineId === lineId)
+      if (line) {
+        track('removed_from_bag', { ...lineProps(line, cart.currency), quantity: line.quantity, source: 'bag' })
+      }
     } catch (err) {
       console.error('Remove from cart failed:', err)
     } finally {

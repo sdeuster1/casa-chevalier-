@@ -2,19 +2,25 @@ import { useEffect, useRef, useState } from 'react'
 import { X } from 'lucide-react'
 import { useLanguage } from '../i18n/LanguageContext'
 import { CONVERSIONS, COLUMNS, TEXT } from '../data/sizeGuide'
+import { track } from '../lib/analytics'
 
 // "Size guide" link + panel. Sized products get the conversion chart,
 // one-size products the general one-size note. Content and text come from
 // src/data/sizeGuide.js; the layout follows the Casa Chevalier size guide PDF.
-export default function SizeGuide({ guide }) {
+export default function SizeGuide({ guide, productHandle }) {
   const [open, setOpen] = useState(false)
   const { lang } = useLanguage()
   const tx = (entry) => entry[lang] ?? entry.en
 
+  const openGuide = () => {
+    setOpen(true)
+    track('size_guide_opened', { product_handle: productHandle, guide: guide.type })
+  }
+
   return (
     <>
       <button
-        onClick={() => setOpen(true)}
+        onClick={openGuide}
         className="mt-4 font-bodoni uppercase text-plum text-[12px] tracking-[0.2em] border-0 border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
       >
         {tx(TEXT.link)}

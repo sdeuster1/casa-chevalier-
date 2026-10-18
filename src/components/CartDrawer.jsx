@@ -5,6 +5,7 @@ import { useCart } from '../context/CartContext'
 import { formatPrice, sizedImage } from '../lib/shopify'
 import { useLanguage } from '../i18n/LanguageContext'
 import ProductTitle from './ProductTitle'
+import { track } from '../lib/analytics'
 
 // Slide-in shopping bag. Opens after "Add to bag" so the customer can go
 // straight to checkout or keep browsing. The full bag stays at /shop.
@@ -20,6 +21,10 @@ export default function CartDrawer() {
 
   // Close when the page changes (e.g. clicking a product in the bag)
   useEffect(() => { closeDrawer() }, [pathname, closeDrawer])
+
+  useEffect(() => {
+    if (drawerOpen) track('bag_opened', { source: 'drawer' })
+  }, [drawerOpen])
 
   // Esc closes; the page behind doesn't scroll while the bag is open
   useEffect(() => {
@@ -42,6 +47,15 @@ export default function CartDrawer() {
   const handleCheckout = () => {
     if (!checkoutUrl) return
     setRedirecting(true)
+    // Last step we can see: payment happens on Shopify's own checkout.
+    // Sent straight away, since the page is about to leave the site.
+    track('checkout_clicked', {
+      source: 'drawer',
+      item_count: itemCount,
+      value: subtotal,
+      currency,
+      product_handles: items.map((l) => l.productHandle),
+    }, { send_instantly: true })
     window.location.href = checkoutUrl
   }
 

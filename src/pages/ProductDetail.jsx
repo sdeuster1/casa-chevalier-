@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Navigate, useParams, useNavigate } from 'react-router-dom'
 import { Heart, Plus, Minus } from 'lucide-react'
 import DOMPurify from 'dompurify'
@@ -15,6 +15,7 @@ import { useWishlist } from '../context/WishlistContext'
 import { useLanguage } from '../i18n/LanguageContext'
 import ProductTitle from '../components/ProductTitle'
 import ColourSwatches from '../components/ColourSwatches'
+import { track } from '../lib/analytics'
 
 const LOW_STOCK_THRESHOLD = 5
 // The "Only 5 left in size 40" note is switched off for now; set to true to bring it back
@@ -87,6 +88,20 @@ export default function ProductDetail() {
   const { addItem, busy, openDrawer } = useCart()
   const { toggle: toggleWish, has: hasWish } = useWishlist()
   const { t } = useLanguage()
+
+  // First step of the shopping funnel. Once per piece: a catalogue reload
+  // (e.g. a language switch) is not a second view.
+  const viewed = useRef(null)
+  useEffect(() => {
+    if (!product || viewed.current === product.handle) return
+    viewed.current = product.handle
+    track('product_viewed', {
+      product_handle: product.handle,
+      product_title: product.name,
+      price: product.price,
+      currency: product.currency,
+    })
+  }, [product])
 
   if (loading) {
     return (
@@ -236,7 +251,7 @@ export default function ProductDetail() {
                 size buttons; the fit note and one-size text are inside it */}
             {oneSizeNote && (
               <div className="mt-5">
-                <SizeGuide guide={guide} />
+                <SizeGuide guide={guide} productHandle={product.handle} />
               </div>
             )}
 
@@ -273,7 +288,7 @@ export default function ProductDetail() {
                     {t('product.sizeRequired')}
                   </p>
                 )}
-                {guide?.type === 'sized' && <SizeGuide guide={guide} />}
+                {guide?.type === 'sized' && <SizeGuide guide={guide} productHandle={product.handle} />}
               </div>
             )}
 

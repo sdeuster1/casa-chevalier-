@@ -65,6 +65,15 @@ const en = {
     companyDetails: 'B&M S.r.l. · Via Leonardo Bruni 25, 20158 Milano · VAT no. 03247930278 · REA MI-1780714',
   },
 
+  cookies: {
+    label: 'Cookie preferences',
+    text: 'We use analytics cookies only with your consent.',
+    policy: 'Cookie Policy',
+    accept: 'Accept',
+    decline: 'Decline',
+    settings: 'Cookie settings',
+  },
+
   common: {
     discover: 'Discover',
     previous: 'Previous',
@@ -372,6 +381,15 @@ const it = {
     legal: 'Informazioni legali',
     rights: '© 2026 Casa Chevalier. Tutti i diritti riservati.',
     companyDetails: 'B&M S.r.l. · Via Leonardo Bruni 25, 20158 Milano · P.IVA 03247930278 · REA MI-1780714',
+  },
+
+  cookies: {
+    label: 'Preferenze cookie',
+    text: 'Usiamo cookie di analisi solo con il tuo consenso.',
+    policy: 'Cookie Policy',
+    accept: 'Accetta',
+    decline: 'Rifiuta',
+    settings: 'Impostazioni cookie',
   },
 
   common: {

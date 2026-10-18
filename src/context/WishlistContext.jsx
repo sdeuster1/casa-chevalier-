@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState, useCallback } from 'react'
 import { useProducts } from './ProductsContext'
+import { track } from '../lib/analytics'
 
 const WishlistContext = createContext(null)
 const STORAGE_KEY = 'cc_wishlist_v2'
@@ -24,10 +25,19 @@ export function WishlistProvider({ children }) {
   }, [handles])
 
   const toggle = useCallback((handle) => {
+    if (!handles.includes(handle)) {
+      const product = products.find((p) => p.handle === handle)
+      track('added_to_wishlist', {
+        product_handle: handle,
+        product_title: product?.name,
+        price: product?.price,
+        currency: product?.currency,
+      })
+    }
     setHandles((prev) =>
       prev.includes(handle) ? prev.filter((h) => h !== handle) : [...prev, handle]
     )
-  }, [])
+  }, [handles, products])
 
   const remove = useCallback((handle) => {
     setHandles((prev) => prev.filter((h) => h !== handle))

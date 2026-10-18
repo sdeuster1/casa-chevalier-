@@ -3,6 +3,7 @@ import { X } from 'lucide-react'
 import Monogram from './Monogram'
 import { useLanguage } from '../i18n/LanguageContext'
 import { subscribeToNewsletter, PRIVACY_POLICY_URL } from '../lib/newsletter'
+import { useConsent, track } from '../lib/analytics'
 
 const STORAGE_KEY = 'cc_newsletter_dismissed'
 
@@ -13,14 +14,18 @@ export default function NewsletterPopup() {
   const [status, setStatus] = useState('idle') // idle | sending | done | invalid_email | error
   const { t, lang } = useLanguage()
   const submitted = status === 'done'
+  // Waits for the cookie banner to be answered, so first-time visitors
+  // never get both at once
+  const cookieChoiceMade = useConsent() !== null
 
   useEffect(() => {
+    if (!cookieChoiceMade) return
     const dismissed = localStorage.getItem(STORAGE_KEY)
     if (dismissed) return
 
     const timer = setTimeout(() => setIsOpen(true), 1200)
     return () => clearTimeout(timer)
-  }, [])
+  }, [cookieChoiceMade])
 
   const close = () => {
     setIsOpen(false)
@@ -34,6 +39,8 @@ export default function NewsletterPopup() {
     const result = await subscribeToNewsletter({ email, locale: lang, source: 'popup', website })
     setStatus(result === 'ok' ? 'done' : result)
     if (result === 'ok') {
+      // Only that someone signed up here; never the address
+      track('newsletter_signed_up', { source: 'popup' })
       localStorage.setItem(STORAGE_KEY, 'true')
       setTimeout(close, 2600)
     }

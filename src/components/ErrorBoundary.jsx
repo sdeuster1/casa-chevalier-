@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { captureError } from '../lib/analytics'
 
 // Safety net: if any page throws while rendering (for example one malformed
 // product from Shopify), show a short message with a reload button instead
@@ -14,6 +15,7 @@ export default class ErrorBoundary extends Component {
 
   componentDidCatch(error, info) {
     console.error('Page crashed:', error, info?.componentStack)
+    captureError(error, { component_stack: info?.componentStack })
   }
 
   componentDidUpdate(prev) {

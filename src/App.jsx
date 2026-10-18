@@ -17,10 +17,12 @@ import ScrollToTop from './components/ScrollToTop'
 import CartDrawer from './components/CartDrawer'
 import ErrorBoundary from './components/ErrorBoundary'
 import PageMeta from './components/PageMeta'
+import CookieConsent from './components/CookieConsent'
 import { ProductsProvider } from './context/ProductsContext'
 import { CartProvider } from './context/CartContext'
 import { WishlistProvider } from './context/WishlistContext'
 import { LanguageProvider } from './i18n/LanguageContext'
+import { isInternalVisit } from './lib/analytics'
 
 // Shopify's own storefront uses /products/<handle>; old or shared links of
 // that shape land on our product page instead of the 404.
@@ -29,19 +31,9 @@ function ShopifyProductLink() {
   return <Navigate to={`/product/${handle}`} replace />
 }
 
-// The team's own visits stay out of the analytics: open the site once with
-// ?internal=1 to stop counting this browser (?internal=0 counts it again).
-function skipInternalVisits(event) {
-  try {
-    const flag = new URLSearchParams(window.location.search).get('internal')
-    if (flag === '1') localStorage.setItem('cc-internal', '1')
-    if (flag === '0') localStorage.removeItem('cc-internal')
-    if (localStorage.getItem('cc-internal') === '1') return null
-  } catch {
-    // Storage blocked (private window): count the visit as usual
-  }
-  return event
-}
+// The team's own visits stay out of the analytics (?internal=1, see
+// src/lib/analytics.js)
+const skipInternalVisits = (event) => (isInternalVisit() ? null : event)
 
 // Everything that renders inside one safety net, reset on every navigation
 function Pages() {
@@ -89,6 +81,8 @@ export default function App() {
             {/* Vercel Web Analytics: cookieless page views, counted on every
                 page change. Only active on the deployed site, not locally. */}
             <Analytics beforeSend={skipInternalVisits} />
+            {/* Asks before PostHog runs; Vercel Analytics needs no consent */}
+            <CookieConsent />
           </CartProvider>
         </ProductsProvider>
       </LanguageProvider>
