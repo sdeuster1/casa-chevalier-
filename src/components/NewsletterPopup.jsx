@@ -23,13 +23,18 @@ export default function NewsletterPopup() {
     const dismissed = localStorage.getItem(STORAGE_KEY)
     if (dismissed) return
 
-    const timer = setTimeout(() => setIsOpen(true), 1200)
+    const timer = setTimeout(() => {
+      setIsOpen(true)
+      track('newsletter_popup_shown')
+    }, 1200)
     return () => clearTimeout(timer)
   }, [cookieChoiceMade])
 
-  const close = () => {
+  // dismissed: closed without signing up (the popup's own conversion rate)
+  const close = (dismissed = true) => {
     setIsOpen(false)
     localStorage.setItem(STORAGE_KEY, 'true')
+    if (dismissed) track('newsletter_popup_closed')
   }
 
   const handleSubmit = async (e) => {
@@ -42,7 +47,7 @@ export default function NewsletterPopup() {
       // Only that someone signed up here; never the address
       track('newsletter_signed_up', { source: 'popup' })
       localStorage.setItem(STORAGE_KEY, 'true')
-      setTimeout(close, 2600)
+      setTimeout(() => close(false), 2600)
     }
   }
 

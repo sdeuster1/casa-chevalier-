@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from 'react-router-dom'
 import { Analytics } from '@vercel/analytics/react'
 import Splash from './pages/Splash'
@@ -22,7 +23,7 @@ import { ProductsProvider } from './context/ProductsContext'
 import { CartProvider } from './context/CartContext'
 import { WishlistProvider } from './context/WishlistContext'
 import { LanguageProvider } from './i18n/LanguageContext'
-import { isInternalVisit } from './lib/analytics'
+import { isInternalVisit, notePageView } from './lib/analytics'
 
 // Shopify's own storefront uses /products/<handle>; old or shared links of
 // that shape land on our product page instead of the 404.
@@ -38,6 +39,8 @@ const skipInternalVisits = (event) => (isInternalVisit() ? null : event)
 // Everything that renders inside one safety net, reset on every navigation
 function Pages() {
   const { pathname } = useLocation()
+  // Remembered so a product view can say where the visitor came from
+  useEffect(() => { notePageView(pathname) }, [pathname])
   return (
     <ErrorBoundary resetKey={pathname}>
       <ScrollToTop />

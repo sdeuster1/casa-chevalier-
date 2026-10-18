@@ -101,6 +101,13 @@ export function openCookieSettings() {
 
 let posthogPromise = null
 
+// Sent with every event, e.g. the site language (LanguageContext)
+const context = {}
+export function setAnalyticsContext(props) {
+  Object.assign(context, props)
+  posthogPromise?.then((ph) => ph?.register(props))
+}
+
 const allowed = () => getConsent() === 'granted' && !isInternalVisit()
 
 // Loads and starts PostHog, only with consent and only once. Called at
@@ -135,6 +142,7 @@ export function startAnalytics() {
         loaded: (ph) => {
           // An earlier Decline leaves an opt-out behind; consent now overrides it
           if (ph.has_opted_out_capturing()) ph.opt_in_capturing()
+          ph.register(context)
         },
       })
       return posthog
@@ -150,7 +158,7 @@ export function startAnalytics() {
 export function track(event, properties, options) {
   if (!allowed()) return
   if (LOG_ONLY) {
-    console.info('[analytics]', event, properties ?? {})
+    console.info('[analytics]', event, { ...context, ...properties })
     return
   }
   posthogPromise?.then((ph) => ph?.capture(event, properties, options))
@@ -165,6 +173,46 @@ export function captureError(error, properties) {
     return
   }
   posthogPromise?.then((ph) => ph?.captureException(error, properties))
+}
+
+// ---------- Where people find a piece ----------
+
+// The last few pages of this visit (App.jsx notes each one), so a product
+// view can say where the visitor came from: the homepage, the collection,
+// another product… A click that isn't a page (search, the bag drawer)
+// names itself with setNextViewSource just before it navigates.
+const recentPages = []
+let nextViewSource = null
+
+export function notePageView(pathname) {
+  if (recentPages.at(-1) === pathname) return
+  recentPages.push(pathname)
+  if (recentPages.length > 3) recentPages.shift()
+}
+
+export function setNextViewSource(source) {
+  nextViewSource = source
+}
+
+const pageType = (path) =>
+  path === '/' ? 'intro'
+  : path === '/home' ? 'home'
+  : path === '/products' ? 'collection'
+  : path.startsWith('/product/') ? 'another product'
+  : path === '/wishlist' ? 'wishlist'
+  : path === '/shop' ? 'bag'
+  : path
+
+// Where the visitor was before `pathname`. The product page may report its
+// view before or after App.jsx notes the page, so both orders are handled.
+export function viewSource(pathname) {
+  if (nextViewSource) {
+    const source = nextViewSource
+    nextViewSource = null
+    return source
+  }
+  const i = recentPages.at(-1) === pathname ? recentPages.length - 2 : recentPages.length - 1
+  return i >= 0 ? pageType(recentPages[i]) : 'landed here'
 }
 
 // What we send about a bag line: the piece, never the person

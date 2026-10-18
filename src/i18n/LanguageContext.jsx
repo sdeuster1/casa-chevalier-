@@ -2,6 +2,7 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react'
 import translations from './translations'
 import { setShopifyLanguage } from '../lib/shopify'
+import { setAnalyticsContext } from '../lib/analytics'
 
 export const LANGUAGES = ['en', 'it']
 const STORAGE_KEY = 'cc_lang'
@@ -29,6 +30,8 @@ export function LanguageProvider({ children }) {
 
   useEffect(() => {
     document.documentElement.lang = lang
+    // Every analytics event says which language the site was in
+    setAnalyticsContext({ site_language: lang })
   }, [lang])
 
   const setLang = useCallback((next) => {

@@ -15,7 +15,7 @@ import { useWishlist } from '../context/WishlistContext'
 import { useLanguage } from '../i18n/LanguageContext'
 import ProductTitle from '../components/ProductTitle'
 import ColourSwatches from '../components/ColourSwatches'
-import { track } from '../lib/analytics'
+import { track, viewSource } from '../lib/analytics'
 
 const LOW_STOCK_THRESHOLD = 5
 // The "Only 5 left in size 40" note is switched off for now; set to true to bring it back
@@ -100,6 +100,7 @@ export default function ProductDetail() {
       product_title: product.name,
       price: product.price,
       currency: product.currency,
+      from: viewSource(`/product/${product.handle}`),
     })
   }, [product])
 
@@ -177,8 +178,12 @@ export default function ProductDetail() {
   )
 
   const handleBuy = async () => {
+    // Each reason "Add to bag" didn't work is counted, to spot friction
+    const problem = (reason) =>
+      track('add_to_bag_problem', { reason, product_handle: product.handle, product_title: product.name, size })
     if (product.hasSizes && !size) {
       setSizeError(true)
+      problem('no_size_chosen')
       return
     }
     if (!selectedVariant) return
@@ -186,6 +191,7 @@ export default function ProductDetail() {
     try {
       const result = await addItem(selectedVariant.id, 1)
       if (result?.capped) {
+        problem(result.total > 0 ? 'only_some_left' : 'sold_out_in_size')
         setAddError(
           result.total > 0
             ? t('product.onlyInSize', { count: result.total, size })
@@ -198,6 +204,7 @@ export default function ProductDetail() {
       openDrawer()
       setTimeout(() => setAdded(false), 2500)
     } catch {
+      problem('error')
       setAddError(t('product.addFailed'))
     }
   }

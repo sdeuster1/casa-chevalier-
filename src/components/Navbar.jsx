@@ -8,6 +8,7 @@ import { useWishlist } from '../context/WishlistContext'
 import { useLanguage } from '../i18n/LanguageContext'
 import LanguageSwitch from './LanguageSwitch'
 import ProductTitle from './ProductTitle'
+import { track, setNextViewSource } from '../lib/analytics'
 
 // Words that find each section in search, singular and plural, in both
 // languages, so "camicia", "camicie" and "shirt" all find the shirts
@@ -43,6 +44,19 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
         return words.every((w) => text.includes(w))
       })
     : []
+
+  // What people look for, counted once they stop typing. Only the words
+  // typed (trimmed), never anything else about the visitor.
+  const searchTerm = normalise(query).trim().slice(0, 40)
+  const resultCount = results.length
+  useEffect(() => {
+    if (!searchTerm) return
+    const timer = setTimeout(
+      () => track('search_performed', { query: searchTerm, result_count: resultCount }),
+      1200
+    )
+    return () => clearTimeout(timer)
+  }, [searchTerm, resultCount])
 
   const closeSearch = () => {
     setSearchOpen(false)
@@ -191,10 +205,12 @@ export default function Navbar({ onMenuToggle, variant = 'light' }) {
               )}
               {results.length > 0 && (
                 <ul className="flex flex-col divide-y divide-cream/15 list-none p-0 m-0">
-                  {results.map((p) => (
+                  {results.map((p, i) => (
                     <li key={p.handle}>
                       <button
                         onClick={() => {
+                          track('search_result_clicked', { query: searchTerm, product_handle: p.handle, position: i + 1 })
+                          setNextViewSource('search')
                           closeSearch()
                           navigate(`/product/${p.handle}`)
                         }}

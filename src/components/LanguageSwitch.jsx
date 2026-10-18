@@ -1,4 +1,5 @@
 import { useLanguage, LANGUAGES } from '../i18n/LanguageContext'
+import { track } from '../lib/analytics'
 
 // "EN | IT" toggle. Inherits colour from its parent so it follows the navbar.
 export default function LanguageSwitch({ className = '' }) {
@@ -10,7 +11,10 @@ export default function LanguageSwitch({ className = '' }) {
         <span key={code} className="flex items-center gap-1.5">
           {i > 0 && <span className="opacity-40">|</span>}
           <button
-            onClick={() => setLang(code)}
+            onClick={() => {
+              if (code !== lang) track('language_changed', { language: code })
+              setLang(code)
+            }}
             aria-pressed={lang === code}
             className={`bg-transparent border-none p-0 cursor-pointer text-inherit transition-opacity duration-300 ${
               lang === code ? 'opacity-100' : 'opacity-50 hover:opacity-80'

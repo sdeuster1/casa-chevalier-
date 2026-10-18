@@ -5,7 +5,7 @@ import { useCart } from '../context/CartContext'
 import { formatPrice, sizedImage } from '../lib/shopify'
 import { useLanguage } from '../i18n/LanguageContext'
 import ProductTitle from './ProductTitle'
-import { track } from '../lib/analytics'
+import { track, setNextViewSource } from '../lib/analytics'
 
 // Slide-in shopping bag. Opens after "Add to bag" so the customer can go
 // straight to checkout or keep browsing. The full bag stays at /shop.
@@ -108,13 +108,13 @@ export default function CartDrawer() {
                     <img
                       src={sizedImage(line.image, 300)}
                       alt={line.productTitle}
-                      onClick={() => goTo(`/product/${line.productHandle}`)}
+                      onClick={() => { setNextViewSource('bag'); goTo(`/product/${line.productHandle}`) }}
                       className="w-24 h-32 object-cover bg-[#d4cec6] cursor-pointer shrink-0"
                     />
                   )}
                   <div className="flex-1 flex flex-col">
                     <button
-                      onClick={() => goTo(`/product/${line.productHandle}`)}
+                      onClick={() => { setNextViewSource('bag'); goTo(`/product/${line.productHandle}`) }}
                       className="font-bodoni tracking-[0.02em] text-[15px] text-dark bg-transparent border-none p-0 text-left cursor-pointer hover:opacity-70 transition-opacity"
                     >
                       <ProductTitle title={line.productTitle} />
