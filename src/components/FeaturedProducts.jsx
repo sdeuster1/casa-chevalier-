@@ -9,7 +9,7 @@ const FEATURED_HANDLES = [
   ['the-equestrian-blazer-heritage-check', 'test-blazer'],
   'the-stable-vest-dark-chocolate',
   'the-everyday-breeches-sand',
-  'the-saddle-shirt-vanilla-blush',
+  'cc-rsc-the-timeless-polo-rust-cream',
 ]
 
 // Homepage row of four pieces with name, colour and price.
