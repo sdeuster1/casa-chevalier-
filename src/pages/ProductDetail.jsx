@@ -40,6 +40,7 @@ const PAIRS_WITH = {
   ],
   'the-signature-bombacha-heritage-check': [BLAZER, 'the-saddle-shirt-vanilla-blush'],
   'the-pocket-belt-dark-chocolate': ['the-everyday-breeches-dark-chocolate', 'the-stable-vest-dark-chocolate'],
+  'cc-rsc-the-timeless-polo-rust-cream': ['cc-rsc-the-signature-bombacha-sand'],
 }
 const RELATED_COUNT = 3
 
