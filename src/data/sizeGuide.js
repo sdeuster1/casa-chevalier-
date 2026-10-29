@@ -69,7 +69,10 @@ const GUIDES = [
     type: 'sized',
     name: 'THE EVERYDAY BREECHES',
     sizes: [36, 38, 40, 42],
-    fit: FIT_MODEL_36,
+    fit: {
+      it: `Vestibilità rilassata. Per una vestibilità più aderente, consigliamo di scegliere una taglia in meno. ${FIT_MODEL_36.it}`,
+      en: `Relaxed fit. For a tighter fit, we recommend sizing down. ${FIT_MODEL_36.en}`,
+    },
   },
   {
     title: 'CC × RSC The Timeless Polo',
