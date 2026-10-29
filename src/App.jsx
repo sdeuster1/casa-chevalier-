@@ -8,6 +8,7 @@ import ProductDetail from './pages/ProductDetail'
 import Contacts from './pages/Contacts'
 import FAQ from './pages/FAQ'
 import News from './pages/News'
+import NewsArticle from './pages/NewsArticle'
 import Philosophy from './pages/Philosophy'
 import Shop from './pages/Shop'
 import Wishlist from './pages/Wishlist'
@@ -55,6 +56,7 @@ function Pages() {
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/news" element={<News />} />
+        <Route path="/news/:slug" element={<NewsArticle />} />
         <Route path="/philosophy" element={<Philosophy />} />
         <Route path="/shop" element={<Shop />} />
         {/* No customer accounts yet: old links go to the homepage */}

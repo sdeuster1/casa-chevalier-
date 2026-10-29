@@ -18,8 +18,7 @@ const columns = [
     title: 'company',
     links: [
       { label: 'philosophy', to: '/philosophy' },
-      // CC News hidden until there is news to show
-      // { label: 'news', to: '/news' },
+      { label: 'news', to: '/news' },
     ],
   },
 ]

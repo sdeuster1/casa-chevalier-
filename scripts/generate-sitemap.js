@@ -14,14 +14,16 @@ import {
   SHOPIFY_ENDPOINT,
   SHOPIFY_STOREFRONT_TOKEN,
 } from '../src/lib/shopifyConfig.js'
+import { articles } from '../src/lib/news.js'
 
 // Primary domain in Vercel (the only domain on the project).
 const SITE_URL = 'https://casachevalier.com'
 
-// Indexable pages. Excluded on purpose: / (splash), /shop, /wishlist, /account,
-// and /news while it is hidden from the menu (placeholder articles).
+// Indexable pages. Excluded on purpose: / (splash), /shop, /wishlist, /account.
 const STATIC_PATHS = [
   '/home', '/products', '/philosophy', '/faq', '/contacts',
+  // CC News and its articles (src/lib/news.js)
+  '/news', ...articles.map((a) => `/news/${a.slug}`),
   // Legal pages (src/lib/legal.js)
   '/policies/shipping-policy', '/policies/refund-policy', '/policies/terms-of-service',
   '/policies/privacy-policy', '/pages/cookie-policy', '/pages/accessibility-statement',

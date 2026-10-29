@@ -259,49 +259,34 @@ const en = {
   news: {
     title: 'CC News',
     subtitle: 'Stories from the house',
-    readMore: 'Read More',
+    readMore: 'Read the story',
+    allNews: 'All news',
+    gallery: 'The Gallery',
+    photoAlt: '{title}, photo {n} of {total}',
     articles: {
-      'atelier-milano': {
-        category: 'Atelier',
-        date: 'March 2026',
-        title: 'Inside the Milan Atelier',
-        excerpt:
-          'A quiet morning behind the doors of Via Leonardo Bruni, where every stitch begins with a single length of Italian thread.',
-      },
-      'spring-collection': {
-        category: 'Collection',
-        date: 'February 2026',
-        title: 'The Spring Capsule',
-        excerpt:
-          'Softly tailored blazers, poplin shirts, and heritage breeches — an ode to the ride and the return.',
-      },
-      concorso: {
-        category: 'Events',
-        date: 'January 2026',
-        title: 'Concorso di Eleganza',
-        excerpt:
-          'Notes from an afternoon among horses and hand-finished lapels at the annual concorso in Lombardy.',
-      },
-      'craft-of-leather': {
-        category: 'Craft',
-        date: 'December 2025',
-        title: 'The Craft of Leather',
-        excerpt:
-          'A conversation with the family tannery in Tuscany that has supplied our belts and saddles for three generations.',
-      },
-      'from-saddle-to-table': {
-        category: 'Lifestyle',
-        date: 'November 2025',
-        title: 'From Saddle to Table',
-        excerpt:
-          'The Italian art of moving from stables to lunch — dressed, unhurried, and always in linen.',
-      },
-      'heritage-of-the-house': {
-        category: 'Heritage',
-        date: 'October 2025',
-        title: 'Heritage of the House',
-        excerpt:
-          'Chapter one of a series on the sartorial traditions that shape every Casa Chevalier collection.',
+      'the-madrid-ride': {
+        kicker: 'Casa Chevalier × Riding Safari Club',
+        title: 'The Madrid Ride',
+        place: 'La Granja',
+        standfirst: 'Ten women, ten horses, and one day to celebrate the beginning of Casa Chevalier.',
+        paragraphs: [
+          'Just outside Madrid, in the wild surroundings of La Granja, we came together to celebrate the launch of our first capsule collection, BOX 95, and the beginning of our collaboration with Riding Safari Club.',
+          'For the occasion, every guest was dressed in Casa Chevalier, including the two pieces created exclusively for the Casa Chevalier × RSC collaboration: the Signature Bombacha in Sand and the Sweatshirt Polo.',
+          'We set off on horseback and rode for two hours through an ever-changing landscape — from open grasslands to dense forest, crossing rivers and riding alongside horses roaming freely in the distance.',
+          'There was something particularly beautiful about the contrast: refined silhouettes against the rawness of nature. It is a contrast that lies at the heart of Casa Chevalier and of our desire to bring elegance back to equestrian clothing — where refined fabrics, craftsmanship and elegance can coexist naturally with function, comfort and performance. Because one should never have to come at the expense of the other.',
+          'Deep in the forest, a long wooden table was waiting for us.',
+          'We left the horses tied safely nearby and gathered around the table for a picnic surrounded by nature. Each guest found her place marked by a personalised Casa Chevalier keyring, together with a basket of special gifts from Gil Cagne Makeup, selected in the neutral, earthy tones that define the Casa Chevalier world.',
+          'We ate, raised our glasses, talked and spent the afternoon together.',
+          'Because beyond the clothes and the horses, the day was also about women supporting women. About making time for one another, sharing ideas, celebrating each other’s projects and dreams, and simply enjoying being together. There are few things more special than a table filled with women supporting one another — surrounded by nature, with horses waiting just a few steps away.',
+          'After the picnic, we got back in the saddle and began our ride home, returning around sunset.',
+          'It was a day that captured exactly what Casa Chevalier means to us: elegance that can be lived in. Clothes made to move, ride, sit around a table, and carry you through an entire day without compromise.',
+        ],
+        closing: [
+          'Wild nature and refined details.',
+          'Friendship and horses.',
+          'The saddle and the table.',
+        ],
+        signoff: 'From Saddle to Table.',
       },
     },
   },
@@ -578,49 +563,34 @@ const it = {
   news: {
     title: 'CC News',
     subtitle: 'Storie dalla Maison',
-    readMore: 'Leggi di più',
+    readMore: 'Leggi la storia',
+    allNews: 'Tutte le news',
+    gallery: 'La galleria',
+    photoAlt: '{title}, foto {n} di {total}',
     articles: {
-      'atelier-milano': {
-        category: 'Atelier',
-        date: 'Marzo 2026',
-        title: "Dentro l'atelier di Milano",
-        excerpt:
-          'Una mattina silenziosa dietro le porte di Via Leonardo Bruni, dove ogni punto nasce da un unico filo italiano.',
-      },
-      'spring-collection': {
-        category: 'Collezione',
-        date: 'Febbraio 2026',
-        title: 'La Capsule di Primavera',
-        excerpt:
-          'Blazer dalla linea morbida, camicie in popeline e breeches di tradizione — un omaggio alla cavalcata e al ritorno.',
-      },
-      concorso: {
-        category: 'Eventi',
-        date: 'Gennaio 2026',
-        title: 'Concorso di Eleganza',
-        excerpt:
-          "Appunti da un pomeriggio tra cavalli e revers rifiniti a mano all'annuale concorso in Lombardia.",
-      },
-      'craft-of-leather': {
-        category: 'Artigianato',
-        date: 'Dicembre 2025',
-        title: "L'arte della pelle",
-        excerpt:
-          'Una conversazione con la conceria di famiglia in Toscana che da tre generazioni realizza le nostre cinture e le nostre selle.',
-      },
-      'from-saddle-to-table': {
-        category: 'Lifestyle',
-        date: 'Novembre 2025',
-        title: 'Dalla sella alla tavola',
-        excerpt:
-          "L'arte tutta italiana di passare dalle scuderie al pranzo — eleganti, senza fretta e sempre in lino.",
-      },
-      'heritage-of-the-house': {
-        category: 'Heritage',
-        date: 'Ottobre 2025',
-        title: 'Il patrimonio della Maison',
-        excerpt:
-          'Il primo capitolo di una serie dedicata alle tradizioni sartoriali che danno forma a ogni collezione Casa Chevalier.',
+      'the-madrid-ride': {
+        kicker: 'Casa Chevalier × Riding Safari Club',
+        title: 'The Madrid Ride',
+        place: 'La Granja',
+        standfirst: 'Dieci donne, dieci cavalli e una giornata per celebrare l’inizio di Casa Chevalier.',
+        paragraphs: [
+          'Appena fuori Madrid, nella natura incontaminata de La Granja, ci siamo ritrovate per celebrare il lancio della nostra prima capsule collection, BOX 95, e l’inizio della collaborazione con Riding Safari Club.',
+          'Per l’occasione, ogni invitata indossava Casa Chevalier, compresi i due capi creati in esclusiva per la collaborazione Casa Chevalier × RSC: la Signature Bombacha in Sand e la Sweatshirt Polo.',
+          'Siamo partite a cavallo e abbiamo montato per due ore attraversando paesaggi in continuo cambiamento: grandi distese di prati, boschi, fiumi e cavalli liberi in lontananza.',
+          'C’era qualcosa di particolarmente bello nel contrasto tra le nostre silhouette raffinate e la natura nella sua forma più autentica e selvaggia. Un contrasto che racchiude perfettamente l’essenza di Casa Chevalier e il nostro desiderio di riportare l’eleganza nell’abbigliamento equestre: tessuti raffinati, artigianalità ed eleganza possono convivere naturalmente con funzionalità, comfort e performance. Perché scegliere l’una non dovrebbe mai significare rinunciare all’altra.',
+          'Nel cuore del bosco, ad aspettarci, una lunga tavolata in legno.',
+          'Abbiamo lasciato i cavalli legati in sicurezza poco distante e ci siamo sedute per un picnic immerso nella natura. Ogni ragazza ha trovato il proprio posto segnato da un portachiavi Casa Chevalier personalizzato con il suo nome e un cesto di regali speciali firmati Gil Cagne Makeup, scelti nelle tonalità neutre e della terra che caratterizzano il mondo Casa Chevalier.',
+          'Abbiamo mangiato, brindato, parlato e trascorso il pomeriggio insieme.',
+          'Perché, oltre agli abiti e ai cavalli, questa giornata parlava anche di donne che sostengono altre donne. Del valore di dedicarsi del tempo, condividere idee, celebrare i progetti e i sogni l’una dell’altra e, semplicemente, godersi il piacere di stare insieme. Poche cose sono più belle di una tavola piena di donne che si sostengono a vicenda, immerse nella natura, con i cavalli ad aspettarle a pochi passi.',
+          'Dopo il picnic siamo tornate in sella e abbiamo ripreso il cammino, rientrando al tramonto.',
+          'È stata una giornata che ha racchiuso esattamente ciò che Casa Chevalier vuole rappresentare: un’eleganza da vivere. Capi pensati per muoversi, montare a cavallo, sedersi intorno a una tavola e accompagnare una donna durante un’intera giornata, senza compromessi.',
+        ],
+        closing: [
+          'Natura selvaggia e dettagli raffinati.',
+          'Amicizia e cavalli.',
+          'La sella e la tavola.',
+        ],
+        signoff: 'From Saddle to Table.',
       },
     },
   },

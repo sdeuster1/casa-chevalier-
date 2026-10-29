@@ -3,12 +3,13 @@ import { useLocation } from 'react-router-dom'
 import { useProducts } from '../context/ProductsContext'
 import { useLanguage } from '../i18n/LanguageContext'
 import { legalDocumentFor } from '../lib/legal'
+import { findArticle } from '../lib/news'
 
 const SITE_URL = 'https://casachevalier.com'
 const BRAND = 'Casa Chevalier'
 
 // Pages kept out of search results: unfinished, personal or not a real page
-const NO_INDEX = ['/news', '/shop', '/wishlist']
+const NO_INDEX = ['/shop', '/wishlist']
 
 // Plain text for a search result: list items and paragraphs become
 // sentences, tags go, and it is cut at a word to about 155 characters.
@@ -52,6 +53,13 @@ export default function PageMeta() {
         title = product.name
         description = snippet(product.shortDescription || product.descriptionHtml)
       }
+    } else if (path.startsWith('/news/')) {
+      const slug = path.slice('/news/'.length)
+      if (findArticle(slug)) {
+        const copy = t(`news.articles.${slug}`)
+        title = `${copy.title} — ${copy.place}`
+        description = copy.standfirst
+      } else known = false
     } else {
       const legal = legalDocumentFor(path)
       const titles = {

@@ -9,8 +9,7 @@ const submenuItems = ['ALL', 'PANTS', 'SHIRTS', 'JACKETS', 'VESTS', 'ACCESSORIES
 const menuItems = [
   { key: 'collection', hasSubmenu: true, to: '/products' },
   { key: 'philosophy', hasSubmenu: false, to: '/philosophy' },
-  // CC News hidden until there is news to show
-  // { key: 'news', hasSubmenu: false, to: '/news' },
+  { key: 'news', hasSubmenu: false, to: '/news' },
   { key: 'contacts', hasSubmenu: false, to: '/contacts' },
 ]
 
