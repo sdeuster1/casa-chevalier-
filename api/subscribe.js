@@ -9,6 +9,12 @@
 //  Shopify Email's "Welcome new subscriber" automation then sends
 //  the 10% welcome code.
 //
+//  Back-in-stock requests use the same endpoint:
+//    { email, locale, source: 'back-in-stock', product, size, website }
+//  They only save the customer with the tags "back-in-stock" and
+//  "back-in-stock-<product handle>-<size>". No marketing consent is
+//  recorded: asking to hear about one size is not a newsletter sign-up.
+//
 //  Runs on the server, so the Admin credentials never reach the
 //  browser. Set in Vercel (Settings → Environment Variables):
 //    SHOPIFY_CLIENT_ID, SHOPIFY_CLIENT_SECRET  — Dev Dashboard app
@@ -22,6 +28,8 @@ const API_VERSION = '2026-07'
 const ADMIN_URL = `https://${SHOP}.myshopify.com/admin/api/${API_VERSION}/graphql.json`
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 const SOURCES = new Set(['popup', 'footer'])
+const PRODUCT_RE = /^[a-z0-9-]{1,100}$/
+const SIZE_RE = /^[a-z0-9-]{1,12}$/
 
 // Client-credentials tokens last 24 hours; reuse one while it's valid.
 let cachedToken = null
@@ -68,8 +76,8 @@ function check(payload, step) {
   return payload
 }
 
-async function subscribe(email, locale, source) {
-  // 1. Create the customer, or find the existing one with this email
+// Creates the customer, or finds the existing one with this email
+async function upsertCustomer(email, locale) {
   const set = check(
     (await admin(
       `mutation Upsert($email: String!, $input: CustomerSetInput!) {
@@ -82,7 +90,25 @@ async function subscribe(email, locale, source) {
     )).customerSet,
     'customerSet'
   )
-  const customerId = set.customer.id
+  return set.customer.id
+}
+
+// Adds tags without overwriting tags the customer already has
+async function addTags(id, tags) {
+  check(
+    (await admin(
+      `mutation Tag($id: ID!, $tags: [String!]!) {
+        tagsAdd(id: $id, tags: $tags) { userErrors { field message } }
+      }`,
+      { id, tags }
+    )).tagsAdd,
+    'tagsAdd'
+  )
+}
+
+async function subscribe(email, locale, source) {
+  // 1. Create the customer, or find the existing one with this email
+  const customerId = await upsertCustomer(email, locale)
 
   // 2. Record consent to email marketing
   check(
@@ -107,16 +133,14 @@ async function subscribe(email, locale, source) {
     'consent'
   )
 
-  // 3. Tag without overwriting tags the customer already has
-  check(
-    (await admin(
-      `mutation Tag($id: ID!, $tags: [String!]!) {
-        tagsAdd(id: $id, tags: $tags) { userErrors { field message } }
-      }`,
-      { id: customerId, tags: ['newsletter', `newsletter-${source}`] }
-    )).tagsAdd,
-    'tagsAdd'
-  )
+  // 3. Tag as a newsletter sign-up and the form it came from
+  await addTags(customerId, ['newsletter', `newsletter-${source}`])
+}
+
+// One product and size the customer wants to hear about; no marketing consent
+async function requestBackInStock(email, locale, product, size) {
+  const customerId = await upsertCustomer(email, locale)
+  await addTags(customerId, ['back-in-stock', `back-in-stock-${product}-${size}`])
 }
 
 export default async function handler(req, res) {
@@ -135,7 +159,14 @@ export default async function handler(req, res) {
     return res.status(400).json({ ok: false, error: 'invalid_email' })
   }
   const locale = body.locale === 'it' ? 'it' : 'en'
+  const backInStock = body.source === 'back-in-stock'
   const source = SOURCES.has(body.source) ? body.source : 'popup'
+  // Product handle and size end up in a customer tag: keep them short and plain
+  const product = String(body.product || '').toLowerCase()
+  const size = String(body.size || '').trim().toLowerCase().replace(/\s+/g, '-')
+  if (backInStock && (!PRODUCT_RE.test(product) || !SIZE_RE.test(size))) {
+    return res.status(400).json({ ok: false, error: 'invalid_request' })
+  }
 
   if (!process.env.SHOPIFY_CLIENT_ID || !process.env.SHOPIFY_CLIENT_SECRET) {
     console.error('Newsletter: Shopify credentials are not configured')
@@ -143,11 +174,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    await subscribe(email, locale, source)
+    if (backInStock) await requestBackInStock(email, locale, product, size)
+    else await subscribe(email, locale, source)
     return res.status(200).json({ ok: true })
   } catch (err) {
     // Log the reason, never the email address
-    console.error('Newsletter sign-up failed:', err.message)
+    console.error(backInStock ? 'Back-in-stock request failed:' : 'Newsletter sign-up failed:', err.message)
     return res.status(502).json({ ok: false, error: 'server' })
   }
 }

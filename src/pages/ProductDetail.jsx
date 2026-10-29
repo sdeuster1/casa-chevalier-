@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
 import Footer from '../components/Footer'
 import SizeGuide from '../components/SizeGuide'
+import BackInStock from '../components/BackInStock'
 import ProductGallery from '../components/ProductGallery'
 import { sizeGuideFor } from '../data/sizeGuide'
 import { formatPrice, photoFocus, RENAMED_HANDLES, sizedImage } from '../lib/shopify'
@@ -156,12 +157,26 @@ export default function ProductDetail() {
   // One-size products show a note instead of a size button
   const oneSizeNote = guide?.type === 'oneSize' && product.variants.length === 1
 
-  // A size chosen on another colour carries over only if it's available here
-  const keptSize = product.variants.some(
-    (v) => (v.options.Size || v.title) === chosenSize && v.available
-  )
-    ? chosenSize
-    : null
+  // Size buttons: Shopify's sizes plus any the size guide lists as sold out
+  // without a Shopify variant yet (e.g. the breeches' 34), in size order
+  const sizeOptions = product.variants.map((v) => ({
+    key: v.id,
+    label: v.options.Size || v.title,
+    available: v.available,
+  }))
+  for (const s of guide?.soldOutSizes || []) {
+    const label = String(s)
+    if (!sizeOptions.some((o) => o.label === label)) {
+      sizeOptions.push({ key: `sold-out-${label}`, label, available: false })
+    }
+  }
+  if (sizeOptions.every((o) => /^\d+$/.test(o.label))) {
+    sizeOptions.sort((a, b) => Number(a.label) - Number(b.label))
+  }
+
+  // A size chosen on another colour carries over if this colour has it too.
+  // Sold-out sizes can be chosen: they show the back-in-stock form.
+  const keptSize = sizeOptions.some((o) => o.label === chosenSize) ? chosenSize : null
 
   // Single-variant products (no sizes, or one-size) select themselves.
   const size =
@@ -210,7 +225,10 @@ export default function ProductDetail() {
     }
   }
 
-  const outOfStock = selectedVariant && !selectedVariant.available
+  // The chosen size (or the only variant) can't be bought right now
+  const outOfStock = size
+    ? !sizeOptions.find((o) => o.label === size)?.available
+    : selectedVariant && !selectedVariant.available
 
   return (
     <div className="min-h-screen bg-cream">
@@ -270,20 +288,20 @@ export default function ProductDetail() {
                   {t('product.sizeLabel')}
                 </span>
                 <div className="grid grid-cols-5 gap-2">
-                  {product.variants.map((v) => {
-                    const label = v.options.Size || v.title
-                    const disabled = !v.available
+                  {sizeOptions.map(({ key, label, available }) => {
+                    const chosen = size === label
                     return (
                       <button
-                        key={v.id}
-                        disabled={disabled}
+                        key={key}
                         onClick={() => { setChosenSize(label); setSizeError(false) }}
-                        className={`py-2 border font-playfair text-[15px] transition-colors ${
-                          disabled
-                            ? 'border-plum/15 text-dark/25 line-through cursor-not-allowed'
-                            : size === label
-                            ? 'border-plum bg-plum text-cream cursor-pointer'
-                            : 'border-plum/30 text-dark hover:border-plum cursor-pointer'
+                        aria-pressed={chosen}
+                        aria-label={available ? undefined : t('product.sizeSoldOut', { size: label })}
+                        className={`py-2 border font-playfair text-[15px] transition-colors cursor-pointer ${
+                          !available
+                            ? `line-through ${chosen ? 'border-plum text-dark/60' : 'border-plum/15 text-dark/30 hover:border-plum/40'}`
+                            : chosen
+                            ? 'border-plum bg-plum text-cream'
+                            : 'border-plum/30 text-dark hover:border-plum'
                         }`}
                       >
                         {label}
@@ -338,6 +356,8 @@ export default function ProductDetail() {
                 ? t('product.added')
                 : t('product.addToBag')}
             </button>
+
+            {outOfStock && <BackInStock product={product} size={product.hasSizes && !oneSizeNote ? size : null} />}
 
             {addError && (
               <p className="font-playfair text-coral text-sm mt-3">{addError}</p>

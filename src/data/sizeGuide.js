@@ -15,6 +15,7 @@
 
 // International conversions for each Italian size
 export const CONVERSIONS = {
+  34: { FR: 32, EU: 30, UK: 2, US: 0 },
   36: { FR: 34, EU: 32, UK: 4, US: 2 },
   38: { FR: 36, EU: 34, UK: 6, US: 4 },
   40: { FR: 38, EU: 36, UK: 8, US: 6 },
@@ -35,6 +36,8 @@ const ONE_SIZE_GENERAL = {
 
 // type 'sized': link + panel with the chart. type 'oneSize': link + panel
 // with the fit note and the general one-size text (or the guide's own `general`).
+// soldOutSizes: sizes in the chart that Shopify doesn't sell yet; the
+// product page adds them as sold-out size buttons.
 const GUIDES = [
   {
     title: 'CC × RSC The Signature Bombacha',
@@ -68,10 +71,13 @@ const GUIDES = [
     handles: ['the-everyday-breeches'],
     type: 'sized',
     name: 'THE EVERYDAY BREECHES',
-    sizes: [36, 38, 40, 42],
+    sizes: [34, 36, 38, 40, 42],
+    // Not a Shopify variant yet: the product page shows it as sold out,
+    // with the "email me when it's back" form
+    soldOutSizes: [34],
     fit: {
-      it: `Vestibilità rilassata. Per una vestibilità più aderente, consigliamo di scegliere una taglia in meno. ${FIT_MODEL_36.it}`,
-      en: `Relaxed fit. For a tighter fit, we recommend sizing down. ${FIT_MODEL_36.en}`,
+      it: 'Vestibilità rilassata. Per una vestibilità più aderente, consigliamo di scegliere una taglia in meno. La modella porta una taglia italiana 36 e indossa una 34.',
+      en: 'Relaxed fit. For a tighter fit, we recommend sizing down. The model is an Italian size 36 and wears an Italian size 34.',
     },
   },
   {

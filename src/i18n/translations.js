@@ -164,6 +164,16 @@ const en = {
     composition: 'Composition',
     colour: 'Colour',
     related: 'You May Also Like',
+    sizeSoldOut: '{size}, sold out',
+    backInStock: {
+      titleSize: 'Size {size} is sold out',
+      title: 'This piece is sold out',
+      body: 'Leave your email and we will let you know as soon as it is back in stock.',
+      notify: 'Notify me',
+      sentSize: 'Thank you. We will email you as soon as size {size} is back in stock.',
+      sent: 'Thank you. We will email you as soon as it is back in stock.',
+      consent: 'We will only use your email to let you know when it is back.',
+    },
   },
 
   bag: {
@@ -468,6 +478,16 @@ const it = {
     composition: 'Composizione',
     colour: 'Colore',
     related: 'Potrebbe piacerti anche',
+    sizeSoldOut: '{size}, esaurita',
+    backInStock: {
+      titleSize: 'La taglia {size} è esaurita',
+      title: 'Questo capo è esaurito',
+      body: 'Lascia la tua email e ti avviseremo non appena tornerà disponibile.',
+      notify: 'Avvisami',
+      sentSize: 'Grazie. Ti scriveremo non appena la taglia {size} sarà di nuovo disponibile.',
+      sent: 'Grazie. Ti scriveremo non appena sarà di nuovo disponibile.',
+      consent: 'Useremo la tua email solo per avvisarti quando tornerà disponibile.',
+    },
   },
 
   bag: {
