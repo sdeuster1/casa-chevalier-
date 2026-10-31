@@ -195,7 +195,8 @@ export default function ProductDetail() {
 
   // Pre-order: the chosen size has no stock left but is sold ahead of
   // production. Before a size is chosen, shown when every size is a pre-order.
-  const preorder = selectedVariant ? selectedVariant.preorder : product.preorder
+  // A chosen size with no Shopify variant (a size guide sold-out size) never is.
+  const preorder = size ? Boolean(selectedVariant?.preorder) : product.preorder
   const shippingNote = product.preorderShipping || t('product.preorderNote')
 
   const handleBuy = async () => {
