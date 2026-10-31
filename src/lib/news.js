@@ -17,18 +17,16 @@ export const articles = [
     cover: 20,
     // Wider than tall (3:2); every other photo is 2:3
     landscape: [21, 27, 33],
-    // Photos placed after paragraph n (counting from 0). [a] is one photo,
-    // [a, b] two side by side. Every photo is also in the gallery at the end.
-    photosAfter: {
-      0: [[21]],
-      1: [[33]],
-      2: [[16]],
-      3: [[18]],
-      4: [[20]],
-      6: [[30]],
-      8: [[24]],
-      9: [[8]],
-    },
+    // The story in chapters: a large photo with a few paragraphs beside it
+    // (paragraph numbers count from 0), the photo alternating left and
+    // right. Every photo is also in the gallery at the end.
+    chapters: [
+      { photo: 18, paragraphs: [0, 1] }, // the launch, dressed in Casa Chevalier
+      { photo: 16, paragraphs: [2, 3] }, // the ride
+      { photo: 20, paragraphs: [4, 5, 6] }, // the table in the forest
+      { photo: 30, paragraphs: [7] }, // women supporting women
+      { photo: 24, paragraphs: [8, 9] }, // the ride home
+    ],
   },
 ]
 

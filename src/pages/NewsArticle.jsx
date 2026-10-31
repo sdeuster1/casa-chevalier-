@@ -6,33 +6,35 @@ import Footer from '../components/Footer'
 import NewsGallery from '../components/NewsGallery'
 import NotFound from './NotFound'
 import { useLanguage } from '../i18n/LanguageContext'
-import { findArticle, isLandscape, photoSources } from '../lib/news'
+import { findArticle, photoSources } from '../lib/news'
 
-// One photo, or two side by side. Phones: edge to edge, two photos split
-// the width. Desktop: a single portrait photo stays narrower than a pair
-// so it doesn't fill the whole screen; a landscape one is as wide as a pair.
-function PhotoRow({ article, numbers, title }) {
+// One chapter of the story: a large photo filling half the page with its
+// paragraphs beside it, the photo alternating left and right. Phones: the
+// photo edge to edge, the paragraphs underneath.
+function Chapter({ article, chapter, index, copy }) {
   const { t } = useLanguage()
-  const pair = numbers.length > 1
-  const wide = pair || isLandscape(article, numbers[0])
+  const { src, srcSet } = photoSources(article, chapter.photo)
+  const photoRight = index % 2 === 1
   return (
-    <div className={`w-full mx-auto grid gap-1 md:gap-5 md:px-6 ${pair ? 'grid-cols-2' : ''} ${wide ? 'md:max-w-4xl' : 'md:max-w-xl'}`}>
-      {numbers.map((n) => {
-        const { src, srcSet } = photoSources(article, n)
-        return (
-          <div key={n} className={`${isLandscape(article, n) ? 'aspect-[3/2]' : 'aspect-[2/3]'} bg-[#e5ded4]`}>
-            <img
-              src={src}
-              srcSet={srcSet}
-              sizes={pair ? '(min-width: 768px) 430px, 50vw' : wide ? '(min-width: 768px) 848px, 100vw' : '(min-width: 768px) 576px, 100vw'}
-              loading="lazy"
-              alt={t('news.photoAlt', { title, n, total: article.photos })}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        )
-      })}
-    </div>
+    <section className="grid grid-cols-1 md:grid-cols-2 md:items-center">
+      <div className={`aspect-[4/5] md:aspect-square bg-[#e5ded4] ${photoRight ? 'md:order-2' : ''}`}>
+        <img
+          src={src}
+          srcSet={srcSet}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          loading={index === 0 ? 'eager' : 'lazy'}
+          alt={t('news.photoAlt', { title: copy.title, n: chapter.photo, total: article.photos })}
+          className="w-full h-full object-cover"
+        />
+      </div>
+      <div className="w-full max-w-[560px] md:justify-self-center px-6 md:px-12 py-12 md:py-16 flex flex-col gap-6">
+        {chapter.paragraphs.map((i) => (
+          <p key={i} className="font-playfair text-dark/80 text-[16px] md:text-[17px] leading-[1.8] m-0">
+            {copy.paragraphs[i]}
+          </p>
+        ))}
+      </div>
+    </section>
   )
 }
 
@@ -45,7 +47,6 @@ export default function NewsArticle() {
   if (!article) return <NotFound />
 
   const copy = t(`news.articles.${slug}`)
-  const cover = photoSources(article, article.cover)
 
   return (
     <div className="min-h-screen bg-cream">
@@ -53,68 +54,37 @@ export default function NewsArticle() {
       <DropdownMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
       <article>
-        {/* Title and cover photo. Phones: title first, then the photo
-            edge to edge. Desktop: photo left, title right. */}
-        <header className="pt-24 md:pt-36 pb-12 md:pb-20 md:px-12">
-          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
-            <div className="px-6 md:px-0 md:order-2 flex flex-col items-center md:items-start text-center md:text-left">
-              <p className="font-playfair uppercase text-mauve text-[11px] md:text-[12px] tracking-[0.2em] mb-5">
-                {copy.kicker}
-              </p>
-              <h1 className="font-bodoni uppercase text-plum text-[26px] md:text-4xl leading-tight tracking-[0.12em]">
-                {copy.title}
-              </h1>
-              <p className="font-playfair italic text-mauve text-lg md:text-xl mt-2">
-                {copy.place}
-              </p>
-              <div className="w-10 h-px bg-plum/30 my-6" />
-              <p className="font-playfair text-dark/80 text-[17px] md:text-lg leading-relaxed max-w-md">
-                {copy.standfirst}
-              </p>
-            </div>
-
-            <div className="md:order-1 aspect-[2/3] bg-[#e5ded4] md:max-w-[480px] md:w-full md:justify-self-end">
-              <img
-                src={cover.src}
-                srcSet={cover.srcSet}
-                sizes="(min-width: 768px) 480px, 100vw"
-                fetchPriority="high"
-                alt={t('news.photoAlt', { title: copy.title, n: article.cover, total: article.photos })}
-                className="w-full h-full object-cover cc-fade-in"
-              />
-            </div>
-          </div>
+        {/* Title, centred above the story */}
+        <header className="pt-28 md:pt-40 pb-12 md:pb-20 px-6 flex flex-col items-center text-center">
+          <p className="font-playfair uppercase text-mauve text-[11px] md:text-[12px] tracking-[0.2em] mb-5">
+            {copy.kicker}
+          </p>
+          <h1 className="font-bodoni uppercase text-plum text-[26px] md:text-4xl leading-tight tracking-[0.12em]">
+            {copy.title}
+          </h1>
+          <p className="font-playfair italic text-mauve text-lg md:text-xl mt-2">
+            {copy.place}
+          </p>
+          <div className="w-10 h-px bg-plum/30 my-6" />
+          <p className="font-playfair text-dark/80 text-[17px] md:text-lg leading-relaxed max-w-xl">
+            {copy.standfirst}
+          </p>
         </header>
 
-        {/* The story, with photos between the paragraphs */}
-        <div className="flex flex-col gap-10 md:gap-14 pb-16 md:pb-24">
-          {copy.paragraphs.map((paragraph, i) => (
-            <div key={i} className="flex flex-col gap-10 md:gap-14">
-              <p className="w-full max-w-[640px] mx-auto px-6 font-playfair text-dark/80 text-[16px] md:text-[17px] leading-[1.8]">
-                {paragraph}
-              </p>
-              {article.photosAfter[i]?.map((numbers) => (
-                <PhotoRow
-                  key={numbers.join('-')}
-                  article={article}
-                  numbers={numbers}
-                  title={copy.title}
-                />
-              ))}
-            </div>
-          ))}
+        {/* The story: photo and text side by side, chapter by chapter */}
+        {article.chapters.map((chapter, i) => (
+          <Chapter key={chapter.photo} article={article} chapter={chapter} index={i} copy={copy} />
+        ))}
 
-          <div className="max-w-[640px] mx-auto px-6 flex flex-col items-center text-center pt-4">
-            <div className="w-10 h-px bg-plum/30 mb-8" />
-            {copy.closing.map((line) => (
-              <p key={line} className="font-bodoni uppercase text-plum text-[12px] md:text-sm tracking-[0.12em] md:tracking-[0.2em] leading-loose">
-                {line}
-              </p>
-            ))}
-            <p className="font-playfair italic text-plum text-xl md:text-2xl mt-8">
-              {copy.signoff}
+        <div className="border-t border-plum/15 px-6 py-16 md:py-24 flex flex-col items-center text-center">
+          {copy.closing.map((line) => (
+            <p key={line} className="font-bodoni uppercase text-plum text-[12px] md:text-sm tracking-[0.12em] md:tracking-[0.2em] leading-loose">
+              {line}
             </p>
-          </div>
+          ))}
+          <p className="font-playfair italic text-plum text-xl md:text-2xl mt-8">
+            {copy.signoff}
+          </p>
         </div>
       </article>
 
