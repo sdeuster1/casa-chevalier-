@@ -298,7 +298,7 @@ export default function ProductDetail() {
                   {sizeOptions.map(({ key, label, available, preorder: onPreorder }) => {
                     const chosen = size === label
                     // No stock left: sold out, or sold out but open to pre-order.
-                    // Both are struck through with a diagonal line.
+                    // Both are shown faded.
                     const noStock = !available || onPreorder
                     return (
                       <button
@@ -312,7 +312,7 @@ export default function ProductDetail() {
                             ? undefined
                             : t('product.sizeSoldOut', { size: label })
                         }
-                        className={`relative overflow-hidden py-2 border font-playfair text-[15px] transition-colors cursor-pointer ${
+                        className={`py-2 border font-playfair text-[15px] transition-colors cursor-pointer ${
                           chosen
                             ? onPreorder
                               ? 'border-plum bg-plum text-cream/80'
@@ -325,13 +325,6 @@ export default function ProductDetail() {
                         }`}
                       >
                         {label}
-                        {noStock && (
-                          <span
-                            aria-hidden="true"
-                            className={`absolute inset-0 pointer-events-none ${chosen && onPreorder ? 'text-cream/70' : 'text-plum/60'}`}
-                            style={{ background: 'linear-gradient(to top right, transparent calc(50% - 0.75px), currentColor, transparent calc(50% + 0.75px))' }}
-                          />
-                        )}
                       </button>
                     )
                   })}
