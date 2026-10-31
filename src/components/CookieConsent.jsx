@@ -4,8 +4,9 @@ import { useLanguage } from '../i18n/LanguageContext'
 import { useConsent, setConsent, COOKIE_SETTINGS_EVENT } from '../lib/analytics'
 
 // Cookie banner: asks once, before any analytics cookie is set (see
-// src/lib/analytics.js). Accept and Decline look the same on purpose, so
-// neither is the "easy" choice. Reopened from the footer's Cookie settings.
+// src/lib/analytics.js). Accept is filled burgundy so it's the easy one to
+// spot; Decline stays outlined, the same size and always visible beside it.
+// Reopened from the footer's Cookie settings.
 export default function CookieConsent() {
   const consent = useConsent()
   const [reopened, setReopened] = useState(false)
@@ -25,7 +26,7 @@ export default function CookieConsent() {
   }
 
   const button =
-    'flex-1 font-bodoni uppercase text-[10px] tracking-[0.2em] py-2 border border-plum text-plum bg-transparent cursor-pointer hover:bg-plum hover:text-cream transition-colors duration-300'
+    'flex-1 font-bodoni uppercase text-[10px] tracking-[0.2em] py-2 border border-plum cursor-pointer transition-colors duration-300'
 
   // A small card in the bottom-right corner: noticeable without covering the page
   return (
@@ -41,10 +42,10 @@ export default function CookieConsent() {
         </Link>
       </p>
       <div className="flex gap-2">
-        <button onClick={() => choose('denied')} className={button}>
+        <button onClick={() => choose('denied')} className={`${button} text-plum bg-transparent hover:bg-plum hover:text-cream`}>
           {t('cookies.decline')}
         </button>
-        <button onClick={() => choose('granted')} className={button}>
+        <button onClick={() => choose('granted')} className={`${button} text-cream bg-plum hover:opacity-90`}>
           {t('cookies.accept')}
         </button>
       </div>
