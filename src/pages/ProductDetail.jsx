@@ -343,9 +343,13 @@ export default function ProductDetail() {
               </p>
             )}
 
-            {/* Pre-order: when it ships, before the customer commits */}
+            {/* Pre-order: when it ships, before the customer commits. When
+                other sizes are in stock, it says this size is the one sold out. */}
             {preorder && (
               <p className="font-playfair text-plum text-[15px] leading-relaxed mt-4">
+                {product.hasSizes && !product.preorder && (
+                  <span className="block text-dark/80">{t('product.preorderSize', { size })}</span>
+                )}
                 <span className="font-bodoni uppercase text-[13px] tracking-[0.15em] mr-2">
                   {t('product.preorderLabel')}
                 </span>
