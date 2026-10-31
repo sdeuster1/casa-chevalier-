@@ -80,26 +80,28 @@ export function CartProvider({ children }) {
   // If the cart never loaded, or Shopify no longer knows it (expired or already
   // checked out), a fresh one is started. Any other failure is thrown so the
   // product page shows an error instead of "Added".
-  const addItem = useCallback(async (variantId, quantity = 1) => {
+  // `preorder` is the shipping note of a pre-order piece, kept on the line.
+  const addItem = useCallback(async (variantId, quantity = 1, preorder = null) => {
     setBusy(true)
     try {
       if (!cartRef.current) await loadRef.current
       let target = cartRef.current || (await startFreshCart())
       let updated
       try {
-        updated = await addCartLines(target.id, variantId, quantity)
+        updated = await addCartLines(target.id, variantId, quantity, preorder)
       } catch (err) {
         // Only start over when the cart itself is gone; a network error
         // must not throw away the pieces already in the bag.
         if (await fetchCart(target.id)) throw err
         target = await startFreshCart()
-        updated = await addCartLines(target.id, variantId, quantity)
+        updated = await addCartLines(target.id, variantId, quantity, preorder)
       }
-      const before =
-        target.lines.find((l) => l.variantId === variantId)?.quantity || 0
+      // A pre-order and an in-stock line of the same size are separate lines
+      const sameLine = (l) => l.variantId === variantId && Boolean(l.preorder) === Boolean(preorder)
+      const before = target.lines.find(sameLine)?.quantity || 0
       applyCart(updated)
 
-      const line = updated.lines.find((l) => l.variantId === variantId)
+      const line = updated.lines.find(sameLine)
       const after = line?.quantity || 0
       const gained = after - before
       if (gained > 0) {

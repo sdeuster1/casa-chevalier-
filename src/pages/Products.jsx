@@ -172,9 +172,9 @@ export default function Products() {
                           style={{ objectPosition: photoFocus(product) }}
                         />
                       )}
-                      {soldOut && (
+                      {(soldOut || product.preorder) && (
                         <span className="absolute top-3 left-3 bg-cream/90 font-bodoni uppercase text-plum text-[12px] tracking-[0.2em] px-2 py-1">
-                          {t('common.soldOut')}
+                          {t(soldOut ? 'common.soldOut' : 'common.preorder')}
                         </span>
                       )}
                       <button

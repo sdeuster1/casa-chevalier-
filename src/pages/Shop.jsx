@@ -86,7 +86,9 @@ export default function Shop() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16">
               <div className="md:col-span-2 flex flex-col divide-y divide-plum/15 border-t border-b border-plum/15">
                 {items.map((line) => {
+                  // A pre-order has no stock to run out of
                   const atLimit =
+                    !line.preorder &&
                     typeof line.available === 'number' &&
                     line.quantity >= line.available
                   return (
@@ -108,6 +110,9 @@ export default function Shop() {
                       </button>
                       {line.size && (
                         <p className="font-playfair text-dark/70 text-sm mt-1">{t('bag.size', { size: line.size })}</p>
+                      )}
+                      {line.preorder && (
+                        <p className="font-playfair text-plum text-sm mt-1">{t('bag.preorder', { note: line.preorder })}</p>
                       )}
                       <p className="font-playfair text-[15px] text-plum mt-1">
                         {formatPrice(line.price, currency)}

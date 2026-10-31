@@ -193,6 +193,11 @@ export default function ProductDetail() {
     (v) => v.title === size || v.options.Size === size
   )
 
+  // Pre-order: the chosen size has no stock left but is sold ahead of
+  // production. Before a size is chosen, shown when every size is a pre-order.
+  const preorder = selectedVariant ? selectedVariant.preorder : product.preorder
+  const shippingNote = product.preorderShipping || t('product.preorderNote')
+
   const handleBuy = async () => {
     // Each reason "Add to bag" didn't work is counted, to spot friction
     const problem = (reason) =>
@@ -205,7 +210,7 @@ export default function ProductDetail() {
     if (!selectedVariant) return
     setAddError(null)
     try {
-      const result = await addItem(selectedVariant.id, 1)
+      const result = await addItem(selectedVariant.id, 1, selectedVariant.preorder ? shippingNote : null)
       if (result?.capped) {
         problem(result.total > 0 ? 'only_some_left' : 'sold_out_in_size')
         setAddError(
@@ -338,6 +343,16 @@ export default function ProductDetail() {
               </p>
             )}
 
+            {/* Pre-order: when it ships, before the customer commits */}
+            {preorder && (
+              <p className="font-playfair text-plum text-[15px] leading-relaxed mt-4">
+                <span className="font-bodoni uppercase text-[13px] tracking-[0.15em] mr-2">
+                  {t('product.preorderLabel')}
+                </span>
+                {shippingNote}
+              </p>
+            )}
+
             {/* Buy button */}
             <button
               onClick={handleBuy}
@@ -354,6 +369,8 @@ export default function ProductDetail() {
                 ? t('product.adding')
                 : added
                 ? t('product.added')
+                : selectedVariant?.preorder
+                ? t('product.preorder')
                 : t('product.addToBag')}
             </button>
 

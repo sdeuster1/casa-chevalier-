@@ -223,4 +223,5 @@ export const lineProps = (line, currency) => ({
   size: line.size,
   price: line.price,
   currency,
+  preorder: Boolean(line.preorder),
 })

@@ -123,6 +123,9 @@ export default function CartDrawer() {
                     {line.size && (
                       <p className="font-playfair text-dark/70 text-sm mt-2">{t('bag.size', { size: line.size })}</p>
                     )}
+                    {line.preorder && (
+                      <p className="font-playfair text-plum text-sm mt-1">{t('bag.preorder', { note: line.preorder })}</p>
+                    )}
                     <div className="mt-auto flex items-end justify-between pt-4">
                       <button
                         onClick={() => removeItem(line.lineId)}

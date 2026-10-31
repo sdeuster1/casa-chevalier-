@@ -75,6 +75,8 @@ const PRODUCT_FIELDS = `
   collections(first: 5) { edges { node { title handle } } }
   composizione: metafield(namespace: "custom", key: "composizione") { value }
   shortDescription: metafield(namespace: "custom", key: "short_description") { value }
+  preorder: metafield(namespace: "custom", key: "preorder") { value }
+  preorderShipping: metafield(namespace: "custom", key: "preorder_shipping") { value }
 `
 
 // ---------- Category mapping ----------
@@ -144,10 +146,15 @@ function normalizeProduct(node) {
   if (!node) return null
 
   const images = node.images.edges.map((e) => e.node.url)
+  // Pre-order (custom.preorder, true/false): with "Continue selling when out
+  // of stock" on in Shopify, a size with no stock left is sold as a pre-order;
+  // sizes still in stock sell as usual.
+  const preorderOn = node.preorder?.value === 'true'
   const variants = node.variants.edges.map((e) => ({
     id: e.node.id,
     title: e.node.title,
     available: e.node.availableForSale,
+    preorder: preorderOn && e.node.availableForSale && !(e.node.quantityAvailable > 0),
     quantity: e.node.quantityAvailable,
     price: parseFloat(e.node.price.amount),
     options: Object.fromEntries(
@@ -190,6 +197,10 @@ function normalizeProduct(node) {
     composition: node.composizione?.value?.trim() || null,
     // custom.short_description (multi-line text); null when not filled in
     shortDescription: node.shortDescription?.value?.trim() || null,
+    // Every size on sale is a pre-order (drives the "Pre-order" label on cards)
+    preorder: variants.some((v) => v.available) && variants.filter((v) => v.available).every((v) => v.preorder),
+    // custom.preorder_shipping (text): when a pre-order ships; null when not filled in
+    preorderShipping: node.preorderShipping?.value?.trim() || null,
     category,
     price: parseFloat(node.priceRange.minVariantPrice.amount),
     currency: node.priceRange.minVariantPrice.currencyCode,
@@ -253,6 +264,11 @@ export async function fetchLegalBody({ policy, page }) {
 
 // ---------- Cart ----------
 
+// A pre-order line carries this note with its shipping time. Shopify shows it
+// at checkout, in the order confirmation and on the order in the admin. The
+// name stays the same in every language, so orders can be filtered by it.
+export const PREORDER_ATTRIBUTE = 'Pre-order'
+
 const CART_FIELDS = `
   id
   checkoutUrl
@@ -266,6 +282,7 @@ const CART_FIELDS = `
       node {
         id
         quantity
+        attributes { key value }
         merchandise {
           ... on ProductVariant {
             id
@@ -304,6 +321,8 @@ function normalizeCart(cart) {
           (o) => ['size', 'taglia'].includes(o.name.toLowerCase())
         )?.value || null,
       price: parseFloat(e.node.merchandise.price.amount),
+      // The shipping note of a pre-order line (see addCartLines); null otherwise
+      preorder: e.node.attributes.find((a) => a.key === PREORDER_ATTRIBUTE)?.value || null,
       image: e.node.merchandise.image?.url || null,
       productTitle: e.node.merchandise.product.title,
       productHandle: e.node.merchandise.product.handle,
@@ -330,7 +349,9 @@ export async function fetchCart(cartId) {
   return normalizeCart(data.cart)
 }
 
-export async function addCartLines(cartId, variantId, quantity = 1) {
+export async function addCartLines(cartId, variantId, quantity = 1, preorder = null) {
+  const line = { merchandiseId: variantId, quantity }
+  if (preorder) line.attributes = [{ key: PREORDER_ATTRIBUTE, value: preorder }]
   const data = await shopifyFetch(
     `mutation Add($cartId: ID!, $lines: [CartLineInput!]!, $language: LanguageCode) @inContext(language: $language) {
       cartLinesAdd(cartId: $cartId, lines: $lines) {
@@ -338,7 +359,7 @@ export async function addCartLines(cartId, variantId, quantity = 1) {
         userErrors { message }
       }
     }`,
-    { cartId, lines: [{ merchandiseId: variantId, quantity }] }
+    { cartId, lines: [line] }
   )
   const errs = data.cartLinesAdd.userErrors
   if (errs?.length) throw new Error(errs.map((e) => e.message).join('; '))
