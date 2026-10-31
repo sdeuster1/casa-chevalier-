@@ -163,6 +163,7 @@ export default function ProductDetail() {
     key: v.id,
     label: v.options.Size || v.title,
     available: v.available,
+    preorder: v.preorder,
   }))
   for (const s of guide?.soldOutSizes || []) {
     const label = String(s)
@@ -294,23 +295,43 @@ export default function ProductDetail() {
                   {t('product.sizeLabel')}
                 </span>
                 <div className="grid grid-cols-5 gap-2">
-                  {sizeOptions.map(({ key, label, available }) => {
+                  {sizeOptions.map(({ key, label, available, preorder: onPreorder }) => {
                     const chosen = size === label
+                    // No stock left: sold out, or sold out but open to pre-order.
+                    // Both are struck through with a diagonal line.
+                    const noStock = !available || onPreorder
                     return (
                       <button
                         key={key}
                         onClick={() => { setChosenSize(label); setSizeError(false) }}
                         aria-pressed={chosen}
-                        aria-label={available ? undefined : t('product.sizeSoldOut', { size: label })}
-                        className={`py-2 border font-playfair text-[15px] transition-colors cursor-pointer ${
-                          !available
-                            ? `line-through ${chosen ? 'border-plum text-dark/60' : 'border-plum/15 text-dark/30 hover:border-plum/40'}`
-                            : chosen
-                            ? 'border-plum bg-plum text-cream'
+                        aria-label={
+                          onPreorder
+                            ? t('product.sizePreorder', { size: label })
+                            : available
+                            ? undefined
+                            : t('product.sizeSoldOut', { size: label })
+                        }
+                        className={`relative overflow-hidden py-2 border font-playfair text-[15px] transition-colors cursor-pointer ${
+                          chosen
+                            ? onPreorder
+                              ? 'border-plum bg-plum text-cream/80'
+                              : available
+                              ? 'border-plum bg-plum text-cream'
+                              : 'border-plum text-dark/60'
+                            : noStock
+                            ? 'border-plum/25 text-dark/45 hover:border-plum/60'
                             : 'border-plum/30 text-dark hover:border-plum'
                         }`}
                       >
                         {label}
+                        {noStock && (
+                          <span
+                            aria-hidden="true"
+                            className={`absolute inset-0 pointer-events-none ${chosen && onPreorder ? 'text-cream/70' : 'text-plum/60'}`}
+                            style={{ background: 'linear-gradient(to top right, transparent calc(50% - 0.75px), currentColor, transparent calc(50% + 0.75px))' }}
+                          />
+                        )}
                       </button>
                     )
                   })}
@@ -349,7 +370,7 @@ export default function ProductDetail() {
             {preorder && (
               <p className="font-playfair text-plum text-[15px] leading-relaxed mt-4">
                 {product.hasSizes && !product.preorder && (
-                  <span className="block text-dark/80">{t('product.preorderSize', { size })}</span>
+                  <span className="block font-bold text-plum text-base md:text-[17px] text-balance mb-1">{t('product.preorderSize', { size })}</span>
                 )}
                 <span className="font-bodoni uppercase text-[13px] tracking-[0.15em] mr-2">
                   {t('product.preorderLabel')}
@@ -375,7 +396,7 @@ export default function ProductDetail() {
                 : added
                 ? t('product.added')
                 : selectedVariant?.preorder
-                ? t('product.preorder')
+                ? t('product.soldOutPreorder')
                 : t('product.addToBag')}
             </button>
 
