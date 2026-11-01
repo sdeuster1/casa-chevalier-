@@ -351,15 +351,12 @@ export default function ProductDetail() {
               </p>
             )}
 
-            {/* Pre-order: when it ships, before the customer commits. When
-                other sizes are in stock, it says this size is the one sold out. */}
+            {/* Pre-order: out of stock but open to pre-order, and when it
+                ships (custom.preorder_shipping), before the customer commits */}
             {preorder && (
               <p className="font-playfair text-plum text-[15px] leading-relaxed mt-4">
-                {product.hasSizes && !product.preorder && (
-                  <span className="block font-bold text-plum text-base md:text-[17px] text-balance mb-1">{t('product.preorderSize', { size })}</span>
-                )}
-                <span className="font-bodoni uppercase text-[13px] tracking-[0.15em] mr-2">
-                  {t('product.preorderLabel')}
+                <span className="block font-bold text-base md:text-[17px] text-balance mb-1">
+                  {t('product.preorderNotice')}
                 </span>
                 {shippingNote}
               </p>
@@ -382,7 +379,7 @@ export default function ProductDetail() {
                 : added
                 ? t('product.added')
                 : selectedVariant?.preorder
-                ? t('product.soldOutPreorder')
+                ? t('product.preorder')
                 : t('product.addToBag')}
             </button>
 
