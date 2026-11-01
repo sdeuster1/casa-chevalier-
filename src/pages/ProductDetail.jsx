@@ -355,7 +355,7 @@ export default function ProductDetail() {
                 ships (custom.preorder_shipping), before the customer commits */}
             {preorder && (
               <p className="font-playfair text-plum text-[15px] leading-relaxed mt-4">
-                <span className="block font-bold text-base md:text-[17px] text-balance mb-1">
+                <span className="block font-medium text-base md:text-[17px] text-balance mb-0.5">
                   {t('product.preorderNotice')}
                 </span>
                 {shippingNote}
