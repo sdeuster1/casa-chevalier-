@@ -297,9 +297,8 @@ export default function ProductDetail() {
                 <div className="grid grid-cols-5 gap-2">
                   {sizeOptions.map(({ key, label, available, preorder: onPreorder }) => {
                     const chosen = size === label
-                    // No stock left: sold out, or sold out but open to pre-order.
-                    // Both are shown faded.
-                    const noStock = !available || onPreorder
+                    // Every size looks the same; once chosen, the line under the
+                    // buttons and the buy button say if it's sold out or a pre-order
                     return (
                       <button
                         key={key}
@@ -314,13 +313,7 @@ export default function ProductDetail() {
                         }
                         className={`py-2 border font-playfair text-[15px] transition-colors cursor-pointer ${
                           chosen
-                            ? onPreorder
-                              ? 'border-plum bg-plum text-cream/80'
-                              : available
-                              ? 'border-plum bg-plum text-cream'
-                              : 'border-plum text-dark/60'
-                            : noStock
-                            ? 'border-plum/25 text-dark/45 hover:border-plum/60'
+                            ? 'border-plum bg-plum text-cream'
                             : 'border-plum/30 text-dark hover:border-plum'
                         }`}
                       >
