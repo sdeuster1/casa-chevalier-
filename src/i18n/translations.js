@@ -103,13 +103,7 @@ const en = {
     interlude1: 'Equestrian elegance, shaped by Italian craftsmanship.',
     interlude2: 'From saddle to table.',
     shopTheLook: 'Shop the Look',
-    newsTitle: 'News from Casa Chevalier',
     newsCta: 'DISCOVER',
-    newsItems: [
-      { category: 'EQUESTRIAN', title: 'The Art of Riding in Style' },
-      { category: 'EDITORIAL', title: 'Spring Summer 2026 Campaign' },
-      { category: 'EVENTS', title: 'Casa Chevalier at Milano Fashion Week' },
-    ],
   },
 
   legal: {
@@ -277,6 +271,7 @@ const en = {
     subtitle: 'A journal of the Casa Chevalier world',
     readMore: 'Read the story',
     allNews: 'All stories',
+    all: 'All',
     gallery: 'The Gallery',
     photoAlt: '{title}, photo {n} of {total}',
     letter: 'A Founder’s Letter',
@@ -517,13 +512,7 @@ const it = {
     interlude1: 'Equestrian elegance, shaped by Italian craftsmanship.',
     interlude2: 'From saddle to table.',
     shopTheLook: 'Shop the Look',
-    newsTitle: 'News da Casa Chevalier',
     newsCta: 'SCOPRI',
-    newsItems: [
-      { category: 'EQUITAZIONE', title: "L'arte di cavalcare con stile" },
-      { category: 'EDITORIALE', title: 'Campagna Primavera Estate 2026' },
-      { category: 'EVENTI', title: 'Casa Chevalier alla Milano Fashion Week' },
-    ],
   },
 
   legal: {
@@ -691,6 +680,7 @@ const it = {
     subtitle: 'Il journal del mondo Casa Chevalier',
     readMore: 'Leggi la storia',
     allNews: 'Tutti gli articoli',
+    all: 'Tutti',
     gallery: 'La galleria',
     photoAlt: '{title}, foto {n} di {total}',
     letter: 'Una lettera della fondatrice',
