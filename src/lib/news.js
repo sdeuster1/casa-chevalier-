@@ -36,7 +36,7 @@ export const articles = [
     category: 'craftsmanship',
     date: '2026-11-02',
     photos: 5,
-    cover: 3,
+    cover: 'cover',
     chapters: [
       { photo: 1, paragraphs: [0, 1, 2, 3, 4, 5] }, // an art to making things with care
       { photo: 2, heading: 0, paragraphs: [6, 7, 8, 9, 10, 11] }, // the people behind the pieces
