@@ -20,7 +20,8 @@ export const articles = [
     category: 'founders-letter',
     date: '2026-11-02',
     photos: 4,
-    cover: 3,
+    // A photo used only as the cover, not in the story: cover.jpg and cover-sm.jpg
+    cover: 'cover',
     // A chapter without a photo is a single column of text
     chapters: [
       { photo: 1, paragraphs: [0, 1, 2] }, // from a love of animals
