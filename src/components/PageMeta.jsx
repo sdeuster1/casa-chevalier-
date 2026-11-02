@@ -53,11 +53,11 @@ export default function PageMeta() {
         title = product.name
         description = snippet(product.shortDescription || product.descriptionHtml)
       }
-    } else if (path.startsWith('/news/')) {
-      const slug = path.slice('/news/'.length)
+    } else if (path.startsWith('/mag/')) {
+      const slug = path.slice('/mag/'.length)
       if (findArticle(slug)) {
         const copy = t(`news.articles.${slug}`)
-        title = `${copy.title} — ${copy.place}`
+        title = copy.place ? `${copy.title} — ${copy.place}` : copy.title
         description = copy.standfirst
       } else known = false
     } else {
@@ -67,7 +67,7 @@ export default function PageMeta() {
         '/philosophy': t('philosophy.title'),
         '/faq': t('faq.eyebrow'),
         '/contacts': t('contacts.title'),
-        '/news': t('news.title'),
+        '/mag': t('news.title'),
         '/shop': t('bag.title'),
         '/wishlist': t('wishlist.title'),
       }

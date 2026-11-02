@@ -1,4 +1,8 @@
 {
+  "redirects": [
+    { "source": "/news", "destination": "/mag", "permanent": true },
+    { "source": "/news/:slug", "destination": "/mag/:slug", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]

@@ -22,8 +22,8 @@ const SITE_URL = 'https://casachevalier.com'
 // Indexable pages. Excluded on purpose: / (splash), /shop, /wishlist, /account.
 const STATIC_PATHS = [
   '/home', '/products', '/philosophy', '/faq', '/contacts',
-  // CC News and its articles (src/lib/news.js)
-  '/news', ...articles.map((a) => `/news/${a.slug}`),
+  // CC MAG and its articles (src/lib/news.js)
+  '/mag', ...articles.map((a) => `/mag/${a.slug}`),
   // Legal pages (src/lib/legal.js)
   '/policies/shipping-policy', '/policies/refund-policy', '/policies/terms-of-service',
   '/policies/privacy-policy', '/pages/cookie-policy', '/pages/accessibility-statement',

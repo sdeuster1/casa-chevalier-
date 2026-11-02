@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
-import { articles, photoSources } from '../lib/news'
+import { articles, formatDate, photoSources } from '../lib/news'
 import { track } from '../lib/analytics'
 
-// Homepage: the latest CC News article on a plum band. Phones: photo, then
+// Homepage: the latest CC MAG article on a plum band. Phones: photo, then
 // the words underneath. Desktop: photo left, words right.
 export default function NewsTeaser() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const article = articles[0]
   if (!article) return null
 
@@ -19,7 +19,7 @@ export default function NewsTeaser() {
         {t('news.title')}
       </h2>
       <Link
-        to={`/news/${article.slug}`}
+        to={`/mag/${article.slug}`}
         onClick={() => track('news_teaser_clicked', { article: article.slug })}
         className="group max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center no-underline"
       >
@@ -36,14 +36,18 @@ export default function NewsTeaser() {
 
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
           <p className="font-playfair uppercase text-lilac text-[11px] md:text-[12px] tracking-[0.2em] mb-4">
-            {copy.kicker}
+            {t(`news.categories.${article.category}`)}
+            <span className="mx-2" aria-hidden="true">·</span>
+            {formatDate(article, lang)}
           </p>
           <h3 className="font-bodoni uppercase text-cream text-xl md:text-3xl leading-tight tracking-[0.12em]">
             {copy.title}
           </h3>
-          <p className="font-playfair italic text-lilac text-base md:text-lg mt-1">
-            {copy.place}
-          </p>
+          {copy.place && (
+            <p className="font-playfair italic text-lilac text-base md:text-lg mt-1">
+              {copy.place}
+            </p>
+          )}
           <p className="font-playfair text-cream/85 text-[15px] md:text-base leading-relaxed mt-4 max-w-sm">
             {copy.standfirst}
           </p>
