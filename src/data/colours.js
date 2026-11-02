@@ -2,7 +2,7 @@
 // ("The Stable Vest - Sand" → Sand). Add a line when a new colour arrives;
 // a colour not listed here shows the product's photo as its swatch.
 export const COLOUR_SWATCHES = {
-  'dark chocolate': '#3d2b23',
+  'dark chocolate': '#4b2c24', // sampled from the breeches fabric
   sand: '#cdb99c',
   'vanilla blush': '#efe1d3',
   bronze: '#9a6b3f',

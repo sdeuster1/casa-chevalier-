@@ -163,6 +163,7 @@ export default function ProductDetail() {
     key: v.id,
     label: v.options.Size || v.title,
     available: v.available,
+    preorder: v.preorder,
   }))
   for (const s of guide?.soldOutSizes || []) {
     const label = String(s)
@@ -294,18 +295,24 @@ export default function ProductDetail() {
                   {t('product.sizeLabel')}
                 </span>
                 <div className="grid grid-cols-5 gap-2">
-                  {sizeOptions.map(({ key, label, available }) => {
+                  {sizeOptions.map(({ key, label, available, preorder: onPreorder }) => {
                     const chosen = size === label
+                    // Every size looks the same; once chosen, the line under the
+                    // buttons and the buy button say if it's sold out or a pre-order
                     return (
                       <button
                         key={key}
                         onClick={() => { setChosenSize(label); setSizeError(false) }}
                         aria-pressed={chosen}
-                        aria-label={available ? undefined : t('product.sizeSoldOut', { size: label })}
+                        aria-label={
+                          onPreorder
+                            ? t('product.sizePreorder', { size: label })
+                            : available
+                            ? undefined
+                            : t('product.sizeSoldOut', { size: label })
+                        }
                         className={`py-2 border font-playfair text-[15px] transition-colors cursor-pointer ${
-                          !available
-                            ? `line-through ${chosen ? 'border-plum text-dark/60' : 'border-plum/15 text-dark/30 hover:border-plum/40'}`
-                            : chosen
+                          chosen
                             ? 'border-plum bg-plum text-cream'
                             : 'border-plum/30 text-dark hover:border-plum'
                         }`}
@@ -344,15 +351,12 @@ export default function ProductDetail() {
               </p>
             )}
 
-            {/* Pre-order: when it ships, before the customer commits. When
-                other sizes are in stock, it says this size is the one sold out. */}
+            {/* Pre-order: out of stock but open to pre-order, and when it
+                ships (custom.preorder_shipping), before the customer commits */}
             {preorder && (
               <p className="font-playfair text-plum text-[15px] leading-relaxed mt-4">
-                {product.hasSizes && !product.preorder && (
-                  <span className="block text-dark/80">{t('product.preorderSize', { size })}</span>
-                )}
-                <span className="font-bodoni uppercase text-[13px] tracking-[0.15em] mr-2">
-                  {t('product.preorderLabel')}
+                <span className="block font-medium text-base md:text-[17px] text-balance mb-0.5">
+                  {t('product.preorderNotice')}
                 </span>
                 {shippingNote}
               </p>
