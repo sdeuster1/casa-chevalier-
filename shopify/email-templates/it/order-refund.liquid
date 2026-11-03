@@ -1,0 +1,116 @@
+{%- comment -%}
+  Casa Chevalier — Rimborso emesso (IT)
+  Paste into Shopify admin → Settings → Notifications.
+{%- endcomment -%}
+{%- capture email_title %}Rimborso emesso{% endcapture -%}
+{%- assign first_name = customer.first_name | default: billing_address.first_name | default: shipping_address.first_name -%}
+{%- assign refund_amount = amount | default: refund.amount -%}
+{%- assign refunded_lines = refund_line_items | default: refund.refund_line_items -%}
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="x-apple-disable-message-reformatting">
+    <title>{{ email_title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&display=swap" rel="stylesheet">
+    <style>
+      body { margin: 0; padding: 0; background: #f0e9e0; }
+      a { color: #4f1d34; }
+      @media (max-width: 620px) {
+        .container { width: 100% !important; }
+        .px { padding-left: 24px !important; padding-right: 24px !important; }
+        .col { display: block !important; width: 100% !important; padding-right: 0 !important; }
+        .heading { font-size: 28px !important; }
+      }
+    </style>
+  </head>
+  <body style="margin:0;padding:0;background:#f0e9e0;">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;">Abbiamo emesso un rimborso per l’ordine {{ order_name }}.</div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f0e9e0;">
+      <tr>
+        <td align="center" style="padding:40px 12px;">
+          <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background:#ffffff;">
+
+            <!-- Logo -->
+            <tr>
+              <td align="center" style="padding:40px 48px 32px;border-bottom:1px solid #c49fae;">
+                <a href="https://casachevalier.com/home" style="text-decoration:none;">
+                  {%- if shop.email_logo_url %}
+                  <img src="{{ shop.email_logo_url }}" alt="{{ shop.name }}" width="{{ shop.email_logo_width | default: 140 }}" style="display:block;border:0;height:auto;">
+                  {%- else %}
+                  <span style="font-family:'Bodoni Moda', Georgia, 'Times New Roman', serif;font-size:24px;letter-spacing:6px;text-transform:uppercase;color:#4f1d34;">Casa Chevalier</span>
+                  {%- endif %}
+                </a>
+              </td>
+            </tr>
+
+            <!-- Content -->
+            <tr>
+              <td class="px" style="padding:48px 48px 56px;">
+                <p style="margin:0 0 12px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#7a6a70;">Ordine {{ order_name }}</p>
+                <h1 class="heading" style="margin:0 0 20px;font-family:'Bodoni Moda', Georgia, 'Times New Roman', serif;font-size:34px;line-height:1.2;font-weight:400;color:#4f1d34;">Il tuo rimborso è stato emesso.</h1>
+                <p style="margin:0;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:15px;line-height:1.7;color:#2b2024;">Abbiamo rimborsato {{ refund_amount | money }} sul metodo di pagamento utilizzato per l’ordine {{ order_name }}. A seconda della tua banca, potrebbero volerci alcuni giorni lavorativi prima che l’importo compaia sul tuo conto.</p>
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:32px 0 0;background:#f0e9e0;">
+                <tr>
+                  <td style="padding:22px 24px;font-family:'Bodoni Moda', Georgia, 'Times New Roman', serif;font-size:20px;color:#4f1d34;">Importo rimborsato</td>
+                  <td align="right" style="padding:22px 24px;font-family:'Bodoni Moda', Georgia, 'Times New Roman', serif;font-size:20px;color:#4f1d34;white-space:nowrap;">{{ refund_amount | money }}</td>
+                </tr>
+              </table>
+
+              {%- if refunded_lines.size > 0 %}
+              <div style="margin:44px 0 0;"><p style="margin:0 0 12px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#7a6a70;">Articoli rimborsati</p></div>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid #eadfd3;">
+                {%- for line in refunded_lines %}
+                <tr>
+                  <td width="84" valign="top" style="padding:18px 0;border-bottom:1px solid #eadfd3;">
+                    {%- if line.line_item.image %}<img src="{{ line.line_item.image | img_url: '144x180' }}" width="72" alt="" style="display:block;border:0;width:72px;height:auto;">{% endif -%}
+                  </td>
+                  <td valign="top" style="padding:18px 12px 18px 0;border-bottom:1px solid #eadfd3;">
+                    <p style="margin:0 0 6px;font-family:'Bodoni Moda', Georgia, 'Times New Roman', serif;font-size:16px;line-height:1.35;color:#2b2024;">{{ line.line_item.product.title | default: line.line_item.title }}</p>
+                    {%- unless line.line_item.variant.title == blank or line.line_item.variant.title contains 'Default' %}
+                    <p style="margin:0 0 4px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:13px;color:#7a6a70;">{{ line.line_item.variant.title }}</p>
+                    {%- endunless %}
+                    <p style="margin:0;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:13px;color:#7a6a70;">Quantità: {{ line.quantity }}</p>
+                  </td>
+                </tr>
+                {%- endfor %}
+              </table>
+              {%- endif %}
+
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:32px 0 0;">
+                <tr>
+                  <td style="background:#4f1d34;">
+                    <a href="{{ order_status_url }}" style="display:inline-block;padding:15px 34px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#f0e9e0;text-decoration:none;">Visualizza l’ordine</a>
+                  </td>
+                </tr>
+              </table>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td class="px" align="center" style="padding:40px 48px;background:#4f1d34;">
+                <p style="margin:0 0 20px;font-family:'Bodoni Moda', Georgia, 'Times New Roman', serif;font-size:18px;letter-spacing:5px;text-transform:uppercase;color:#f0e9e0;">Casa Chevalier</p>
+                <p style="margin:0 0 20px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:13px;line-height:1.7;color:#f0e9e0;">
+                  Hai domande sul tuo ordine? Scrivici a <a href="mailto:info@casachevalier.com" style="color:#f0e9e0;">info@casachevalier.com</a>
+                </p>
+                <p style="margin:0;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;line-height:2;">
+                  <a href="https://casachevalier.com/shop" style="color:#c49fae;text-decoration:none;">Shop</a>
+                  <span style="color:#c49fae;">&nbsp;·&nbsp;</span>
+                  <a href="https://casachevalier.com/contacts" style="color:#c49fae;text-decoration:none;">Contatti</a>
+                  <span style="color:#c49fae;">&nbsp;·&nbsp;</span>
+                  <a href="https://casachevalier.com/faq" style="color:#c49fae;text-decoration:none;">FAQ</a>
+                  <span style="color:#c49fae;">&nbsp;·&nbsp;</span>
+                  <a href="https://casachevalier.com/policies/shipping-policy" style="color:#c49fae;text-decoration:none;">Spedizioni e resi</a>
+                </p>
+              </td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

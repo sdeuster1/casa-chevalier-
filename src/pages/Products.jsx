@@ -9,6 +9,7 @@ import { useProducts } from '../context/ProductsContext'
 import { useWishlist } from '../context/WishlistContext'
 import { useLanguage } from '../i18n/LanguageContext'
 import ProductTitle from '../components/ProductTitle'
+import { useIsDesktop } from '../lib/useIsDesktop'
 
 // Pieces moved from Shopify's order in the full collection: each one is shown
 // right after the other handle. The Bombacha sits between the two Saddle
@@ -36,6 +37,7 @@ export default function Products() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { t, sectionLabel } = useLanguage()
+  const isDesktop = useIsDesktop()
 
   const urlCategory = searchParams.get('category')
   const urlProductId = searchParams.get('product')
@@ -65,6 +67,72 @@ export default function Products() {
     activeCategory === 'ALL'
       ? arrange(products)
       : products.filter((p) => matchesCategory(p, activeCategory))
+
+  // Phones: the pieces grouped by category, in the dropdown's order
+  const phoneRows = categories
+    .filter((section) => section !== 'ALL' && (activeCategory === 'ALL' || activeCategory === section))
+    .map((section) => ({
+      section,
+      items: activeCategory === 'ALL' ? filtered.filter((p) => p.section === section) : filtered,
+    }))
+    .filter((row) => row.items.length > 0)
+
+  // One product tile, shared by the desktop grid and the phone rows
+  const renderCard = (product) => {
+    const wished = hasWish(product.handle)
+    const isHighlighted = highlighted === product.handle
+    const soldOut = !product.availableForSale
+    return (
+      <div
+        key={product.handle}
+        ref={(el) => { productRefs.current[product.handle] = el }}
+        className={`flex flex-col group cc-fade-in transition-all duration-500 ${
+          isHighlighted ? 'ring-2 ring-plum ring-offset-4 ring-offset-cream' : ''
+        }`}
+      >
+        <div className="relative aspect-[3/4] overflow-hidden bg-[#d4cec6]">
+          {product.image && (
+            <img
+              src={sizedImage(product.image, 900)}
+              loading="lazy"
+              alt={product.name}
+              onClick={() => navigate(`/product/${product.handle}`)}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
+              style={{ objectPosition: photoFocus(product) }}
+            />
+          )}
+          {(soldOut || product.preorder) && (
+            <span className="absolute top-3 left-3 bg-cream/90 font-bodoni uppercase text-plum text-[12px] tracking-[0.2em] px-2 py-1">
+              {t(soldOut ? 'common.soldOut' : 'common.preorder')}
+            </span>
+          )}
+          <button
+            onClick={() => toggleWish(product.handle)}
+            className="absolute top-3 right-3 bg-cream/80 backdrop-blur-sm w-8 h-8 flex items-center justify-center rounded-full border-none cursor-pointer hover:bg-cream transition-colors duration-300"
+            aria-label={wished ? t('common.removeFromWishlist') : t('common.addToWishlist')}
+          >
+            <Heart
+              className="w-4 h-4 text-plum"
+              fill={wished ? '#4f1d34' : 'none'}
+              strokeWidth={1.5}
+            />
+          </button>
+        </div>
+
+        <div className="pt-4 flex items-start justify-between gap-3">
+          <button
+            onClick={() => navigate(`/product/${product.handle}`)}
+            className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark min-w-0 bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
+          >
+            <ProductTitle title={product.name} />
+          </button>
+          <p className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark whitespace-nowrap shrink-0 m-0">
+            {formatPrice(product.price, product.currency)}
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-cream">
@@ -147,63 +215,32 @@ export default function Products() {
             </div>
           )}
 
-          {!loading && filtered.length > 0 && (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-10 md:gap-x-8 md:gap-y-16">
-              {filtered.map((product) => {
-                const wished = hasWish(product.handle)
-                const isHighlighted = highlighted === product.handle
-                const soldOut = !product.availableForSale
-                return (
-                  <div
-                    key={product.handle}
-                    ref={(el) => { productRefs.current[product.handle] = el }}
-                    className={`flex flex-col group cc-fade-in transition-all duration-500 ${
-                      isHighlighted ? 'ring-2 ring-plum ring-offset-4 ring-offset-cream' : ''
-                    }`}
-                  >
-                    <div className="relative aspect-[3/4] overflow-hidden bg-[#d4cec6]">
-                      {product.image && (
-                        <img
-                          src={sizedImage(product.image, 900)}
-                          loading="lazy"
-                          alt={product.name}
-                          onClick={() => navigate(`/product/${product.handle}`)}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 cursor-pointer"
-                          style={{ objectPosition: photoFocus(product) }}
-                        />
-                      )}
-                      {(soldOut || product.preorder) && (
-                        <span className="absolute top-3 left-3 bg-cream/90 font-bodoni uppercase text-plum text-[12px] tracking-[0.2em] px-2 py-1">
-                          {t(soldOut ? 'common.soldOut' : 'common.preorder')}
-                        </span>
-                      )}
-                      <button
-                        onClick={() => toggleWish(product.handle)}
-                        className="absolute top-3 right-3 bg-cream/80 backdrop-blur-sm w-8 h-8 flex items-center justify-center rounded-full border-none cursor-pointer hover:bg-cream transition-colors duration-300"
-                        aria-label={wished ? t('common.removeFromWishlist') : t('common.addToWishlist')}
-                      >
-                        <Heart
-                          className="w-4 h-4 text-plum"
-                          fill={wished ? '#4f1d34' : 'none'}
-                          strokeWidth={1.5}
-                        />
-                      </button>
-                    </div>
+          {!loading && filtered.length > 0 && isDesktop && (
+            <div className="grid grid-cols-3 gap-x-8 gap-y-16">
+              {filtered.map((product) => renderCard(product))}
+            </div>
+          )}
 
-                    <div className="pt-4 flex items-start justify-between gap-3">
-                      <button
-                        onClick={() => navigate(`/product/${product.handle}`)}
-                        className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark min-w-0 bg-transparent border-none p-0 cursor-pointer text-left hover:opacity-70 transition-opacity"
-                      >
-                        <ProductTitle title={product.name} />
-                      </button>
-                      <p className="font-bodoni tracking-[0.02em] text-[15px] md:text-base text-dark whitespace-nowrap shrink-0 m-0">
-                        {formatPrice(product.price, product.currency)}
-                      </p>
-                    </div>
+          {/* Phones: one row per category, swiped sideways, so each photo is
+              larger. A chosen category shows just its own row. */}
+          {!loading && filtered.length > 0 && !isDesktop && (
+            <div className="flex flex-col gap-12">
+              {phoneRows.map(({ section, items }) => (
+                <div key={section}>
+                  {activeCategory === 'ALL' && (
+                    <h2 className="font-bodoni uppercase text-plum text-[13px] tracking-[0.2em] mb-4">
+                      {sectionLabel(section)}
+                    </h2>
+                  )}
+                  <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-6 px-6 scroll-px-6">
+                    {items.map((product) => (
+                      <div key={product.handle} className="w-[64vw] shrink-0 snap-start">
+                        {renderCard(product)}
+                      </div>
+                    ))}
                   </div>
-                )
-              })}
+                </div>
+              ))}
             </div>
           )}
         </div>

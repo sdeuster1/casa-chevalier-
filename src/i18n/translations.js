@@ -280,6 +280,29 @@ const en = {
     gallery: 'The Gallery',
     photoAlt: '{title}, photo {n} of {total}',
     articles: {
+      'made-to-be-lived-in': {
+        kicker: 'Casa Chevalier',
+        title: 'Made to Be Lived In',
+        place: 'England',
+        standfirst: 'Where Italian craftsmanship meets the freedom of movement — clothes designed not just to be worn, but to be lived in.',
+        paragraphs: [
+          'Every Casa Chevalier piece begins in Italy, where the finest fabrics are selected and each garment is crafted by hand with the precision and care that only generations of Italian savoir-faire can deliver.',
+          'From the weight of the wool to the fall of a lapel, every detail is considered. The result is clothing that feels as refined as it looks — tailoring rooted in a tradition where quality is never negotiable.',
+          'But craftsmanship alone is not enough. What makes a piece truly exceptional is the fabric it begins with — and at Casa Chevalier, that means the very best that Italian mills have to offer.',
+          'Soft, resilient, and utterly luxurious to the touch. These are fabrics chosen not only for how they look on the first wear, but for how they age, move, and live alongside you over time.',
+          'Because at Casa Chevalier, elegance is never static. Our pieces are made to move — to walk through courtyards, to ride, to sit comfortably at a long lunch and still look impeccable.',
+          'This is what we mean by From Saddle to Table: clothing that transitions effortlessly from one moment to the next, without ever losing its character or its shape.',
+          'There is a particular kind of freedom in wearing something that asks nothing of you — no adjusting, no compromising, no choosing between beauty and comfort.',
+          'That freedom is what Casa Chevalier is built on. Pieces you reach for instinctively, that become part of how you move through your day, your week, your life.',
+          'In every stitch, every button, every carefully considered detail — the belief that true luxury is clothing made not just to be admired, but to be lived in.',
+        ],
+        closing: [
+          'Italian craft and timeless elegance.',
+          'Made to move, made to last.',
+          'From Saddle to Table.',
+        ],
+        signoff: 'Made to Be Lived In.',
+      },
       'the-madrid-ride': {
         kicker: 'Casa Chevalier × Riding Safari Club',
         title: 'The Madrid Ride',
@@ -600,6 +623,29 @@ const it = {
     gallery: 'La galleria',
     photoAlt: '{title}, foto {n} di {total}',
     articles: {
+      'made-to-be-lived-in': {
+        kicker: 'Casa Chevalier',
+        title: 'Made to Be Lived In',
+        place: 'Inghilterra',
+        standfirst: 'Dove l’artigianalità italiana incontra la libertà di movimento — capi pensati non solo per essere indossati, ma per essere vissuti.',
+        paragraphs: [
+          'Ogni creazione Casa Chevalier nasce in Italia, dove i tessuti più pregiati vengono selezionati e ogni capo è realizzato a mano con la precisione e la cura che solo generazioni di savoir-faire italiano possono offrire.',
+          'Dal peso della lana alla caduta di un revers, ogni dettaglio è pensato. Il risultato sono capi che si sentono raffinati quanto appaiono — una sartorialità radicata in una tradizione dove la qualità non è mai negoziabile.',
+          'Ma l’artigianalità da sola non basta. Ciò che rende un capo davvero eccezionale è il tessuto da cui nasce — e per Casa Chevalier, questo significa il meglio che le manifatture italiane possano offrire.',
+          'Morbidi, resistenti e assolutamente lussuosi al tatto. Tessuti scelti non solo per come appaiono al primo utilizzo, ma per come invecchiano, si muovono e vivono con te nel tempo.',
+          'Perché in Casa Chevalier, l’eleganza non è mai statica. I nostri capi sono fatti per muoversi — per attraversare cortili, per montare a cavallo, per sedersi comodamente a un lungo pranzo e apparire sempre impeccabili.',
+          'Questo è ciò che intendiamo con From Saddle to Table: capi che passano senza sforzo da un momento all’altro, senza mai perdere il loro carattere o la loro forma.',
+          'C’è una libertà particolare nell’indossare qualcosa che non chiede nulla — nessun aggiustamento, nessun compromesso, nessuna scelta tra bellezza e comfort.',
+          'Questa libertà è ciò su cui Casa Chevalier è costruita. Capi che scegli istintivamente, che diventano parte del modo in cui vivi la tua giornata, la tua settimana, la tua vita.',
+          'In ogni cucitura, ogni bottone, ogni dettaglio attentamente pensato — la convinzione che il vero lusso è un capo fatto non solo per essere ammirato, ma per essere vissuto.',
+        ],
+        closing: [
+          'Artigianalità italiana ed eleganza senza tempo.',
+          'Fatto per muoversi, fatto per durare.',
+          'From Saddle to Table.',
+        ],
+        signoff: 'Made to Be Lived In.',
+      },
       'the-madrid-ride': {
         kicker: 'Casa Chevalier × Riding Safari Club',
         title: 'The Madrid Ride',

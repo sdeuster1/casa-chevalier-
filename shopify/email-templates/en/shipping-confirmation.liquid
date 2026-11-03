@@ -1,0 +1,146 @@
+{%- comment -%}
+  Casa Chevalier — Shipping confirmation (EN)
+  Paste into Shopify admin → Settings → Notifications.
+{%- endcomment -%}
+{%- capture email_title %}Shipping confirmation{% endcapture -%}
+{%- assign first_name = customer.first_name | default: billing_address.first_name | default: shipping_address.first_name -%}
+{%- assign tracking_url = fulfillment.tracking_urls.first | default: order_status_url -%}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="x-apple-disable-message-reformatting">
+    <title>{{ email_title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&display=swap" rel="stylesheet">
+    <style>
+      body { margin: 0; padding: 0; background: #f0e9e0; }
+      a { color: #4f1d34; }
+      @media (max-width: 620px) {
+        .container { width: 100% !important; }
+        .px { padding-left: 24px !important; padding-right: 24px !important; }
+        .col { display: block !important; width: 100% !important; padding-right: 0 !important; }
+        .heading { font-size: 28px !important; }
+      }
+    </style>
+  </head>
+  <body style="margin:0;padding:0;background:#f0e9e0;">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;">Your order {{ order_name }} has shipped.</div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f0e9e0;">
+      <tr>
+        <td align="center" style="padding:40px 12px;">
+          <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background:#ffffff;">
+
+            <!-- Logo -->
+            <tr>
+              <td align="center" style="padding:40px 48px 32px;border-bottom:1px solid #c49fae;">
+                <a href="https://casachevalier.com/home" style="text-decoration:none;">
+                  {%- if shop.email_logo_url %}
+                  <img src="{{ shop.email_logo_url }}" alt="{{ shop.name }}" width="{{ shop.email_logo_width | default: 140 }}" style="display:block;border:0;height:auto;">
+                  {%- else %}
+                  <span style="font-family:'Bodoni Moda', Georgia, 'Times New Roman', serif;font-size:24px;letter-spacing:6px;text-transform:uppercase;color:#4f1d34;">Casa Chevalier</span>
+                  {%- endif %}
+                </a>
+              </td>
+            </tr>
+
+            <!-- Content -->
+            <tr>
+              <td class="px" style="padding:48px 48px 56px;">
+                <p style="margin:0 0 12px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#7a6a70;">Order {{ order_name }}</p>
+                <h1 class="heading" style="margin:0 0 20px;font-family:'Bodoni Moda', Georgia, 'Times New Roman', serif;font-size:34px;line-height:1.2;font-weight:400;color:#4f1d34;">Your order is on its way.</h1>
+                <p style="margin:0;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:15px;line-height:1.7;color:#2b2024;">Good news{% if first_name != blank %}, {{ first_name }}{% endif %}: your order has been handed to the courier. You can follow its journey using the link below.</p>
+
+              {%- if fulfillment.tracking_numbers.size > 0 %}
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:32px 0 0;background:#f0e9e0;">
+                <tr>
+                  {%- if fulfillment.tracking_company != blank %}
+                  <td class="col" valign="top" style="padding:20px 24px;">
+                    <p style="margin:0 0 12px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#7a6a70;">Courier</p>
+                    <p style="margin:0;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:14px;color:#2b2024;">{{ fulfillment.tracking_company }}</p>
+                  </td>
+                  {%- endif %}
+                  <td class="col" valign="top" style="padding:20px 24px;">
+                    <p style="margin:0 0 12px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#7a6a70;">Tracking number</p>
+                    <p style="margin:0;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:14px;color:#2b2024;">{{ fulfillment.tracking_numbers.first }}</p>
+                  </td>
+                </tr>
+              </table>
+              {%- endif %}
+
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:32px 0 0;">
+                <tr>
+                  <td style="background:#4f1d34;">
+                    <a href="{{ tracking_url }}" style="display:inline-block;padding:15px 34px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#f0e9e0;text-decoration:none;">Track your parcel</a>
+                  </td>
+                </tr>
+              </table>
+
+              <div style="margin:44px 0 0;"><p style="margin:0 0 12px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#7a6a70;">In this shipment</p></div>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid #eadfd3;">
+                {%- for line in fulfillment.fulfillment_line_items %}
+                <tr>
+                  <td width="84" valign="top" style="padding:18px 0;border-bottom:1px solid #eadfd3;">
+                    {%- if line.line_item.image %}<img src="{{ line.line_item.image | img_url: '144x180' }}" width="72" alt="" style="display:block;border:0;width:72px;height:auto;">{% endif -%}
+                  </td>
+                  <td valign="top" style="padding:18px 12px 18px 0;border-bottom:1px solid #eadfd3;">
+                    <p style="margin:0 0 6px;font-family:'Bodoni Moda', Georgia, 'Times New Roman', serif;font-size:16px;line-height:1.35;color:#2b2024;">{{ line.line_item.product.title | default: line.line_item.title }}</p>
+                    {%- unless line.line_item.variant.title == blank or line.line_item.variant.title contains 'Default' %}
+                    <p style="margin:0 0 4px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:13px;color:#7a6a70;">{{ line.line_item.variant.title }}</p>
+                    {%- endunless %}
+                    <p style="margin:0;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:13px;color:#7a6a70;">Quantity: {{ line.quantity }}</p>
+                  </td>
+                </tr>
+                {%- endfor %}
+              </table>
+
+              {%- if shipping_address %}
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:36px 0 0;">
+                <tr>
+                  <td class="col" valign="top" width="50%" style="padding:0 16px 16px 0;">
+                    <p style="margin:0 0 12px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#7a6a70;">Delivery address</p>
+                    <p style="margin:0;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:14px;line-height:1.6;color:#2b2024;">
+                      {{ shipping_address.name }}<br>
+                      {%- if shipping_address.company != blank %}{{ shipping_address.company }}<br>{% endif %}
+                      {{ shipping_address.address1 }}{% if shipping_address.address2 != blank %}, {{ shipping_address.address2 }}{% endif %}<br>
+                      {{ shipping_address.zip }} {{ shipping_address.city }}{% if shipping_address.province_code != blank %} {{ shipping_address.province_code }}{% endif %}<br>
+                      {{ shipping_address.country }}
+                    </p>
+                  </td>
+                  {%- if shipping_method %}
+                  <td class="col" valign="top" width="50%" style="padding:0 0 16px;">
+                    <p style="margin:0 0 12px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#7a6a70;">Shipping method</p>
+                    <p style="margin:0;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:14px;line-height:1.6;color:#2b2024;">{{ shipping_method.title }}</p>
+                  </td>
+                  {%- endif %}
+                </tr>
+              </table>
+              {%- endif %}
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td class="px" align="center" style="padding:40px 48px;background:#4f1d34;">
+                <p style="margin:0 0 20px;font-family:'Bodoni Moda', Georgia, 'Times New Roman', serif;font-size:18px;letter-spacing:5px;text-transform:uppercase;color:#f0e9e0;">Casa Chevalier</p>
+                <p style="margin:0 0 20px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:13px;line-height:1.7;color:#f0e9e0;">
+                  Questions about your order? Write to us at <a href="mailto:info@casachevalier.com" style="color:#f0e9e0;">info@casachevalier.com</a>
+                </p>
+                <p style="margin:0;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;line-height:2;">
+                  <a href="https://casachevalier.com/shop" style="color:#c49fae;text-decoration:none;">Shop</a>
+                  <span style="color:#c49fae;">&nbsp;·&nbsp;</span>
+                  <a href="https://casachevalier.com/contacts" style="color:#c49fae;text-decoration:none;">Contact</a>
+                  <span style="color:#c49fae;">&nbsp;·&nbsp;</span>
+                  <a href="https://casachevalier.com/faq" style="color:#c49fae;text-decoration:none;">FAQ</a>
+                  <span style="color:#c49fae;">&nbsp;·&nbsp;</span>
+                  <a href="https://casachevalier.com/policies/shipping-policy" style="color:#c49fae;text-decoration:none;">Shipping & Returns</a>
+                </p>
+              </td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -1,16 +1,8 @@
-import { useSyncExternalStore } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
+import { useIsDesktop } from '../lib/useIsDesktop'
 
 // Video only on desktop: phones show the photo and never download the reel.
-const DESKTOP = '(min-width: 768px)'
-const subscribe = (cb) => {
-  const mq = window.matchMedia(DESKTOP)
-  mq.addEventListener('change', cb)
-  return () => mq.removeEventListener('change', cb)
-}
-const useIsDesktop = () =>
-  useSyncExternalStore(subscribe, () => window.matchMedia(DESKTOP).matches, () => false)
 
 // Campaign split screen: photo on the left, reel on the right (desktop),
 // with the call to shop over both.

@@ -11,6 +11,19 @@
 
 export const articles = [
   {
+    slug: 'made-to-be-lived-in',
+    photos: 5,
+    cover: 1,
+    landscape: [],
+    chapters: [
+      { photo: 1, paragraphs: [0, 1] },
+      { photo: 5, paragraphs: [2, 3] },
+      { photo: 3, paragraphs: [4, 5] },
+      { photo: 2, paragraphs: [6, 7] },
+      { photo: 4, paragraphs: [8] },
+    ],
+  },
+  {
     slug: 'the-madrid-ride',
     photos: 35,
     // The photo at the top of the article and on the CC News page
