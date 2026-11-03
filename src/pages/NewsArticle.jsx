@@ -6,7 +6,7 @@ import Footer from '../components/Footer'
 import NewsGallery from '../components/NewsGallery'
 import NotFound from './NotFound'
 import { useLanguage } from '../i18n/LanguageContext'
-import { findArticle, formatDate, hasGallery, isLetter, photoSources } from '../lib/news'
+import { findArticle, formatDate, hasGallery, isLandscape, isLetter, photoSources } from '../lib/news'
 
 // A chapter's heading (if it has one) and paragraphs
 function ChapterText({ chapter, copy }) {
@@ -48,7 +48,7 @@ function Chapter({ article, chapter, side, eager, copy }) {
   const photoRight = side % 2 === 1
   return (
     <section className="grid grid-cols-1 md:grid-cols-2">
-      <div className={`aspect-[4/5] md:aspect-square md:max-h-[calc(100vh-5rem)] md:w-full md:sticky md:top-20 md:self-start bg-[#e5ded4] ${photoRight ? 'md:order-2' : ''}`}>
+      <div className={`${isLandscape(article, chapter.photo) ? 'aspect-[3/2]' : 'aspect-[2/3]'} md:w-full md:sticky md:top-20 md:self-start bg-[#e5ded4] ${photoRight ? 'md:order-2' : ''}`}>
         <img
           src={src}
           srcSet={srcSet}
