@@ -159,10 +159,10 @@ function normalizeProduct(node) {
     ...(LOCAL_IMAGES[node.handle] || []),
     ...node.images.edges.map((e) => e.node.url),
   ]
-  // Pre-order (custom.preorder, true/false): with "Continue selling when out
-  // of stock" on in Shopify, a size with no stock left is sold as a pre-order;
-  // sizes still in stock sell as usual.
-  const preorderOn = node.preorder?.value === 'true'
+  // Pre-order is the rule: a size with no stock left is sold as a pre-order
+  // (with "Continue selling when out of stock" on in Shopify); sizes still in
+  // stock sell as usual. custom.preorder set to false turns it off for a product.
+  const preorderOn = node.preorder?.value !== 'false'
   const variants = node.variants.edges.map((e) => ({
     id: e.node.id,
     title: e.node.title,

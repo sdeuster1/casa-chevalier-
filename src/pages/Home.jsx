@@ -8,7 +8,7 @@ import ShopTheLook from '../components/ShopTheLook'
 import Footer from '../components/Footer'
 import NewsletterPopup from '../components/NewsletterPopup'
 import InstagramFeed from '../components/InstagramFeed'
-import NewsTeaser from '../components/NewsTeaser'
+import NewsCarousel from '../components/NewsCarousel'
 import { useLanguage } from '../i18n/LanguageContext'
 
 export default function Home() {
@@ -25,7 +25,7 @@ export default function Home() {
       <FeaturedProducts />
       <TextInterlude text={t('home.interlude2')} />
       <ShopTheLook />
-      <NewsTeaser />
+      <NewsCarousel />
       <InstagramFeed />
       <Footer />
     </div>

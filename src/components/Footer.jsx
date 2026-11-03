@@ -18,7 +18,7 @@ const columns = [
     title: 'company',
     links: [
       { label: 'philosophy', to: '/philosophy' },
-      { label: 'news', to: '/news' },
+      { label: 'news', to: '/mag' },
     ],
   },
 ]

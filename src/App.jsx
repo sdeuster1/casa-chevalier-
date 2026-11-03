@@ -33,6 +33,12 @@ function ShopifyProductLink() {
   return <Navigate to={`/product/${handle}`} replace />
 }
 
+// CC News became CC MAG: /news/<slug> links go to /mag/<slug>
+function OldNewsLink() {
+  const { slug } = useParams()
+  return <Navigate to={`/mag/${slug}`} replace />
+}
+
 // The team's own visits stay out of the analytics (?internal=1, see
 // src/lib/analytics.js)
 const skipInternalVisits = (event) => (isInternalVisit() ? null : event)
@@ -55,8 +61,10 @@ function Pages() {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/faq" element={<FAQ />} />
-        <Route path="/news" element={<News />} />
-        <Route path="/news/:slug" element={<NewsArticle />} />
+        <Route path="/mag" element={<News />} />
+        <Route path="/mag/:slug" element={<NewsArticle />} />
+        <Route path="/news" element={<Navigate to="/mag" replace />} />
+        <Route path="/news/:slug" element={<OldNewsLink />} />
         <Route path="/philosophy" element={<Philosophy />} />
         <Route path="/shop" element={<Shop />} />
         {/* No customer accounts yet: old links go to the homepage */}

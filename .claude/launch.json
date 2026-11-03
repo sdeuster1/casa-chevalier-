@@ -12,6 +12,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["vite", "--host", "--port", "5180"],
       "port": 5180
+    },
+    {
+      "name": "casa-chevalier-local-node",
+      "runtimeExecutable": "/Users/amandabaldan/.local/node/bin/node",
+      "runtimeArgs": ["node_modules/vite/bin/vite.js", "--port", "5175"],
+      "port": 5175
     }
   ]
 }
