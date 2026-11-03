@@ -7,7 +7,8 @@ import { track } from '../lib/analytics'
 // "Size guide" link + panel. Sized products get the conversion chart,
 // one-size products the general one-size note. Content and text come from
 // src/data/sizeGuide.js; the layout follows the Casa Chevalier size guide PDF.
-export default function SizeGuide({ guide, productHandle }) {
+// `className` lets the product page restyle the link (e.g. beside "One size")
+export default function SizeGuide({ guide, productHandle, className }) {
   const [open, setOpen] = useState(false)
   const { lang } = useLanguage()
   const tx = (entry) => entry[lang] ?? entry.en
@@ -21,7 +22,7 @@ export default function SizeGuide({ guide, productHandle }) {
     <>
       <button
         onClick={openGuide}
-        className="mt-4 font-bodoni uppercase text-plum text-[12px] tracking-[0.2em] border-0 border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
+        className={className ?? 'mt-4 font-bodoni uppercase text-plum text-[12px] tracking-[0.2em] border-0 border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity'}
       >
         {tx(TEXT.link)}
       </button>

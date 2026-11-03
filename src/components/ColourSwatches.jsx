@@ -30,8 +30,9 @@ export default function ColourSwatches({ colours, currentHandle, size = 'sm', re
               current ? 'border-plum' : 'border-transparent hover:border-plum/30'
             }`}
           >
+            {/* Hairline edge so light colours (vanilla, cream) still show on the cream page */}
             <span
-              className={`block ${SIZES[size].swatch} bg-[#e5ded4] bg-cover bg-center`}
+              className={`block ${SIZES[size].swatch} bg-[#e5ded4] bg-cover bg-center ring-1 ring-inset ring-dark/15`}
               style={hex ? { backgroundColor: hex } : { backgroundImage: `url(${sizedImage(c.image, 120)})` }}
             />
           </Link>

@@ -8,7 +8,7 @@ import Footer from '../components/Footer'
 import SizeGuide from '../components/SizeGuide'
 import BackInStock from '../components/BackInStock'
 import ProductGallery from '../components/ProductGallery'
-import { sizeGuideFor } from '../data/sizeGuide'
+import { sizeGuideFor, TEXT } from '../data/sizeGuide'
 import { formatPrice, photoFocus, RENAMED_HANDLES, sizedImage } from '../lib/shopify'
 import { useProducts } from '../context/ProductsContext'
 import { useCart } from '../context/CartContext'
@@ -274,28 +274,35 @@ export default function ProductDetail() {
                 <Heart className="w-5 h-5 text-plum" fill={wished ? '#4f1d34' : 'none'} strokeWidth={1.5} />
               </button>
             </div>
-            <p className="font-playfair text-plum text-lg mt-2">
+            {/* Price kept quiet, in the body text's size, so the name leads */}
+            <p className="font-playfair text-dark/80 text-base mt-3">
               {formatPrice(product.price, product.currency)}
             </p>
 
-            {/* Colour — one swatch per colour version of this piece */}
+            {/* Colour: one swatch per colour version of this piece. The
+                colour's name is already under the product name. */}
             {colours.length > 1 && (
               <div className="mt-6">
                 <span className="block font-bodoni uppercase text-dark text-[13px] tracking-[0.15em] mb-2">
                   {t('product.colour')}
-                  <span className="font-playfair normal-case tracking-normal text-dark/70 ml-2">
-                    {product.colour}
-                  </span>
                 </span>
                 <ColourSwatches colours={colours} currentHandle={product.handle} size="md" replace />
               </div>
             )}
 
-            {/* One-size products: just the size guide link in place of the
-                size buttons; the fit note and one-size text are inside it */}
+            {/* One-size products: "One size · Size guide" in place of the size
+                buttons; the fit note and one-size text are inside the guide */}
             {oneSizeNote && (
-              <div className="mt-5">
-                <SizeGuide guide={guide} productHandle={product.handle} />
+              <div className="mt-6 flex items-baseline gap-3">
+                <span className="font-bodoni uppercase text-dark text-[13px] tracking-[0.15em]">
+                  {TEXT.oneSizeTitle[lang] ?? TEXT.oneSizeTitle.en}
+                </span>
+                <span aria-hidden="true" className="text-dark/40">·</span>
+                <SizeGuide
+                  guide={guide}
+                  productHandle={product.handle}
+                  className="font-bodoni uppercase text-plum text-[12px] tracking-[0.2em] border-0 border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
+                />
               </div>
             )}
 
@@ -362,13 +369,6 @@ export default function ProductDetail() {
                 </p>
               )}
 
-            {/* Origin, just above the buy button */}
-            {!NOT_MADE_IN_ITALY.includes(product.handle) && (
-              <p className="font-playfair text-dark/80 text-[15px] mt-4">
-                {t('product.madeIn')}
-              </p>
-            )}
-
             {/* Pre-order: out of stock but open to pre-order, and when it
                 ships (custom.preorder_shipping), before the customer commits */}
             {preorder && (
@@ -384,7 +384,7 @@ export default function ProductDetail() {
             <button
               onClick={handleBuy}
               disabled={busy || outOfStock}
-              className={`w-full mt-4 font-bodoni uppercase text-[13px] tracking-[0.25em] py-4 transition-opacity duration-300 ${
+              className={`w-full mt-6 font-bodoni uppercase text-[13px] tracking-[0.25em] py-4 transition-opacity duration-300 ${
                 outOfStock
                   ? 'bg-plum/30 text-cream cursor-not-allowed'
                   : 'bg-plum text-cream cursor-pointer hover:opacity-90'
@@ -460,6 +460,13 @@ export default function ProductDetail() {
             {product.shortDescription && (
               <p className="font-playfair text-dark/80 text-[15px] leading-relaxed mt-6 max-w-md whitespace-pre-line">
                 {product.shortDescription}
+              </p>
+            )}
+
+            {/* Origin, with the description, in bold so it stands out */}
+            {!NOT_MADE_IN_ITALY.includes(product.handle) && (
+              <p className={`font-playfair font-bold text-dark text-[15px] ${product.shortDescription ? 'mt-3' : 'mt-6'}`}>
+                {t('product.madeIn')}
               </p>
             )}
 
