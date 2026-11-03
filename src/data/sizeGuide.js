@@ -53,7 +53,6 @@ const GUIDES = [
     type: 'sized',
     name: 'THE EQUESTRIAN BLAZER',
     sizes: [38, 40, 42],
-    showFit: true, // the fit note also shows under the size buttons
     fit: {
       it: 'La modella indossa abitualmente una taglia italiana 36 e indossa una 38 in The Equestrian Blazer. La 38 è adatta anche a una 36, a seconda della vestibilità desiderata.',
       en: 'The model usually wears an Italian size 36 and is wearing an Italian size 38 in The Equestrian Blazer. The 38 is also suitable for an IT 36 depending on the desired fit.',
