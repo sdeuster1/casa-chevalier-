@@ -138,6 +138,16 @@ export const RENAMED_HANDLES = {
 export const sizedImage = (url, width) =>
   url ? `${url}${url.includes('?') ? '&' : '?'}width=${width}` : url
 
+// ---------- Local product images ----------
+// Photos shot locally that go before Shopify's images. The first
+// entry becomes the main photo on the card and the product page.
+const LOCAL_IMAGES = {
+  'the-saddle-shirt-bronze': [
+    '/media/products/the-saddle-shirt-bronze/back.jpg',
+    '/media/products/the-saddle-shirt-bronze/front.jpg',
+  ],
+}
+
 // ---------- Normalisation ----------
 // Flattens Shopify's edges/node shape into the flat objects our
 // components already expect, so the UI layer stays unchanged.
@@ -145,7 +155,10 @@ export const sizedImage = (url, width) =>
 function normalizeProduct(node) {
   if (!node) return null
 
-  const images = node.images.edges.map((e) => e.node.url)
+  const images = [
+    ...(LOCAL_IMAGES[node.handle] || []),
+    ...node.images.edges.map((e) => e.node.url),
+  ]
   // Pre-order (custom.preorder, true/false): with "Continue selling when out
   // of stock" on in Shopify, a size with no stock left is sold as a pre-order;
   // sizes still in stock sell as usual.

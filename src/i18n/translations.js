@@ -280,6 +280,23 @@ const en = {
     gallery: 'The Gallery',
     photoAlt: '{title}, photo {n} of {total}',
     articles: {
+      'a-choice-made-with-care': {
+        kicker: 'The Saddle Shirt',
+        title: 'A Choice Made with Care',
+        place: '',
+        standfirst: 'Why the pieces we choose to live in matter as much as the way we choose to live.',
+        paragraphs: [
+          'There is something powerful in the decision to wear less, but better. To choose a piece not because it follows a season, but because it belongs in your life — today, next year, and for years to come.',
+          'The Saddle Shirt was born from this belief. Designed in the warm, earthy tones of the Casa Chevalier world, it carries the quiet confidence of a piece that knows exactly what it is: refined, versatile, and made to last.',
+          'Cut from the finest Italian silk, the Saddle Shirt drapes with a softness that feels instinctive against the skin. Every seam, every button, every detail speaks of the hands that made it — artisans who understand that true quality lives in what you cannot always see.',
+          'From the stables to the table, from morning to evening — the Saddle Shirt moves with you, never asking to be adjusted, never losing its shape. It is the kind of piece you reach for without thinking, because it has already become part of who you are.',
+        ],
+        closing: [
+          'Less, but better.',
+          'Chosen with care, made to stay.',
+        ],
+        signoff: 'From Saddle to Table.',
+      },
       'made-to-be-lived-in': {
         kicker: 'Casa Chevalier',
         title: 'Made to Be Lived In',
@@ -623,6 +640,23 @@ const it = {
     gallery: 'La galleria',
     photoAlt: '{title}, foto {n} di {total}',
     articles: {
+      'a-choice-made-with-care': {
+        kicker: 'The Saddle Shirt',
+        title: 'A Choice Made with Care',
+        place: '',
+        standfirst: 'Perché i capi che scegliamo di vivere contano quanto il modo in cui scegliamo di vivere.',
+        paragraphs: [
+          'C’è qualcosa di potente nella decisione di indossare meno, ma meglio. Scegliere un capo non perché segue una stagione, ma perché appartiene alla tua vita — oggi, l’anno prossimo e per gli anni a venire.',
+          'La Saddle Shirt è nata da questa convinzione. Disegnata nelle tonalità calde e terrose del mondo Casa Chevalier, porta con sé la sicurezza discreta di un capo che sa esattamente cosa è: raffinato, versatile e fatto per durare.',
+          'Tagliata nella più pregiata seta italiana, la Saddle Shirt cade con una morbidezza che si sente istintiva sulla pelle. Ogni cucitura, ogni bottone, ogni dettaglio parla delle mani che l’hanno creata — artigiani che comprendono che la vera qualità vive in ciò che non sempre si vede.',
+          'Dalle scuderie alla tavola, dal mattino alla sera — la Saddle Shirt si muove con te, senza mai chiedere di essere aggiustata, senza mai perdere la sua forma. È il tipo di capo che scegli senza pensarci, perché è già diventato parte di chi sei.',
+        ],
+        closing: [
+          'Meno, ma meglio.',
+          'Scelto con cura, fatto per restare.',
+        ],
+        signoff: 'From Saddle to Table.',
+      },
       'made-to-be-lived-in': {
         kicker: 'Casa Chevalier',
         title: 'Made to Be Lived In',

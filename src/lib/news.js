@@ -11,6 +11,16 @@
 
 export const articles = [
   {
+    slug: 'a-choice-made-with-care',
+    photos: 2,
+    cover: 1,
+    landscape: [],
+    chapters: [
+      { photo: 1, paragraphs: [0, 1] },
+      { photo: 2, paragraphs: [2, 3] },
+    ],
+  },
+  {
     slug: 'made-to-be-lived-in',
     photos: 5,
     cover: 1,
