@@ -18,15 +18,24 @@ import ProductTitle from '../components/ProductTitle'
 import ColourSwatches from '../components/ColourSwatches'
 import { track, viewSource } from '../lib/analytics'
 
-const LOW_STOCK_THRESHOLD = 5
-// The "Only 5 left in size 40" note is switched off for now; set to true to bring it back
-const SHOW_LOW_STOCK = false
+// "Only 2 left" / "Only 1 left" shows when a piece (or the chosen size) is down to this many
+const LOW_STOCK_THRESHOLD = 2
+const SHOW_LOW_STOCK = true
+
+// "Wear it with": one piece suggested right under the buy button, by handle.
+// Customers bought the blazer and the checked bombacha together.
+const WEAR_WITH = {
+  'the-equestrian-blazer-heritage-check': 'the-signature-bombacha-heritage-check',
+  'test-blazer': 'the-signature-bombacha-heritage-check',
+}
 
 // "You May Also Like": the pieces each product is styled with, by handle.
 // Every product shows three; any free places are filled at random. A list
 // means "the first of these that exists" (the blazer's handle may change).
 const BLAZER = ['the-equestrian-blazer-heritage-check', 'test-blazer']
 const PAIRS_WITH = {
+  'the-equestrian-blazer-heritage-check': ['the-signature-bombacha-heritage-check', 'the-saddle-shirt-vanilla-blush'],
+  'test-blazer': ['the-signature-bombacha-heritage-check', 'the-saddle-shirt-vanilla-blush'],
   'the-everyday-breeches-sand': [
     'the-everyday-breeches-dark-chocolate',
     'the-signature-bombacha-heritage-check',
@@ -89,7 +98,7 @@ export default function ProductDetail() {
 
   const { addItem, busy, openDrawer } = useCart()
   const { toggle: toggleWish, has: hasWish } = useWishlist()
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
 
   // First step of the shopping funnel. Once per piece: a catalogue reload
   // (e.g. a language switch) is not a second view.
@@ -188,6 +197,8 @@ export default function ProductDetail() {
 
   // Colour versions of this piece ("The Stable Vest - Sand" / "- Dark Chocolate"), stable order
   const colours = [product, ...colourVersions(product)].sort((a, b) => a.handle.localeCompare(b.handle))
+
+  const wearWith = products.find((p) => p.handle === WEAR_WITH[product.handle]) || null
 
   const wished = hasWish(product.handle)
   const selectedVariant = product.variants.find(
@@ -327,6 +338,13 @@ export default function ProductDetail() {
                     {t('product.sizeRequired')}
                   </p>
                 )}
+                {/* Fit note right under the sizes (guides with showFit), so
+                    the model's size is seen without opening the size guide */}
+                {guide?.showFit && guide.fit && (
+                  <p className="font-playfair text-dark/80 text-[14px] leading-relaxed mt-3">
+                    {guide.fit[lang] ?? guide.fit.en}
+                  </p>
+                )}
                 {guide?.type === 'sized' && <SizeGuide guide={guide} productHandle={product.handle} />}
               </div>
             )}
@@ -337,10 +355,10 @@ export default function ProductDetail() {
               selectedVariant.available &&
               selectedVariant.quantity > 0 &&
               selectedVariant.quantity <= LOW_STOCK_THRESHOLD && (
-                <p className="font-playfair text-plum text-sm mt-3">
-                  {product.hasSizes && size
-                    ? t('product.remainingInSize', { count: selectedVariant.quantity, size })
-                    : t('product.remaining', { count: selectedVariant.quantity })}
+                <p className="font-playfair font-medium text-plum text-[15px] mt-3">
+                  {product.hasSizes && size && !oneSizeNote
+                    ? t(selectedVariant.quantity === 1 ? 'product.remainingOneInSize' : 'product.remainingInSize', { count: selectedVariant.quantity, size })
+                    : t(selectedVariant.quantity === 1 ? 'product.remainingOne' : 'product.remaining', { count: selectedVariant.quantity })}
                 </p>
               )}
 
@@ -389,6 +407,54 @@ export default function ProductDetail() {
               <p className="font-playfair text-coral text-sm mt-3">{addError}</p>
             )}
 
+            {/* One quiet service line under the buy button; tapping it opens
+                the Shipping & Returns section below with the full details */}
+            {!outOfStock && (
+              <button
+                onClick={() => {
+                  setOpenSection('shipping')
+                  document.getElementById('shipping-returns')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                }}
+                className="w-full mt-4 font-bodoni uppercase text-dark/60 text-[11px] tracking-[0.14em] leading-relaxed text-center bg-transparent border-none p-0 cursor-pointer hover:text-plum transition-colors"
+              >
+                {/* Each half stays whole, so a narrow screen breaks at the dot */}
+                {t('product.serviceLine').split(' · ').map((part, i) => (
+                  <span key={part}>
+                    {i > 0 && ' · '}
+                    <span className="whitespace-nowrap">{part}</span>
+                  </span>
+                ))}
+              </button>
+            )}
+
+            {/* Wear it with: one piece customers bought together with this one */}
+            {wearWith && (
+              <button
+                onClick={() => navigate(`/product/${wearWith.handle}`)}
+                className="w-full mt-6 flex items-center gap-4 border border-plum/20 bg-transparent p-3 text-left cursor-pointer hover:border-plum transition-colors"
+              >
+                {wearWith.image && (
+                  <img
+                    src={sizedImage(wearWith.image, 200)}
+                    alt=""
+                    className="w-14 h-[74px] object-cover bg-[#d4cec6] shrink-0"
+                    style={{ objectPosition: photoFocus(wearWith) }}
+                  />
+                )}
+                <span className="flex-1 min-w-0">
+                  <span className="block font-bodoni uppercase text-dark/60 text-[11px] tracking-[0.15em]">
+                    {t('product.wearWith')}
+                  </span>
+                  <span className="block font-bodoni text-dark text-[15px] mt-1">
+                    <ProductTitle title={wearWith.name} />
+                  </span>
+                  <span className="block font-playfair text-plum text-sm mt-0.5">
+                    {formatPrice(wearWith.price, wearWith.currency)}
+                  </span>
+                </span>
+              </button>
+            )}
+
             {/* Short description — custom.short_description, under the buy
                 button so the button is in the first screen */}
             {product.shortDescription && (
@@ -412,10 +478,15 @@ export default function ProductDetail() {
                   label: t('product.composition'),
                   body: product.composition,
                 },
+                {
+                  key: 'shipping',
+                  label: t('product.shippingReturns'),
+                  body: t('product.shippingReturnsBody'),
+                },
               ].filter(Boolean).map((sec) => {
                 const open = openSection === sec.key
                 return (
-                  <div key={sec.key} className="border-b border-plum/20">
+                  <div key={sec.key} id={sec.key === 'shipping' ? 'shipping-returns' : undefined} className="border-b border-plum/20">
                     <button
                       onClick={() => setOpenSection(open ? null : sec.key)}
                       className="w-full flex items-center justify-between py-4 bg-transparent border-none cursor-pointer"

@@ -5,6 +5,7 @@ import { useCart } from '../context/CartContext'
 import { formatPrice, sizedImage } from '../lib/shopify'
 import { useLanguage } from '../i18n/LanguageContext'
 import ProductTitle from './ProductTitle'
+import FreeShippingProgress from './FreeShippingProgress'
 import { track, setNextViewSource } from '../lib/analytics'
 
 // Slide-in shopping bag. Opens after "Add to bag" so the customer can go
@@ -151,6 +152,7 @@ export default function CartDrawer() {
                 </span>
               </div>
               <p className="font-playfair text-dark/70 text-sm mt-2">{t('bag.taxes')}</p>
+              <FreeShippingProgress subtotal={subtotal} currency={currency} className="mt-4" />
               <button
                 onClick={handleCheckout}
                 disabled={!checkoutUrl || redirecting || busy}

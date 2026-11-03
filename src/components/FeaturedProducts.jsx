@@ -2,20 +2,21 @@ import { useRef, useState } from 'react'
 import { useProducts } from '../context/ProductsContext'
 import ProductCard from './ProductCard'
 
-// Shopify handles of the four pieces shown on the homepage, in order.
+// Shopify handles of the five pieces shown on the homepage, in order.
 // A list means "the first of these that exists": the blazer still has its
 // placeholder handle in Shopify and keeps working before and after the rename.
 const FEATURED_HANDLES = [
   ['the-equestrian-blazer-heritage-check', 'test-blazer'],
-  'the-stable-vest-dark-chocolate',
+  'cc-rsc-the-signature-bombacha-sand',
+  'the-stable-vest-sand',
+  'the-signature-bombacha-heritage-check',
   'the-everyday-breeches-sand',
-  'cc-rsc-the-timeless-polo-rust-cream',
 ]
 
-// Homepage row of four pieces with name, colour and price.
+// Homepage row of featured pieces with name, colour and price.
 // Phones: one large piece at a time, swiped sideways, with the next one
-// peeking in and dots underneath. Tablet: two per row. Desktop: four in a
-// row spanning 92% of the page width.
+// peeking in and dots underneath. Tablet: three per row. Desktop: all five
+// in one row spanning 92% of the page width.
 export default function FeaturedProducts() {
   const { products, loading } = useProducts()
   const trackRef = useRef(null)
@@ -44,7 +45,7 @@ export default function FeaturedProducts() {
   }
 
   const cards = loading
-    ? [...Array(4)].map((_, i) => (
+    ? [...Array(FEATURED_HANDLES.length)].map((_, i) => (
         <div key={i} className="cc-fade-in">
           <div className="aspect-[2/3] bg-[#e5ded4]" />
           <div className="h-3 w-28 bg-[#e5ded4] mt-4" />
@@ -58,7 +59,7 @@ export default function FeaturedProducts() {
       <div
         ref={trackRef}
         onScroll={handleScroll}
-        className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-x-3 md:gap-x-5 gap-y-10 overflow-x-auto md:overflow-visible snap-x snap-mandatory no-scrollbar px-[9vw] md:px-0 md:w-[92%] mx-auto"
+        className="flex md:grid md:grid-cols-3 lg:grid-cols-5 gap-x-3 md:gap-x-5 gap-y-10 overflow-x-auto md:overflow-visible snap-x snap-mandatory no-scrollbar px-[9vw] md:px-0 md:w-[92%] mx-auto"
       >
         {cards.map((card) => (
           <div key={card.key} className="w-[82vw] shrink-0 snap-center md:w-auto">

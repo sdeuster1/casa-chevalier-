@@ -8,6 +8,7 @@ import { useCart } from '../context/CartContext'
 import { formatPrice, sizedImage } from '../lib/shopify'
 import { useLanguage } from '../i18n/LanguageContext'
 import ProductTitle from '../components/ProductTitle'
+import FreeShippingProgress from '../components/FreeShippingProgress'
 import { track } from '../lib/analytics'
 
 export default function Shop() {
@@ -188,6 +189,7 @@ export default function Shop() {
                 <p className="font-playfair text-dark/70 text-sm">
                   {t('bag.taxes')}
                 </p>
+                <FreeShippingProgress subtotal={subtotal} currency={currency} className="mt-2" />
                 <ul className="font-playfair font-medium text-plum text-sm leading-relaxed flex flex-col gap-1 mt-1">
                   <li>{t('bag.freeShippingEu')}</li>
                   <li>{t('bag.freeShippingIntl')}</li>
