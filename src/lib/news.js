@@ -19,16 +19,16 @@ export const articles = [
     // A Founder's Letter: the page says so under the title, with the byline
     category: 'founders-letter',
     date: '2026-11-02',
-    photos: 3,
+    photos: 5,
     // A photo used only as the cover, not in the story: cover.jpg and cover-sm.jpg
     cover: 'cover',
     // A chapter without a photo is a single column of text
     chapters: [
-      { photo: 1, paragraphs: [0, 1, 2] }, // from a love of animals
-      { photo: 2, heading: 0, paragraphs: [3, 4, 5, 6, 7, 8] }, // without compromise
-      { heading: 1, paragraphs: [9, 10, 11, 12, 13] }, // made to be lived in
-      { photo: 3, paragraphs: [14, 15, 16, 17, 18, 19, 20, 21, 22, 23] }, // the sneeze
-      { heading: 2, paragraphs: [24, 25, 26, 27, 28] }, // who we are
+      { photo: 1, paragraphs: [0, 1, 2] }, // from a love of animals: leading the horse
+      { photo: 2, heading: 0, paragraphs: [3, 4, 5, 6, 7, 8] }, // without compromise: blazer, eco suede bag
+      { photo: 3, heading: 1, paragraphs: [9, 10, 11, 12, 13] }, // made to be lived in: riding
+      { photo: 4, paragraphs: [14, 15, 16, 17, 18, 19, 20, 21, 22, 23] }, // the sneeze: the shirt in the stables
+      { photo: 5, heading: 2, paragraphs: [24, 25, 26, 27, 28] }, // who we are: the horse nuzzling the blazer
     ],
   },
   {
