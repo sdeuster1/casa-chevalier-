@@ -38,11 +38,11 @@ export const articles = [
     photos: 5,
     cover: 'cover',
     chapters: [
-      { photo: 1, paragraphs: [0, 1, 2, 3, 4, 5] }, // an art to making things with care
-      { photo: 2, heading: 0, paragraphs: [6, 7, 8, 9, 10, 11] }, // the people behind the pieces
-      { photo: 3, heading: 1, paragraphs: [12, 13, 14, 15, 16, 17] }, // designed with purpose
-      { photo: 4, heading: 2, paragraphs: [18, 19, 20, 21, 22, 23, 24, 25] }, // made to be lived in
-      { photo: 5, paragraphs: [26, 27, 28, 29, 30] }, // worth keeping
+      { photo: 1, paragraphs: [0, 1, 2, 3, 4, 5] }, // an art to making things with care: still, in the stable
+      { photo: 5, heading: 0, paragraphs: [6, 7, 8, 9, 10, 11] }, // the people behind the pieces: blazer close-up
+      { photo: 4, heading: 1, paragraphs: [12, 13, 14, 15, 16, 17] }, // designed with purpose: shirt and tack
+      { photo: 3, heading: 2, paragraphs: [18, 19, 20, 21, 22, 23, 24, 25] }, // made to be lived in: walking with the horse
+      { photo: 2, paragraphs: [26, 27, 28, 29, 30] }, // worth keeping: in the hay
     ],
   },
   {
