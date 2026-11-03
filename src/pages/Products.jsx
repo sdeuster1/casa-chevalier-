@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, useMemo } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useState, useEffect, useLayoutEffect, useRef, useMemo } from 'react'
+import { useLocation, useNavigate, useNavigationType, useSearchParams } from 'react-router-dom'
 import { ChevronDown, Heart } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import DropdownMenu from '../components/DropdownMenu'
@@ -26,16 +26,30 @@ const arrange = (list) =>
     return item && i >= 0 ? [...rest.slice(0, i + 1), item, ...rest.slice(i + 1)] : acc
   }, list)
 
+// Where the visitor was on this page (scroll and each phone row), so the
+// back button from a product returns them to the same spot
+const PLACE_KEY = 'cc-products-place'
+
+const readPlace = () => {
+  try { return JSON.parse(sessionStorage.getItem(PLACE_KEY)) || null } catch { return null }
+}
+
+const savePlace = (place) => {
+  try { sessionStorage.setItem(PLACE_KEY, JSON.stringify(place)) } catch { /* private mode: nothing to keep */ }
+}
+
 export default function Products() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [manualCategory, setManualCategory] = useState(null)
   const [highlightTick, setHighlightTick] = useState(0)
   const productRefs = useRef({})
+  const rowRefs = useRef({})
   const { products, loading, error, retry } = useProducts()
   const categories = ['ALL', 'PANTS', 'SHIRTS', 'JACKETS', 'VESTS', 'ACCESSORIES']
   const { toggle: toggleWish, has: hasWish } = useWishlist()
   const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
+  const navigationType = useNavigationType()
+  const { search } = useLocation()
+  const [searchParams, setSearchParams] = useSearchParams()
   const { t, sectionLabel } = useLanguage()
   const isDesktop = useIsDesktop()
 
@@ -43,15 +57,52 @@ export default function Products() {
   const urlProductId = searchParams.get('product')
   const highlighted = urlProductId && highlightTick === 0 ? urlProductId : null
 
+  // The chosen category lives in the address (?category=pants), so going back
+  // from a product shows the same category. replace: no extra back steps.
+  // Other parameters (e.g. Instagram utm tags) are kept.
+  const chooseCategory = (cat) =>
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev)
+      next.delete('product')
+      if (cat === 'ALL') next.delete('category')
+      else next.set('category', cat.toLowerCase())
+      return next
+    }, { replace: true })
+
+  // Remember the scroll position and each phone row's sideways position
+  // while the visitor browses; written down when they leave the page
+  const place = useRef({ y: 0, rows: {} })
+  useEffect(() => {
+    const onScroll = () => { place.current.y = window.scrollY }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+  // Layout cleanup runs before the next page scrolls to the top
+  useLayoutEffect(() => () => savePlace({ ...place.current, search }), [search])
+
+  // Back button (POP): put the visitor where they were, once the pieces are shown
+  const restored = useRef(false)
+  useLayoutEffect(() => {
+    if (restored.current || loading || navigationType !== 'POP') return
+    restored.current = true
+    const saved = readPlace()
+    if (!saved || saved.search !== search) return
+    place.current = { y: saved.y, rows: { ...saved.rows } }
+    Object.entries(saved.rows || {}).forEach(([section, left]) => {
+      const row = rowRefs.current[section]
+      if (row) row.scrollLeft = left
+    })
+    window.scrollTo({ top: saved.y, behavior: 'instant' })
+  }, [loading, navigationType, search])
+
   const activeCategory = useMemo(() => {
-    if (manualCategory) return manualCategory
     if (urlCategory) return urlCategory.toUpperCase()
     if (urlProductId) {
       const p = products.find((x) => x.handle === urlProductId)
       if (p) return p.section
     }
     return 'ALL'
-  }, [manualCategory, urlCategory, urlProductId, products])
+  }, [urlCategory, urlProductId, products])
 
   useEffect(() => {
     if (!urlProductId || loading) return
@@ -151,7 +202,7 @@ export default function Products() {
               <span className="sr-only">{t('products.filterLabel')}</span>
               <select
                 value={categories.includes(activeCategory) ? activeCategory : 'ALL'}
-                onChange={(e) => setManualCategory(e.target.value)}
+                onChange={(e) => chooseCategory(e.target.value)}
                 className="appearance-none bg-transparent font-bodoni uppercase text-plum text-[13px] md:text-sm tracking-[0.2em] border-0 border-b border-plum rounded-none pb-1 pr-7 cursor-pointer focus:outline-none focus-visible:outline-1 focus-visible:outline-plum focus-visible:outline-offset-4"
               >
                 {categories.map((cat) => (
@@ -207,7 +258,7 @@ export default function Products() {
                 {t('products.empty')}
               </p>
               <button
-                onClick={() => setManualCategory('ALL')}
+                onClick={() => chooseCategory('ALL')}
                 className="mt-4 font-bodoni uppercase text-plum text-[12px] tracking-[0.2em] border-b border-plum pb-0.5 bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
               >
                 {t('products.viewAll')}
@@ -232,7 +283,11 @@ export default function Products() {
                       {sectionLabel(section)}
                     </h2>
                   )}
-                  <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-6 px-6 scroll-px-6">
+                  <div
+                    ref={(el) => { rowRefs.current[section] = el }}
+                    onScroll={(e) => { place.current.rows[section] = e.currentTarget.scrollLeft }}
+                    className="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-6 px-6 scroll-px-6"
+                  >
                     {items.map((product) => (
                       <div key={product.handle} className="w-[64vw] shrink-0 snap-start">
                         {renderCard(product)}
