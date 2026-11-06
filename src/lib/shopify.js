@@ -139,8 +139,8 @@ export const sizedImage = (url, width) =>
   url ? `${url}${url.includes('?') ? '&' : '?'}width=${width}` : url
 
 // ---------- Local product images ----------
-// Photos shot locally that go before Shopify's images. The first
-// entry becomes the main photo on the card and the product page.
+// Photos kept with the site that replace a product's Shopify images.
+// The first entry becomes the main photo on the card and the product page.
 const LOCAL_IMAGES = {
   'the-saddle-shirt-bronze': [
     '/media/products/the-saddle-shirt-bronze/back.jpg',
@@ -155,10 +155,7 @@ const LOCAL_IMAGES = {
 function normalizeProduct(node) {
   if (!node) return null
 
-  const images = [
-    ...(LOCAL_IMAGES[node.handle] || []),
-    ...node.images.edges.map((e) => e.node.url),
-  ]
+  const images = LOCAL_IMAGES[node.handle] || node.images.edges.map((e) => e.node.url)
   // Pre-order is the rule: a size with no stock left is sold as a pre-order
   // (with "Continue selling when out of stock" on in Shopify); sizes still in
   // stock sell as usual. custom.preorder set to false turns it off for a product.
