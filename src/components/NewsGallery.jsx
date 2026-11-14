@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useLanguage } from '../i18n/LanguageContext'
-import { isLandscape, photoSources } from '../lib/news'
+import { galleryPhotos, isLandscape, photoSources } from '../lib/news'
 
-// Every photo of an article in one sideways row. Phones: swiped, with the
+// The article's photos not already in the story, in one sideways row. Phones: swiped, with the
 // next photo peeking in from the right and a counter underneath.
 // Desktop: three photos in view and arrows either side. Landscape photos
 // keep their shape and sit centred in the row.
@@ -11,8 +11,8 @@ export default function NewsGallery({ article, title }) {
   const { t } = useLanguage()
   const trackRef = useRef(null)
   const [active, setActive] = useState(0)
-  const count = article.photos
-  const photos = Array.from({ length: count }, (_, i) => i + 1)
+  const photos = galleryPhotos(article)
+  const count = photos.length
 
   // Photos are all the same width, so the scroll position says which is first in view
   const handleScroll = () => {
@@ -58,7 +58,7 @@ export default function NewsGallery({ article, title }) {
                   srcSet={srcSet}
                   sizes="(min-width: 768px) 420px, 78vw"
                   loading="lazy"
-                  alt={t('news.photoAlt', { title, n, total: count })}
+                  alt={t('news.photoAlt', { title, n, total: article.photos })}
                   className="w-full h-full object-cover"
                 />
               </div>

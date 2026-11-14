@@ -23,10 +23,12 @@ export const articles = [
     cover: 1,
     chapters: [
       { photo: 1, paragraphs: [0, 1, 2] }, // opening the doors of Casa: the table
-      { photo: 2, heading: 0, paragraphs: [3, 4, 5] }, // where it all began: the vests on the rail
+      { photo: 7, heading: 0, paragraphs: [3, 4, 5] }, // where it all began: the cookies, wrapped in ribbon
       { photo: 3, paragraphs: [6, 7] }, // trying on the collection: blazers and shirts
       { photo: 11, heading: 1, paragraphs: [8, 9, 10] }, // more than a collection: the flyers
     ],
+    // The gallery's order; photos already in the story are left out anyway
+    gallery: [2, 5, 9, 4, 6, 10, 8],
   },
   {
     slug: 'a-choice-made-with-care',
@@ -85,9 +87,15 @@ export const findArticle = (slug) => articles.find((a) => a.slug === slug)
 
 export const isLetter = (article) => article.category === 'founders-letter'
 
-// The gallery only shows when there are more photos than the chapters use
-export const hasGallery = (article) =>
-  article.photos > article.chapters.filter((c) => c.photo).length
+// The gallery: every photo not already shown in the story, in the
+// article's own gallery order if it has one, otherwise by number
+export const galleryPhotos = (article) => {
+  const inStory = new Set(article.chapters.map((c) => c.photo).filter(Boolean))
+  const order = article.gallery ?? Array.from({ length: article.photos }, (_, i) => i + 1)
+  return order.filter((n) => !inStory.has(n))
+}
+
+export const hasGallery = (article) => galleryPhotos(article).length > 0
 
 // '2 November 2026' / '2 novembre 2026'
 export const formatDate = (article, lang) =>
