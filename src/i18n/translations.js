@@ -67,10 +67,11 @@ const en = {
 
   cookies: {
     label: 'Cookie preferences',
-    text: 'We use analytics cookies only with your consent.',
+    text: 'We use cookies to understand how our site is used and to improve your experience, only with your consent.',
     policy: 'Cookie Policy',
-    accept: 'Accept',
-    decline: 'Decline',
+    learnMore: 'Learn more',
+    accept: 'Accept and close',
+    decline: 'Continue without accepting',
     settings: 'Cookie settings',
   },
 
@@ -506,10 +507,11 @@ const it = {
 
   cookies: {
     label: 'Preferenze cookie',
-    text: 'Usiamo cookie di analisi solo con il tuo consenso.',
+    text: 'Usiamo i cookie per capire come viene utilizzato il sito e migliorare la tua esperienza, solo con il tuo consenso.',
     policy: 'Cookie Policy',
-    accept: 'Accetta',
-    decline: 'Rifiuta',
+    learnMore: 'Scopri di più',
+    accept: 'Accetta e chiudi',
+    decline: 'Continua senza accettare',
     settings: 'Impostazioni cookie',
   },
 
