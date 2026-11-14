@@ -292,6 +292,28 @@ const en = {
       craftsmanship: 'Craftsmanship',
     },
     articles: {
+      'casa-chevalier-in-milan': {
+        title: 'Casa Chevalier Opens Its Doors in Milan',
+        place: 'Milan',
+        standfirst: 'An intimate gathering of friends and family in the city where it all began.',
+        headings: [
+          'Where it all began',
+          'More Than a Collection',
+        ],
+        paragraphs: [
+          'Some moments are meant to be shared in a place that feels like home.',
+          'On November 5th, Casa Chevalier opened the doors of Casa, our founder Amanda Baldan’s home in the heart of Milan, welcoming friends and family for an intimate celebration of our first collection.',
+          'More than a collection presentation, it was an opportunity to bring people together, share the story behind the brand and invite them into the world of Casa Chevalier.',
+          'Milan holds a special place in our story.',
+          'It is where our founder was born and where the Casa Chevalier collection comes to life, from the very first ideas and sketches to the finished pieces.',
+          'Choosing to celebrate this first chapter at home, surrounded by the people who have been part of the journey, felt like the most natural way to introduce the brand.',
+          'Throughout the day, guests discovered the collection, tried on their favourite pieces and shared conversations over a glass of wine, in the warmth and familiarity of a private home.',
+          'No formal presentation, just a beautiful gathering of people, shared moments and a collection designed to become part of everyday life.',
+          'Casa Chevalier was created with the desire to build something that extends beyond clothing. A world shaped by shared values, experiences and the people who become part of its story.',
+          'Our first gathering in Milan was a meaningful expression of that vision.',
+          'The first of many occasions to come together, share experiences and continue building the Casa Chevalier community.',
+        ],
+      },
       'a-choice-made-with-care': {
         title: 'A Choice Made with Care',
         standfirst: 'Why animal friendly materials have been part of Casa Chevalier from the very beginning.',
@@ -710,6 +732,28 @@ const it = {
       craftsmanship: 'Artigianalità',
     },
     articles: {
+      'casa-chevalier-in-milan': {
+        title: 'Casa Chevalier apre le porte di casa a Milano',
+        place: 'Milano',
+        standfirst: 'Un incontro intimo tra amici e famiglia, nella città dove tutto ha avuto inizio.',
+        headings: [
+          'Dove tutto ha avuto inizio',
+          'Più di una collezione',
+        ],
+        paragraphs: [
+          'Ci sono momenti che meritano di essere condivisi in un luogo che sa di casa.',
+          'Il 5 novembre, Casa Chevalier ha aperto le porte di Casa, l’abitazione milanese della fondatrice Amanda Baldan, accogliendo amici e familiari per celebrare la sua prima collezione.',
+          'Più che una presentazione, è stata un’occasione per riunire le persone, raccontare la storia del brand e invitarle a scoprire da vicino il mondo di Casa Chevalier.',
+          'Milano occupa un posto speciale nella nostra storia.',
+          'È la città in cui è nata la nostra fondatrice e dove prende vita la collezione Casa Chevalier, dalle prime idee e dai disegni iniziali fino ai capi finiti.',
+          'Scegliere di celebrare questo primo capitolo a casa, circondati dalle persone che hanno accompagnato il progetto fin dall’inizio, è sembrato il modo più naturale per presentare il brand.',
+          'Durante la giornata, gli ospiti hanno potuto scoprire la collezione, provare i loro capi preferiti e condividere conversazioni davanti a un bicchiere di vino, nell’atmosfera calda e familiare di una casa privata.',
+          'Nessuna presentazione formale, ma un incontro fatto di persone, momenti condivisi e una collezione pensata per diventare parte della vita di ogni giorno.',
+          'Casa Chevalier nasce dal desiderio di creare qualcosa che vada oltre l’abbigliamento. Un mondo costruito attorno a valori condivisi, esperienze e persone che, nel tempo, diventano parte della sua storia.',
+          'Il nostro primo incontro a Milano è stato un’espressione significativa di questa visione.',
+          'Il primo di tanti momenti in cui ritrovarsi, condividere esperienze e continuare a costruire la community di Casa Chevalier.',
+        ],
+      },
       'a-choice-made-with-care': {
         title: 'Una scelta fatta con cura',
         standfirst: 'Perché la scelta di materiali animal friendly fa parte di Casa Chevalier fin dall’inizio.',

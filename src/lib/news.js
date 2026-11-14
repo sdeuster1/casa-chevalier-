@@ -15,6 +15,20 @@ export const CATEGORIES = ['founders-letter', 'events', 'press', 'stories', 'cra
 
 export const articles = [
   {
+    slug: 'casa-chevalier-in-milan',
+    category: 'events',
+    date: '2026-11-14',
+    photos: 11,
+    // The breakfast table, on the CC MAG page
+    cover: 1,
+    chapters: [
+      { photo: 1, paragraphs: [0, 1, 2] }, // opening the doors of Casa: the table
+      { photo: 2, heading: 0, paragraphs: [3, 4, 5] }, // where it all began: the vests on the rail
+      { photo: 3, paragraphs: [6, 7] }, // trying on the collection: blazers and shirts
+      { photo: 11, heading: 1, paragraphs: [8, 9, 10] }, // more than a collection: the flyers
+    ],
+  },
+  {
     slug: 'a-choice-made-with-care',
     // A Founder's Letter: the page says so under the title, with the byline
     category: 'founders-letter',
