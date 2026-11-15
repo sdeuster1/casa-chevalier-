@@ -293,6 +293,26 @@ const en = {
       craftsmanship: 'Craftsmanship',
     },
     articles: {
+      'casa-chevalier-in-madrid': {
+        title: 'Casa Chevalier in Madrid',
+        place: 'AMA Studio, Madrid',
+        standfirst: 'An Italian-inspired gathering celebrating the first Casa Chevalier collection in the heart of Madrid.',
+        headings: [
+          'An Italian Touch in Madrid',
+          'A World to Share',
+        ],
+        paragraphs: [
+          'On November 12th, Casa Chevalier brought its world to Madrid, welcoming guests to AMA Studio on Calle Lagasca for a day dedicated to its first collection.',
+          'Set in the heart of the Salamanca neighbourhood, the event offered an opportunity to discover the collection in person, explore the pieces up close and experience the philosophy behind Casa Chevalier.',
+          'Throughout the day, guests were invited to discover the collection, feel the fabrics, try on their favourite pieces and explore the versatility of designs created for life both in and beyond the saddle.',
+          'As the evening approached, the space transformed into an intimate Italian-style aperitivo, bringing together friends, familiar faces and new members of the growing Casa Chevalier community.',
+          'Conversations, shared moments and a relaxed atmosphere made the occasion feel less like a traditional collection presentation and more like an invitation into the world of Casa Chevalier.',
+          'From its beginnings in Milan to its growing presence in Madrid, Casa Chevalier continues to bring together women who share an appreciation for thoughtful design, personal style and a certain way of living.',
+          'The Madrid gathering was another expression of the brand’s vision: creating experiences that extend beyond clothing and bring people together.',
+          'A new chapter in Madrid, and another occasion to celebrate the community growing around Casa Chevalier.',
+          'For those who couldn’t join us, the collection will remain available to discover and try on at AMA Studio, Calle Lagasca 119, Madrid, until November 26th.',
+        ],
+      },
       'casa-chevalier-in-milan': {
         title: 'Casa Chevalier Opens Its Doors in Milan',
         place: 'Milan',
@@ -734,6 +754,26 @@ const it = {
       craftsmanship: 'Artigianalità',
     },
     articles: {
+      'casa-chevalier-in-madrid': {
+        title: 'Casa Chevalier a Madrid',
+        place: 'AMA Studio, Madrid',
+        standfirst: 'Un incontro dal tocco italiano per celebrare la nostra prima collezione nel cuore di Madrid.',
+        headings: [
+          'Un tocco italiano a Madrid',
+          'Un mondo da condividere',
+        ],
+        paragraphs: [
+          'Il 12 novembre abbiamo portato il mondo di Casa Chevalier a Madrid, accogliendo i nostri ospiti presso AMA Studio, in Calle Lagasca, per una giornata dedicata alla nostra prima collezione.',
+          'Nel cuore del quartiere Salamanca, l’evento è stato un’occasione per scoprire da vicino le nostre creazioni, apprezzare i dettagli di ogni capo e immergersi nell’universo Casa Chevalier.',
+          'Durante la giornata, i nostri ospiti hanno avuto l’opportunità di scoprire la collezione, apprezzarne i tessuti, provare i propri capi preferiti e conoscere la versatilità di creazioni pensate per essere indossate non soltanto in sella, ma anche nella vita di tutti i giorni.',
+          'Al calare della sera, abbiamo riunito i nostri ospiti per un aperitivo all’italiana, tra amici, volti conosciuti e nuove persone entrate a far parte della nostra community.',
+          'Tra conversazioni, incontri e momenti di convivialità, l’evento ha assunto un carattere spontaneo e familiare, trasformando la presentazione della collezione in un’esperienza da condividere.',
+          'Dalle nostre origini milanesi a Madrid, continuiamo a dare forma a un universo che unisce la passione per il mondo equestre, la ricerca estetica e uno stile di vita fatto di esperienze e relazioni.',
+          'L’evento di Madrid ha rappresentato un’ulteriore espressione della nostra visione: il desiderio di creare occasioni di incontro che vadano oltre la collezione e contribuiscano a costruire una community unita da passioni e valori condivisi.',
+          'Un nuovo capitolo per Casa Chevalier a Madrid e un’altra occasione per ritrovarci, condividere esperienze e continuare a far crescere la nostra community.',
+          'Per chi non ha avuto occasione di partecipare, la collezione resterà disponibile presso AMA Studio, Calle Lagasca 119, Madrid, fino al 26 novembre, con la possibilità di scoprire e provare i capi di persona.',
+        ],
+      },
       'casa-chevalier-in-milan': {
         title: 'Casa Chevalier apre le porte di casa a Milano',
         place: 'Milano',

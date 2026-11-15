@@ -15,6 +15,21 @@ export const CATEGORIES = ['founders-letter', 'events', 'press', 'stories', 'cra
 
 export const articles = [
   {
+    slug: 'casa-chevalier-in-madrid',
+    category: 'events',
+    date: '2026-11-15',
+    photos: 12,
+    // The bar set with glasses, on the CC MAG page
+    cover: 2,
+    chapters: [
+      { photo: 1, paragraphs: [0, 1] }, // AMA Studio: a glass of red on the burgundy counter
+      { photo: 2, heading: 0, paragraphs: [2] }, // an Italian touch: the bar set with glasses
+      { photo: 3, paragraphs: [3, 4] }, // the aperitivo: the collection on the rail
+      { photo: 4, heading: 1, paragraphs: [5, 6, 7] }, // a world to share: the evening crowd
+      { paragraphs: [8] }, // the collection at AMA Studio until November 26th
+    ],
+  },
+  {
     slug: 'casa-chevalier-in-milan',
     category: 'events',
     date: '2026-11-14',
