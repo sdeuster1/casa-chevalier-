@@ -18,7 +18,7 @@ export const articles = [
     slug: 'casa-chevalier-in-madrid',
     category: 'events',
     date: '2026-11-15',
-    photos: 12,
+    photos: 10,
     // The bar set with glasses, on the CC MAG page
     cover: 2,
     chapters: [
